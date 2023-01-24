@@ -6,7 +6,7 @@ contract EcommerceStore {
     Products[] public deployedProducts;
     
     function createProduct(uint minimum) public {
-        Products newProduct = new Products(minimum, msg.sender);
+        Products newProduct = new Products(minimum,msg.sender);
         deployedProducts.push(newProduct);
     }
     
@@ -21,27 +21,29 @@ contract Products {
         string name;
         string description;
         uint price;
-        address payable seller;
         address payable escrowContracts;
         mapping (address => bool) confirmations;
         uint productCount;
     }
+
+    address public seller;
+    uint numProducts;
+    uint public minimumContribution;
+
     mapping(address => Product) public products;
     mapping(address => bool) public sellers;
 
-    // constructor(uint minimum, address creator) {
-    //     manager = creator;
-    //     minimumContribution = minimum;
-    // }
-
+    constructor(uint minimum, address creator) {
+        seller = creator;
+        minimumContribution = minimum;
+    }
 
     function createProduct(
-        string calldata description, uint price,
-        address payable seller
+        string calldata description, uint price
     ) public restrictedToSeller {
         require(address(msg.sender).balance > price*2, "The msg.sender is not payable");
         // get last index of requests from storage
-       Product storage newRequest = requests[numRequests];
+       Product storage newRequest = products[numProducts];
     //    // increase requests counter
     //    numRequests ++;
        // add information about new request
@@ -58,9 +60,9 @@ contract Products {
     
     function approveReceipt(uint index) public {
         // get request at provided index from storage
-        Product storage request = requests[index];
+        Product storage request = products[index];
         // sender needs to have contributed to Campaign
-        require(approvers[msg.sender]);
+        require(seller[msg.sender]);
         // sender must not have voted yet
         require(!request.confirmations[msg.sender]);
         
@@ -70,35 +72,9 @@ contract Products {
         request.productCount --;
     }
 
-    address public manager;
-    uint public minimumContribution;
-    mapping(address => bool) public approvers;
-    
-    
-    modifier restrictedToSeller() {
-        require(msg.sender == manager);
+modifier restrictedToSeller() {
+        require(msg.sender == seller);
         _;
     }
-    
-    function approveRequest(uint index) public {
-        // get request at provided index from storage
-        Product storage request = requests[index];
-        // sender needs to have contributed to Campaign
-        require(approvers[msg.sender]);
-        // sender must not have voted yet
-        require(!request.approvals[msg.sender]);
-        
-        // add sender to addresses who have voted
-        request.approvals[msg.sender] = true;
-        // increment approval count
-        request.approvalCount ++;
-    }
-    
-    function finalizeRequest(uint index) public restrictedToSeller {
-        Product storage request = requests[index];
-        require(!request.complete);
-        require(request.approvalCount > (approversCount / 2));
-        request.recipient.transfer(request.value);
-        request.complete = true;
-    }
+
 }
