@@ -25,7 +25,8 @@ contract Products {
         address payable seller;
         mapping (address => bool) confirmations;
         mapping (address => string) buyer_id;
-
+        // float rating;
+        // mapping (float => string) rating_review;
         uint amt;
     }
 
@@ -42,18 +43,19 @@ contract Products {
     }
 
     function createProduct(
-        string calldata description, uint price
+        string calldata description, uint price,
+        uint amt, address payable seller
     ) public restrictedToSeller {
         require(address(msg.sender).balance > price*2, "The msg.sender is not payable");
         //  create new product
-       Product storage newProduct = products[numProducts];
+       Product storage newProduct = products[amt];
        // increase product count
        numProducts ++;
        // add information about new request
        newProduct.description = description;
        newProduct.price = price;
        newProduct.seller = seller;
-       newProduct.productCount = 0;
+       newProduct.amt = amt;
     }
 
     function purchase(address escrow) public payable {
