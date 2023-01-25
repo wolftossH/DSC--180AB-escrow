@@ -21,9 +21,12 @@ contract Products {
         string name;
         string description;
         uint price;
-        address payable escrowContracts;
+        // address payable escrowContracts;
+        address payable seller;
         mapping (address => bool) confirmations;
-        uint productCount;
+        mapping (address => string) buyer_id;
+
+        uint amt;
     }
 
     address public seller;
@@ -42,15 +45,15 @@ contract Products {
         string calldata description, uint price
     ) public restrictedToSeller {
         require(address(msg.sender).balance > price*2, "The msg.sender is not payable");
-        // get last index of requests from storage
-       Product storage newRequest = products[numProducts];
-    //    // increase requests counter
-    //    numRequests ++;
+        //  create new product
+       Product storage newProduct = products[numProducts];
+       // increase product count
+       numProducts ++;
        // add information about new request
-       newRequest.description = description;
-       newRequest.price = price;
-       newRequest.seller = seller;
-       newRequest.productCount = 0;
+       newProduct.description = description;
+       newProduct.price = price;
+       newProduct.seller = seller;
+       newProduct.productCount = 0;
     }
 
     function purchase(address escrow) public payable {
