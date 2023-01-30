@@ -22,13 +22,15 @@ contract Products {
         string description;
         uint amt;
         uint price;
-        // address payable escrowContracts;
-        address payable deposit_fund;
-        // mapping (address => bool) confirmations;
-        mapping (address => bool) buyer_confirmations;
-        // float rating;
-        // mapping (float => string) rating_review;
 
+        // address payable deposit_fund;
+        uint deposit_fund;
+        mapping (address => bool) buyer_confirmations;
+        address payable recipient;
+
+        uint rating;
+        uint tot_ratings;
+        mapping (string => uint) rating_review;
     }
 
     struct Seller {
@@ -38,24 +40,28 @@ contract Products {
     }
 
     // Product[] public products;
-    address public seller;
+    address payable public seller;
     uint public numProducts;
     uint public minimumContribution;
 
     mapping(uint => Product) public products;
     mapping(address => bool) public buyers;
+    mapping(address => Seller) public sellers;
+
 
     constructor(uint minimum, address creator) {
-        seller = creator;
+        seller = payable(creator);
         minimumContribution = minimum;
     }
 
     function createProduct(
-        string calldata description, uint price,
-        uint amt
-        , address payable deposit_fund
+        string calldata description
+        , uint price
+        , uint amt
+        // , address payable deposit_fund
+        , uint deposit_fund
     ) public restrictedToSeller {
-        require(address(msg.sender).balance > price*2, "The msg.sender is not payable");
+        require(address(msg.sender).balance > price*2, "Not enough balance to sell");
         //  create new product
        Product storage newProduct = products[numProducts];
        // increase product count
@@ -63,41 +69,81 @@ contract Products {
        // add information about new request
        newProduct.description = description;
        newProduct.price = price;
-       newProduct.deposit_fund = deposit_fund;
+    //    Create deposit fund for this product in to stay in contract
+    //    when both havent approved
+       newProduct.deposit_fund = deposit_fund;        
        newProduct.amt = amt;
     }
+    
+    function buyProduct(
+        uint product_id
+        , uint deposit
+        , address payable recipient
+    ) public restrictedToBuyer payable {
+        // select a product they want to buy
+        Product storage curProd = products[product_id];
+        require(address(msg.sender).balance > curProd.price*2, "Not enough balance to sell");
+        require(deposit >= curProd.price*2, "Not enough money to buy");
+        require(curProd.amt > 0, 'Product ran out');
+        curProd.deposit_fund += deposit;
+        curProd.recipient = recipient;
 
-    function approveReceipt(uint index) public {
-        Product storage request = products[index];
-        // get request at provided index from storage
-        require(buyers[msg.sender]);
-        // sender must not have voted yet ?????
-        require(!request.buyer_confirmations[msg.sender]);
+        curProd.buyer_confirmations[address(msg.sender)] = false;      
+        curProd.amt --;
     }
 
+    function approvePurchase(
+        uint product_id
+        // , address payable buyer
+    ) private restrictedToSeller{
+        Product storage curProd = products[product_id];
+        curProd.buyer_confirmations[address(msg.sender)] = true;      
+    }
 
+    function rejectPurchase(
+        uint product_id
+        // , address payable buyer
+    ) private restrictedToSeller{
+        // reject then refund
+        Product storage curProd = products[product_id];
+        curProd.recipient.transfer(curProd.price*2);
+        curProd.amt ++;
 
-    function purchase(address escrow) public payable {
-        require(address(msg.sender).balance >= products[numProducts].price*2); // ensure the seller has enough ether to fulfill the purchase
-        buyers[msg.sender] = true;
+    }
+
+    function approveReceipt(
+        uint product_id
+    ) public restrictedToBuyer{
+        Product storage curProd = products[product_id];
+        // get request at provided index from storage
+        // sender must not have voted yet ?????
+        require(!curProd.buyer_confirmations[address(msg.sender)]);
+        curProd.recipient.transfer(curProd.price);
+        curProd.deposit_fund -= curProd.price*2;
+        seller.transfer(curProd.price);
+        // need to transfer to seller too *************************
+        // curProd.recipient.transfer(curProd.price);
+    }
+
+    function addRating(
+        uint product_id
+        , uint rating
+        , string memory review
+    ) public restrictedToBuyer {
+        Product storage curProd = products[product_id];
+        require(curProd.buyer_confirmations, 'You did not buy the product to review');
+        curProd.rating_review[review] = rating;
+        curProd.tot_ratings ++;
+        curProd.rating += rating
+        
     }
     
-    // function approveReceipt(uint index) public {
-    //     // get request at provided index from storage
-    //     Product storage request = products[numProducts];
-    //     // sender needs to have contributed to Campaign
-    //     require(sellers[msg.sender]);
-    //     // sender must not have voted yet
-    //     require(!request.buyer_confirmations[msg.sender]);
-        
-    //     // add sender to addresses who have voted
-    //     request.confirmations[msg.sender] = true;
-    //     // increment approval count
-    //     request.numProducts --;
-    // }
-
 modifier restrictedToSeller() {
         require(msg.sender == seller);
+        _;
+    }
+modifier restrictedToBuyer() {
+        require(msg.sender != seller);
         _;
     }
 
