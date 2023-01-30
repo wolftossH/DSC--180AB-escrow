@@ -31,6 +31,7 @@ contract Products {
         // address payable deposit_fund;
         uint deposit_fund;
         mapping (address => bool) buyer_confirmations;
+        mapping (address => bool) past_buyers;
         address[] buyer_ids;
 
         address payable recipient;
@@ -54,7 +55,7 @@ contract Products {
     // address[] buyer_id;
 
     mapping(uint => Product) public products;
-    mapping(address => bool) public buyers;
+    // mapping(address => bool) public buyers;
     mapping(address => Seller) public sellers;
 
     constructor(
@@ -70,8 +71,9 @@ contract Products {
         , uint price
         , uint amt
         // , address payable deposit_fund
-    ) public restrictedToSeller {
+    ) public restrictedToSeller payable{
         require(address(msg.sender).balance > price*2 ether, "Not enough balance to sell");
+        require(msg.value >= price*0.001 ether, "Not enough money to buy");
         //  create new product
        Product storage newProduct = products[numProducts];
        // increase product count
@@ -83,6 +85,8 @@ contract Products {
     //    when both havent approved
        newProduct.deposit_fund = 0;        
        newProduct.amt = amt;
+       newProduct.init_amt = amt;
+
     }
     
 
@@ -126,28 +130,31 @@ contract Products {
         , address payable buyer_id
     ) public restrictedToSeller{
         // reject then refund
-        Product storage curProd = products[product_id];
-        payable(address(buyer_id)).transfer(curProd.price*2);
-        // curProd.recipient.transfer(curProd.price*2);
-        curProd.amt ++;
 
+        Product storage curProd = products[product_id];
+        require(curProd.past_buyers[address(msg.sender)], 'Buyer already rejected');
+        require(!curProd.buyer_confirmations[address(msg.sender)], 'Buyer already bought product');
+
+        payable(address(buyer_id)).transfer(curProd.price*2 ether);
+        curProd.amt ++;
+        curProd.past_buyers[buyer_id] = true;
     }
 
     function approveReceipt(
         uint product_id
-    ) public restrictedToBuyer{
+        // , address payable buyer_id
+
+    ) public restrictedToBuyer payable{
         Product storage curProd = products[product_id];
         // get request at provided index from storage
         // sender must not have voted yet ?????
         require(curProd.buyer_confirmations[address(msg.sender)], 'Seller has not confirmed');
         // curProd.recipient.transfer(curProd.price);
-        payable(msg.sender).transfer(curProd.price);
+        payable(address(msg.sender)).transfer(curProd.price*1 ether);
         curProd.deposit_fund -= curProd.price*2;
-        seller.transfer(curProd.price);
-        curProd.buyer_confirmations[address(msg.sender)] = false;      
-
         // need to transfer to seller too *************************
-        // curProd.recipient.transfer(curProd.price);
+        payable(address(seller)).transfer(curProd.price*1 ether);
+        curProd.buyer_confirmations[address(msg.sender)] = false;      
     }
 
     function addRating(
