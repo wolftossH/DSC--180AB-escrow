@@ -3,23 +3,23 @@
 pragma solidity ^0.8.2;
  
 contract EcommerceStore {
-    Products[] public deployedProducts;
+    Store[] public deployedStores;
     
     function createProduct(
         // uint minimum
     ) public {
         // Products newProduct = new Products(minimum,msg.sender);
-        Products newProduct = new Products(msg.sender);
+        Store newProduct = new Store(msg.sender);
 
-        deployedProducts.push(newProduct);
+        deployedStores.push(newProduct);
     }
     
-    function getDeployedCampaigns() public view returns (Products[] memory) {
-        return deployedProducts;
+    function getDeployedCampaigns() public view returns (Store[] memory) {
+        return deployedStores;
     }
 }
  
-contract Products {
+contract Store {
 
     struct Product {
         string name;
@@ -32,6 +32,8 @@ contract Products {
         uint deposit_fund;
         mapping (address => bool) buyer_confirmations;
         mapping (address => bool) past_buyers;
+        mapping (address => bool) past_rejects;
+
         address[] buyer_ids;
 
         address payable recipient;
@@ -47,7 +49,7 @@ contract Products {
         uint rating;
     }
 
-    // Product[] public products;
+    Product[] public allProducts;
     address payable public seller;
     uint public numProducts;
     uint public minimumContribution;
@@ -73,9 +75,12 @@ contract Products {
         // , address payable deposit_fund
     ) public restrictedToSeller payable{
         require(address(msg.sender).balance > price*2 ether, "Not enough balance to sell");
-        require(msg.value >= price*0.001 ether, "Not enough money to buy");
+        require(msg.value == price*0.00001 ether, "Value must be equal to");
         //  create new product
-       Product storage newProduct = products[numProducts];
+    //    Product storage newProduct = products[numProducts];
+        uint256 idx = allProducts.length;
+        allProducts.push();
+        Product storage newProduct = products[idx];
        // increase product count
        numProducts ++;
        // add information about new request
@@ -98,7 +103,9 @@ contract Products {
         // select a product they want to buy
         Product storage curProd = products[product_id];
         require(address(msg.sender).balance > curProd.price*2 ether, "Not enough balance to sell");
-        require(msg.value == curProd.price*2 ether, "Not enough money to buy");
+        // add 0.0001 to the price to maintain money in Store contract for transferring fee & 
+        require(msg.value == curProd.price*2 + 0.0001 ether, "Not enough money to buy");
+        // require(msg.value == price*0.00001 ether, "Value must be equal to");
         require(curProd.amt > 0, 'Product ran out');
         curProd.deposit_fund += msg.value;
         // curProd.recipient = recipient;
@@ -109,10 +116,14 @@ contract Products {
         curProd.buyer_ids.push(address(msg.sender));
 
     }
+
     function observeBuyers(
         uint product_id
     ) public restrictedToSeller 
     view returns (address[] memory){
+        /*
+        Show list of buyers for seller to choose
+        */
         Product storage curProd = products[product_id];
         return curProd.buyer_ids;
     }
@@ -121,6 +132,9 @@ contract Products {
         uint product_id
         , address payable buyer_id
     ) public restrictedToSeller{
+        /*
+        Select a buyer from a product to determine if the buyer is fine to buy
+        */
         Product storage curProd = products[product_id];
         curProd.buyer_confirmations[buyer_id] = true;      
     }
@@ -129,15 +143,18 @@ contract Products {
         uint product_id
         , address payable buyer_id
     ) public restrictedToSeller{
+        /*
+        Select a buyer from a product to reject from buying
+        */
         // reject then refund
 
         Product storage curProd = products[product_id];
-        require(curProd.past_buyers[address(msg.sender)], 'Buyer already rejected');
-        require(!curProd.buyer_confirmations[address(msg.sender)], 'Buyer already bought product');
+        require(!curProd.past_rejects[address(msg.sender)], 'Buyer already rejected');
+        require(!curProd.past_buyers[address(msg.sender)], 'Buyer already bought product');
 
         payable(address(buyer_id)).transfer(curProd.price*2 ether);
         curProd.amt ++;
-        curProd.past_buyers[buyer_id] = true;
+        curProd.past_rejects[buyer_id] = true;
     }
 
     function approveReceipt(
@@ -145,16 +162,24 @@ contract Products {
         // , address payable buyer_id
 
     ) public restrictedToBuyer payable{
+        /*
+        Once confirm receive the product or purchase, the buyer now can get back the refund.
+        This also pays the seller the amount
+        */
         Product storage curProd = products[product_id];
         // get request at provided index from storage
         // sender must not have voted yet ?????
         require(curProd.buyer_confirmations[address(msg.sender)], 'Seller has not confirmed');
+        require(!curProd.past_buyers[address(msg.sender)], 'Buyer already bought the product');
+
         // curProd.recipient.transfer(curProd.price);
         payable(address(msg.sender)).transfer(curProd.price*1 ether);
         curProd.deposit_fund -= curProd.price*2;
         // need to transfer to seller too *************************
         payable(address(seller)).transfer(curProd.price*1 ether);
-        curProd.buyer_confirmations[address(msg.sender)] = false;      
+        // curProd.buyer_confirmations[address(msg.sender)] = false;  
+        curProd.past_buyers[address(msg.sender)] = true;
+            
     }
 
     function addRating(
