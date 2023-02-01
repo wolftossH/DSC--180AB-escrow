@@ -4,12 +4,15 @@ pragma solidity ^0.8.2;
  
 contract EcommerceStore {
     Store[] public deployedStores;
+    mapping (address => bool) seller_signups;
     
     function createProduct(
         // uint minimum
     ) public {
         // Products newProduct = new Products(minimum,msg.sender);
+        require(!seller_signups[address(msg.sender)], 'You already signuped for a store');
         Store newProduct = new Store(msg.sender);
+        seller_signups[address(msg.sender)] = true;
 
         deployedStores.push(newProduct);
     }
@@ -49,12 +52,10 @@ contract Store {
         uint rating;
     }
 
-    Product[] public allProducts;
+    string[] public allProducts;
     address payable public seller;
     uint public numProducts;
-    uint public minimumContribution;
 
-    // address[] buyer_id;
 
     mapping(uint => Product) public products;
     // mapping(address => bool) public buyers;
@@ -69,22 +70,24 @@ contract Store {
     }
 
     function createProduct(
-        string calldata description
+        string calldata name
         , uint price
         , uint amt
         // , address payable deposit_fund
     ) public restrictedToSeller payable{
         require(address(msg.sender).balance > price*2 ether, "Not enough balance to sell");
-        require(msg.value == price*0.00001 ether, "Value must be equal to");
+        require(msg.value == 0.001  ether, "Product creation must be equal to 1 finney");
         //  create new product
     //    Product storage newProduct = products[numProducts];
-        uint256 idx = allProducts.length;
-        allProducts.push();
-        Product storage newProduct = products[idx];
+        Product storage newProduct = products[numProducts];
+        bytes memory prod_id = new bytes(numProducts*2);
+        
+        
+        allProducts.push(string(abi.encodePacked(newProduct.name, string(prod_id))));
        // increase product count
        numProducts ++;
        // add information about new request
-       newProduct.description = description;
+       newProduct.name = name;
        newProduct.price = price;
     //    Create deposit fund for this product in to stay in contract
     //    when both havent approved
@@ -93,6 +96,10 @@ contract Store {
        newProduct.init_amt = amt;
 
     }
+
+    function getAllProducts() public view returns (string[] calldata) {
+        return allProducts;
+    } 
     
 
     function buyProduct(
@@ -103,9 +110,12 @@ contract Store {
         // select a product they want to buy
         Product storage curProd = products[product_id];
         require(address(msg.sender).balance > curProd.price*2 ether, "Not enough balance to sell");
-        // add 0.0001 to the price to maintain money in Store contract for transferring fee & 
-        require(msg.value == curProd.price*2 + 0.0001 ether, "Not enough money to buy");
-        // require(msg.value == price*0.00001 ether, "Value must be equal to");
+
+        // add 0.0001 to the price to maintain money in Store contract for transferring fee         
+        bytes memory mandatory_price = new bytes(curProd.price*2);
+        string memory bstr = string(abi.encodePacked("Must deposit", string(mandatory_price), ".001"));
+        require(msg.value == curProd.price*2 + 0.001 ether, bstr);
+        
         require(curProd.amt > 0, 'Product ran out');
         curProd.deposit_fund += msg.value;
         // curProd.recipient = recipient;
