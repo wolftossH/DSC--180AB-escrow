@@ -1,7 +1,7 @@
 const Footer = () => {
     return (
-        <h1>Nvabar</h1>
+        <h1>Footer</h1>
     );
 }
 
-export default Navbar;
+export default Footer;

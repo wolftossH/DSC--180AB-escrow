@@ -1,7 +1,7 @@
-const Navbar = () => {
+const Services = () => {
     return (
-        <h1>Nvabar</h1>
+        <h1>Services</h1>
     );
 }
 
-export default Navbar;
+export default Services;

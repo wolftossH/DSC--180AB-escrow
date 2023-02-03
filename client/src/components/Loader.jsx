@@ -1,7 +1,7 @@
-const Navbar = () => {
+const Loader = () => {
     return (
-        <h1>Nvabar</h1>
+        <h1>Loader</h1>
     );
 }
 
-export default Navbar;
+export default Loader;
