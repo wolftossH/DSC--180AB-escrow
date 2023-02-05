@@ -16,13 +16,13 @@ return (
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
       <div className="mf:flex-[0.5] flex-initial justify-center items-center">
         <img src={logo} alt="logo" className="w-32 cursor-pointer" />
-        <p className="font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer">Escryptow</p>
+        <p className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer">Escryptow</p>
       </div>
       <ul className="text-white mf:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {["About", "Services", "Tecnologies"].map((item, index) => (
+        {["About", "Services", "Technologies"].map((item, index) => (
           <NavBarItem key={item + index} title={item} />
         ))}
-        <li className="text-[#221C20] font-bold bg-[#AB8DA0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#734161]">
+        <li className="text-[#221C20] font-bold bg-[#8deef0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#7ae3e6]">
           Connect
         </li>
       </ul>
@@ -39,7 +39,7 @@ return (
             flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white animate-slide-in"
           >
             <li className="text-xl w-full my-2"><AiOutlineClose onClick={() => setToggleMenu(false)} /></li>
-            {["About", "Services", "Tecnologies"].map(
+            {["About", "Services", "Technologies"].map(
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-3 text-lg" />,
             )}
           </ul>
