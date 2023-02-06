@@ -59,7 +59,7 @@ const Welcome = () => {
                     </p>                
                 </button>
                 {/* create list */}
-                <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10">
+                <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10 purple-glassmorp">
                     <div className={`rounded-tl-2xl ${companyCommonStyles}`}>
                     Reliability
                     </div>
@@ -98,10 +98,10 @@ const Welcome = () => {
                     </div>
                     {/* same side as the card */}
                     <div className="p-5 sm:w-96 w-full flex flex-col justify-start items-center blue-glassmorphism">
-                    <Input placeholder="Address To" name="addressTo" type="text" handleChange={handleChange} />
-                    <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} />
-                    <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={handleChange} />
-                    <Input placeholder="Enter Message" name="message" type="text" handleChange={handleChange} />
+                        <Input placeholder="Address To" name="addressTo" type="text" handleChange={handleChange} />
+                        <Input placeholder="Amount (ETH)" name="amount" type="number" handleChange={handleChange} />
+                        <Input placeholder="Keyword (Gif)" name="keyword" type="text" handleChange={handleChange} />
+                        <Input placeholder="Enter Message" name="message" type="text" handleChange={handleChange} />
 
                     <div className="h-[1px] w-full bg-gray-400 my-2" />
 
