@@ -97,9 +97,10 @@ contract Store {
 
     }
 
-    function getAllProducts() public view returns (string[] calldata) {
-        return allProducts;
-    } 
+    function getAllProducts() public view returns (string[] memory) {
+        string[] storage prod = allProducts;        
+        return prod;
+    }
     
 
     function buyProduct(
