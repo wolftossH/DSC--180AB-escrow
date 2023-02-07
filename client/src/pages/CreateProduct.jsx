@@ -17,7 +17,8 @@ const CreateProduct = () => {
       description: '',
       target: '', 
       deadline: '',
-      image: ''
+      image: '',
+      deposit: ''
     });
 
     const handleSubmit = async (e) => {
@@ -75,7 +76,7 @@ const CreateProduct = () => {
                     </div>
                 </div>
                     <FormField 
-                    labelName="Description"
+                    labelName="Description *"
                     placeholder="Product Description "
                     isTextArea
                     value={form.description}
@@ -85,6 +86,13 @@ const CreateProduct = () => {
                     <img src={money} alt="money" className="w-[40px] h-[40px] object-contain"/>
                     <h4 className="font-epilogue font-bold text-[25px] text-white ml-[20px]">You have to deposit 2x the amount</h4>
                 </div>
+                <FormField 
+                        labelName="Deposit *"
+                        placeholder="ETH 0.50x2"
+                        inputType="number"
+                        value={form.deposit}
+                        handleChange={(e) => handleFormFieldChange('deposit', e)}
+                    />
                 <FormField 
                 labelName="Campaign image *"
                 placeholder="Place image URL of your campaign"
