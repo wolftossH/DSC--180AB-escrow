@@ -23,7 +23,7 @@ const Services = () => {
                         <Link to="/cart">Buy Products</Link>
                     </div>
                     <div className={`purple-glassmorphism sm:rounded-tr-2xl rounded-bl-3xl rounded-b-3xl ${companyCommonStyles}`}>
-                    Track Transactions
+                        <Link to="/transactions"> Track Transactions</Link>
                     </div>
                 {/* </div> */}
         </div>
