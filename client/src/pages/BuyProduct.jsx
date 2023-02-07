@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Home = () => {
+const BuyProduct = () => {
     return (
         <div>aadasd</div>
     )
 }
 
-export default Home
+export default BuyProduct

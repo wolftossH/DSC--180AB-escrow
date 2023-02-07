@@ -17,9 +17,11 @@ const Services = () => {
         <div className="grid sm:grid-cols-3 w-full mt-5 sm:w-96 flex-col ">
                 {/* <div className="grid sm:grid-cols-3 w-full mt-5"> */}
                     <div className={`rounded-tl-3xl rounded-bl-3xl ${companyCommonStyles}` }>
-                        Sell Products
+                        <Link to="/createProduct">Sell Products</Link>
                     </div>
-                    <div className={companyCommonStyles}>Buy Products</div>
+                    <div className={companyCommonStyles}>
+                        <Link to="/cart">Buy Products</Link>
+                    </div>
                     <div className={`purple-glassmorphism sm:rounded-tr-2xl rounded-bl-3xl rounded-b-3xl ${companyCommonStyles}`}>
                     Track Transactions
                     </div>
