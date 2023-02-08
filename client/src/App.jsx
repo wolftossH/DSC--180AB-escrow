@@ -1,4 +1,4 @@
-import { Navbar, Welcome, Footer, Services,  Loader } from "./components";
+import { Navbar,Navbar_new, Welcome, Footer, Services,  Loader } from "./components";
 import {CreateProduct,BuyProduct,Transactions, } from './pages';
 import {Route, Routes} from 'react-router-dom';
 import {Link, useNavigate} from 'react-router-dom'

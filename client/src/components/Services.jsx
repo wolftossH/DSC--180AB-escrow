@@ -16,20 +16,38 @@ const Services = () => {
         
         // put services in a purple box
         // p-7 sm:w-96 w-full flex flex-col grid sm:grid-cols-3 w-full mt-2 justify-start items-center 
-        <div className="grid sm:grid-cols-3 w-full mt-5 sm:w-96 flex-col ">
-                {/* <div className="grid sm:grid-cols-3 w-full mt-5"> */}
-                    <div className={`rounded-tl-3xl rounded-bl-3xl ${companyCommonStyles}` }>
-                        <Link to="/createProduct">Sell Products</Link>
-                    </div>
-                    <div className={companyCommonStyles}>
-                        <Link to="/cart">Buy Products</Link>
-                    </div>
-                    <div className={`purple-glassmorphism sm:rounded-tr-2xl rounded-bl-3xl rounded-b-3xl ${companyCommonStyles}`}>
-                        <Link to="/transactions"> Track Transactions</Link>
-                    </div>
-                {/* </div> */}
-        </div>
+        // <div className="grid sm:grid-cols-3 w-full mt-5 sm:w-96 flex-col ">
+        //         {/* <div className="grid sm:grid-cols-3 w-full mt-5"> */}
+        //             <div className={`rounded-tl-3xl rounded-bl-3xl ${companyCommonStyles}` }>
+        //                 <Link to="/createProduct">Sell Products</Link>
+        //             </div>
+        //             <div className={companyCommonStyles}>
+        //                 <Link to="/cart">Buy Products</Link>
+        //             </div>
+        //             <div className={`purple-glassmorphism sm:rounded-tr-2xl rounded-bl-3xl rounded-b-3xl ${companyCommonStyles}`}>
+        //                 <Link to="/transactions"> Track Transactions</Link>
+        //             </div>
+        //         {/* </div> */}
+        // </div>
+        
 
+                // https://wickedblocks.dev/groups/modal/#
+<div class="lg:p-16 sm:my-10 sm:align-middle sm:max-w-xl sm:w-full">
+
+        <div class="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex purple-glassmorphism">
+            <div class="flex flex-row w-full">
+                <Link to="/createProduct" class="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
+                    Sell Products
+                </Link>
+                <Link to="/cart" class="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
+                    Buy Products
+                </Link>
+                <Link to="/transactions" class="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"> 
+                    Track Transactions
+                </Link>
+            </div>
+        </div>
+    </div> 
     );
 }
 // const root = ReactDOM.createRoot(document.getElementById('root'));
