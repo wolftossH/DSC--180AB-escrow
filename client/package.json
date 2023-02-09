@@ -9,8 +9,6 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@thirdweb-dev/react": "^3.8.2",
-    "@thirdweb-dev/sdk": "^3.8.2",
     "autoprefixer": "^9.8.8",
     "ethers": "^5.7.2",
     "postcss": "^7.0.39",
