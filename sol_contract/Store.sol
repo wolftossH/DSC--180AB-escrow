@@ -1,4 +1,3 @@
-
 //  SPDX-License-Identifier: GPL-3.0
 
 pragma solidity ^0.8.2;
@@ -27,6 +26,8 @@ contract Store {
 
         address seller;
 
+        uint in_delivery;
+
         uint rating;
         uint tot_ratings;
         string[] reviews;
@@ -34,7 +35,9 @@ contract Store {
     }
 
     uint public numProducts;
+
     mapping(uint => Product) public products;
+    mapping(uint => mapping(address => string)) internal buyers;
 
     // Seller: Create a new product for sale
     function createProduct (
@@ -47,6 +50,10 @@ contract Store {
         require(address(msg.sender).balance > price, "Not enough balance to sell");
         // Ensure that the value sent is equal to the price
         require(msg.value == price, "Value must be equal to price");
+        // Ensure that the price is bigger than 0
+        require(price > 0, "Price must be bigger than 0");
+        // Ensure that the amount is bigger than 0
+        require(amt > 0, "Amount must be bigger than 0");
 
         // Create a new product
         uint256 idx = numProducts;
@@ -63,12 +70,14 @@ contract Store {
         newProduct.init_amt = amt;
         newProduct.seller = address(msg.sender);
         newProduct.cancelled = false;
+        newProduct.in_delivery = 0;
     
     }
 
     // Buyer: Buy a product
     function buyProduct(
-        uint product_id
+        uint product_id,
+        string calldata delivery_address
     ) public payable {
         // Select a product to buy
         Product storage curProd = products[product_id];
@@ -98,6 +107,9 @@ contract Store {
         curProd.amt --;
         // Add the buyer's address to the buyer_ids array
         curProd.buyer_ids.push(address(msg.sender));
+
+        buyers[product_id][address(msg.sender)] = delivery_address;
+
     }
 
     // Seller: Approve purchase for the specified buyer
@@ -118,6 +130,9 @@ contract Store {
         // Ensure that the seller has not already approved Purchase
         require(!curProd.buyer_confirmations[buyer_id], "The buyer has already been approved");
 
+        // Increase the amount of products in delivery;
+        curProd.in_delivery ++;
+        
         // Approve the purchase by setting the buyer's confirmation status to true
         curProd.buyer_confirmations[buyer_id] = true;
     }
@@ -154,12 +169,15 @@ contract Store {
     ) public {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
+        // Ensure that the buyer has already started the transaction
+        require(curProd.buyer_start[msg.sender], "Buyer not identified for the product");
         // Ensure that the buyer has confirmed the purchase with the seller
         require(curProd.buyer_confirmations[address(msg.sender)], "The seller has not confirmed the purchase.");
         // Ensure that the buyer has not already purchased the product
         require(!curProd.past_buyers[address(msg.sender)], "The buyer has already purchased the product.");
         // Ensure that the buyer has not been rejected
         require(!curProd.past_rejects[address(msg.sender)], "The buyer has already been rejected.");
+        
         
         // Transfer the price of the product to the buyer
         payable(address(msg.sender)).transfer(curProd.price);
@@ -169,6 +187,9 @@ contract Store {
         // Reduce the deposit fund by the escrow value
         curProd.deposit_fund -= curProd.value_escrow;
         
+        // Decrease the amount of products in delivery;
+        curProd.in_delivery --;
+
         // Mark the buyer as having purchased the product
         curProd.past_buyers[address(msg.sender)] = true;
 
@@ -180,8 +201,8 @@ contract Store {
         }
     }
 
-    // Buyer: Reject receipt of the specified product
-    function rejectReceipt(
+    // Buyer: Cancel purchase of the specified product
+    function cancelBuy(
         uint product_id
     ) public {
         // Retrieve the specified product from storage
@@ -190,6 +211,9 @@ contract Store {
         // Ensure that the buyer has not already purchased the product and has not been rejected
         require(!curProd.past_buyers[address(msg.sender)], "The buyer has already purchased the product.");
         require(!curProd.past_rejects[address(msg.sender)], "The buyer has already been rejected.");
+        require(!curProd.buyer_confirmations[address(msg.sender)], "The seller has already sent the product.");
+        // Ensure that the buyer has already started the transaction
+        require(curProd.buyer_start[msg.sender], "Buyer not identified for the product");
 
         // Transfer the escrow value back to the buyer
         payable(address(msg.sender)).transfer(curProd.value_escrow);
@@ -200,11 +224,7 @@ contract Store {
         // Mark the buyer as having rejected the product
         curProd.past_rejects[msg.sender] = true;
         curProd.buyer_confirmations[msg.sender] = true;
-
-        if (!curProd.cancelled) {
-            // Increment the amount of available products
-            curProd.amt ++;
-        }
+        curProd.amt ++;
     }
 
     // Seller: stop selling Product
@@ -215,7 +235,11 @@ contract Store {
         Product storage curProd = products[product_id];
 
         // Ensure that only the seller can delete the product
-        require(curProd.seller == address(msg.sender), "Only the seller can stop the purchase.");
+        require(curProd.seller == address(msg.sender), "Only the seller can stop selling the product.");
+        // Ensure that no products are currently in delivery
+        require(curProd.in_delivery == 0, "The seller can only stop selling the product when there are no products in delivery");
+        // Ensure that the product is not already cancelled
+        require(!curProd.cancelled, "The product is already cancelled");
         
         // Mark the product as cancelled
         curProd.cancelled = true;
@@ -229,6 +253,8 @@ contract Store {
                 payable(curProd.buyer_ids[i]).transfer(curProd.value_escrow);
                 // Decrement the deposit fund by the escrow value
                 curProd.deposit_fund -= curProd.value_escrow;
+                // Record the rejection of the buyer
+                curProd.past_rejects[curProd.buyer_ids[i]] = true;
             }
         }
         // Transfer the sellers's escrow price back to them
@@ -249,6 +275,20 @@ contract Store {
         
         // Return the list of buyers for the specified product
         return curProd.buyer_ids;
+    }  
+
+    function getDeliveryAddress(
+        uint product_id,
+        address buyer
+    ) public view returns (string memory) {
+        // Retrieve the specified product from storage
+        Product storage curProd = products[product_id];
+
+        // Ensure that the caller is the seller of the product
+        require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
+        
+        // Return the list of buyers for the specified product
+        return buyers[product_id][buyer];
     }   
 
     // Buyer: Add rating to product
