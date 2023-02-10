@@ -287,7 +287,7 @@ contract Store {
         // Ensure that the caller is the seller of the product
         require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
         
-        // Return the list of buyers for the specified product
+        // Return the delivery address of the specified buyer
         return buyers[product_id][buyer];
     }   
 
