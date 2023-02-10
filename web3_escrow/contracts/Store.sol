@@ -38,6 +38,7 @@ contract Store {
 
     // Seller: Create a new product for sale
     function createProduct (
+        address _seller,
         string calldata name,
         string calldata description,
         uint price,
@@ -54,6 +55,7 @@ contract Store {
         Product storage newProduct = products[idx];
 
         // Add information about the new product
+        newProduct.seller = _seller;
         newProduct.name = name;
         newProduct.description = description;
         newProduct.price = price;

@@ -10,7 +10,7 @@ export const StateContextProvider = ({ children }) => {
     // const { contract } = useContract(
     //     '0xf59A1f8251864e1c5a6bD64020e3569be27e6AA9'
     // );
-    const { mutateAsync: createProduct } = useContractWrite(contract, 'createCampaign');
+    const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
   
     const address = useAddress();
     const connect = useMetamask();
@@ -19,12 +19,11 @@ export const StateContextProvider = ({ children }) => {
         try {
           const data = await createProduct([
             address, // owner
-            form.title, // title
+            form.name, // title
             form.description, // description
-            form.target,
-            new Date(form.deadline).getTime(), // deadline,
+            form.price,
+            form.amt,
             form.deposit,
-            form.image
           ])
     
           console.log("contract call success", data)

@@ -2,6 +2,7 @@ import React from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ConnectWallet } from "@thirdweb-dev/react";
+import { useMetamask } from "@thirdweb-dev/react";
 
 
 
@@ -14,6 +15,8 @@ const NavBarItem = ({ title, classprops }) => (
 
 const Navbar = () => {
     const [toggleMenu, setToggleMenu] = React.useState(false);
+    const connectWithMetamask = useMetamask();
+
 return (
   
     <nav className="w-full flex md:justify-center justify-between items-center p-4">
@@ -32,8 +35,9 @@ return (
         <a
         class="text-black flex items-center justify-center rounded-xl border-4 border-black bg-pink-100 px-3 py-2 font-bold shadow-[6px_6px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring active:bg-pink-50"
         >
-          
-          <ConnectWallet/> <span aria-hidden="true" role="img" class="ml-1.5">🦊</span>
+          <button onClick={connectWithMetamask}>Connect Metamask</button>
+          {/* <ConnectWallet colorMode="dark" accentColor="#c17ee6"/> */}
+          <span aria-hidden="true" role="img" class="ml-1.5">🦊</span>
         </a>
       </ul>
       <div className="flex relative">
