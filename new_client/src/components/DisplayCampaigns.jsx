@@ -10,7 +10,7 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
   // code readability
   // go to product details
   const handleNavigate = (product) => {
-    navigate(`/product-details/${product.title}`, { state: product })
+    navigate(`/product-details/${product.name}`, { state: product })
   }
   
   return (

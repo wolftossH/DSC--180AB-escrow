@@ -31,6 +31,20 @@ export const StateContextProvider = ({ children }) => {
           console.log("contract call failure", error)
         }
       }
+  const getCampaigns = async () => {
+    const campaigns = await contract.call('getCampaigns');
+
+    const parsedProducts = campaigns.map((campaign, i) => ({
+      seller: campaign.seller,
+      name: campaign.name,
+      description: campaign.description,
+      price: ethers.utils.formatEther(campaign.target.toString()),
+      amount: campaign.amt.toNumber(),
+      pId: i
+    }));
+
+    return parsedProducts;
+  }
 }
 
 export const useStateContext = () => useContext(StateContext);

@@ -33,7 +33,7 @@ contract Store {
         mapping (string => uint) rating_review;
     }
 
-    uint public numProducts;
+    uint public numProducts = 0;
     mapping(uint => Product) public products;
 
     // Seller: Create a new product for sale
@@ -67,7 +67,15 @@ contract Store {
         newProduct.cancelled = false;
     
     }
+    function getProducts() public view returns (Product[] memory) {
+        Product[] memory allProducts = new Product[](numProducts);
+        for(uint i = 0; i < numProducts; i++) {
+            Product storage item = products[i];
+            allProducts[i] = item;
+        }
 
+        return allProducts;
+    }
     // Buyer: Buy a product
     function buyProduct(
         uint product_id
