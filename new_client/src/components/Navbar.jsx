@@ -3,6 +3,8 @@ import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { useMetamask } from "@thirdweb-dev/react";
+import { Link } from "react-router-dom";
+
 
 
 
@@ -23,7 +25,12 @@ return (
       
       <div className="mf:flex-[0.5] flex-initial justify-center items-center">
         <img src={logo} alt="logo" className="w-32 cursor-pointer" />
-        <p className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer">Escryptow</p>
+        <Link to="/" className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer"> 
+          Escryptow
+        </Link>
+        {/* <p className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer">
+          Escryptow
+        </p> */}
       </div>
       <ul className="text-white mf:flex hidden list-none flex-row justify-between items-center flex-initial">
         {["About", "Services", "Technologies"].map((item, index) => (

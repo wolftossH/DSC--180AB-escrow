@@ -7,9 +7,9 @@ import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
 const StateContext = createContext();
 
 export const StateContextProvider = ({ children }) => {
-    // const { contract } = useContract(
-    //     '0xf59A1f8251864e1c5a6bD64020e3569be27e6AA9'
-    // );
+    const { contract } = useContract(
+        ''
+    );
     const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
   
     const address = useAddress();
@@ -31,20 +31,34 @@ export const StateContextProvider = ({ children }) => {
           console.log("contract call failure", error)
         }
       }
-  const getCampaigns = async () => {
-    const campaigns = await contract.call('getCampaigns');
+  const getProducts = async () => {
+    const products = await contract.call('getAllProducts');
 
-    const parsedProducts = campaigns.map((campaign, i) => ({
-      seller: campaign.seller,
-      name: campaign.name,
-      description: campaign.description,
-      price: ethers.utils.formatEther(campaign.target.toString()),
-      amount: campaign.amt.toNumber(),
+    const parsedProducts = products.map((product, i) => ({
+      seller: product.seller,
+      name: product.name,
+      description: product.description,
+      price: ethers.utils.formatEther(product.target.toString()),
+      amount: product.amt.toNumber(),
       pId: i
     }));
 
     return parsedProducts;
   }
+
+  return (
+    <StateContext.Provider
+      value={{ 
+        address,
+        contract,
+        connect,
+        createProduct: publishProduct,
+        getProducts,
+      }}
+    >
+      {children}
+    </StateContext.Provider>
+  )
 }
 
 export const useStateContext = () => useContext(StateContext);
