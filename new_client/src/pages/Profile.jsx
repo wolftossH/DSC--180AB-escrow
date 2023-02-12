@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react'
 
 import { DisplayCampaigns } from '../components';
-import { useStateContext } from '../context/index.jsx'
+import { useStateContext } from '../context'
 
-const BuyProduct = () => {
+const Profile = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setCampaigns] = useState([]);
 
@@ -29,4 +29,4 @@ const BuyProduct = () => {
   )
 }
 
-export default BuyProduct
+export default Profile

@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
 
-// import { useStateContext } from '../context';
+import { useStateContext } from '../context';
 import { money } from '../assets';
 import { CustomButton, FormField, Loader } from '../components';
 import { checkIfImage } from '../utils';
@@ -10,13 +10,12 @@ import { checkIfImage } from '../utils';
 const CreateProduct = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    // const { createCampaign } = useStateContext();
+    const { publishProduct } = useStateContext();
     const [form, setForm] = useState({
       name: '',
-    //   title: '',
       description: '',
-      target: '', 
-      deadline: '',
+      price: '', 
+      price: '',
       image: '',
       deposit: ''
     });
@@ -28,9 +27,12 @@ const CreateProduct = () => {
         checkIfImage(form.image, async (exists) => {
           if(exists) {
             setIsLoading(true)
-            await createCampaign(
-                { ...form,
-                target: ethers.utils.parseUnits(form.target, 18)})
+            await publishProduct(
+                {
+                ...form,
+                price: ethers.utils.parseUnits(form.price, "ether"),
+                // deposit: ethers.utils.parseUnits(form.deposit, "ether")
+            })
             setIsLoading(false);
             navigate('/');
           } else {
@@ -65,15 +67,15 @@ const CreateProduct = () => {
                         labelName="Price *"
                         placeholder="ETH 0.50"
                         inputType="number"
-                        value={form.target}
-                        handleChange={(e) => handleFormFieldChange('target', e)}
+                        value={form.price}
+                        handleChange={(e) => handleFormFieldChange('price', e)}
                     />
                     <FormField 
                         labelName="Amount *"
                         placeholder="Amount"
                         inputType="number"
-                        value={form.deadline}
-                        handleChange={(e) => handleFormFieldChange('deadline', e)}
+                        value={form.amt}
+                        handleChange={(e) => handleFormFieldChange('amt', e)}
                     />
                     </div>
                 </div>
@@ -86,13 +88,13 @@ const CreateProduct = () => {
                     />
                 <div className="w-full flex justify-start items-center p-4 bg-[#8c6dfd] h-[120px] rounded-[20px]">
                     <img src={money} alt="money" className="w-[40px] h-[40px] object-contain"/>
-                    <h4 className="font-epilogue font-bold text-[25px] text-white ml-[20px]">You have to deposit 2x the amount</h4>
+                    <h4 className="font-epilogue font-bold text-[25px] text-white ml-[20px]">You have to deposit 1x the amount</h4>
                 </div>
                 <FormField 
                         labelName="Deposit *"
-                        placeholder="ETH 0.50x2"
+                        placeholder="ETH 0.50"
                         inputType="number"
-                        value={form.deposit}
+                        value={form.price}
                         handleChange={(e) => handleFormFieldChange('deposit', e)}
                     />
                 <FormField 

@@ -2,8 +2,11 @@ import React from "react";
 import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ConnectWallet } from "@thirdweb-dev/react";
-import { useMetamask } from "@thirdweb-dev/react";
+import { useMetamask, useAddress } from "@thirdweb-dev/react";
 import { Link } from "react-router-dom";
+import { useStateContext } from '../context';
+
+import { CustomButton } from './';
 
 
 
@@ -18,6 +21,11 @@ const NavBarItem = ({ title, classprops }) => (
 const Navbar = () => {
     const [toggleMenu, setToggleMenu] = React.useState(false);
     const connectWithMetamask = useMetamask();
+    // const address = useAddress();
+    // const connect = useMetamask();
+    const { connect, address,getProducts } = useStateContext();
+
+
 
 return (
   
@@ -39,13 +47,23 @@ return (
         {/* <li className="text-[#221C20] font-bold bg-[#8deef0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#7ae3e6]">
           Connect
         </li> */}
-        <a
+        <Link to="/profile"> 
+          Profile
+        </Link>
+        <div className="sm:flex hidden flex-row justify-end gap-4">
+          <CustomButton 
+            btnType="button"
+            title={address ? 'Connected' : 'Connect Metamask'}
+            styles={address ? '' : ''}
+            handleClick={connect}
+          />
+        </div>
+        {/* <a
         class="text-black flex items-center justify-center rounded-xl border-4 border-black bg-pink-100 px-3 py-2 font-bold shadow-[6px_6px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring active:bg-pink-50"
         >
-          <button onClick={connectWithMetamask}>Connect Metamask</button>
-          {/* <ConnectWallet colorMode="dark" accentColor="#c17ee6"/> */}
+          <button onClick={connect}>Connect Metamask</button>
           <span aria-hidden="true" role="img" class="ml-1.5">🦊</span>
-        </a>
+        </a> */}
       </ul>
       <div className="flex relative">
         {!toggleMenu && (
