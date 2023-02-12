@@ -40,7 +40,7 @@ export const StateContextProvider = ({ children }) => {
         form.description, // description
         form.price,
         form.amt,
-        { value: ethers.utils.parseEther(form.deposit)});  
+        { value: ethers.utils.parseUnits(form.price.toString(), "wei")});  
       return data;
     }
   const getProducts = async (form) => {

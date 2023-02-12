@@ -10,7 +10,7 @@ import { checkIfImage } from '../utils';
 const CreateProduct = () => {
     const navigate = useNavigate();
     const [isLoading, setIsLoading] = useState(false);
-    const { publishProduct } = useStateContext();
+    const { createProduct } = useStateContext();
     const [form, setForm] = useState({
       name: '',
       description: '',
@@ -27,7 +27,7 @@ const CreateProduct = () => {
         checkIfImage(form.image, async (exists) => {
           if(exists) {
             setIsLoading(true)
-            await publishProduct(
+            await createProduct(
                 {
                 ...form,
                 price: ethers.utils.parseUnits(form.price, "ether"),
