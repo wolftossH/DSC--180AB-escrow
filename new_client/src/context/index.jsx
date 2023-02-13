@@ -53,10 +53,22 @@ export const StateContextProvider = ({ children }) => {
       price: ethers.utils.formatEther(product.price.toString()),
       amount: product.amt.toNumber(),
       pId: i,
-      pic: form.image,
+      // pic: form.image,
     }));
 
     return parsedProducts;
+  }
+
+  const getUserProducts= async (form) => {
+    const allProducts = await getProducts();
+    console.log(address)
+    console.log('strange')
+
+
+    const filteredCampaigns = allProducts.filter((product) => product.seller === address);
+    console.log(filteredCampaigns)
+
+    return filteredCampaigns;
   }
 
   return (
@@ -67,6 +79,7 @@ export const StateContextProvider = ({ children }) => {
         connect,
         createProduct: publishProduct,
         getProducts,
+        getUserProducts,
       }}
     >
       {children}
