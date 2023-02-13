@@ -97,15 +97,22 @@ const ProductDetailsSellers = () => {
                     <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
                   )}
                 </div> */}
-                    <button
+            </div>
+            <div>
+            {state.amt != 0 && (
+                <button
                 type="button"
                 onClick={handleStopProduct}
                 className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
                 >
-                    <p className="text-white text-base font-semibold">
-                    Retreive Your Products
-                    </p>                
+                <p className="text-white text-base font-semibold">
+                Retreive Your Products
+                </p>                
                 </button>
+              )}
+              {state.amt === 0 && (
+                <h1>Products already retrieved</h1>
+              )}
             </div>
             <div className="flex-1"> 
           </div> 

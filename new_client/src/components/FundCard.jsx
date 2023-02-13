@@ -1,14 +1,17 @@
 import React from 'react';
 
 import { tagType, thirdweb } from '../assets';
+import useFetch from "../hooks/gifGen";
 // import { daysLeft } from '../utils';
 
 const FundCard = ({ seller, name, description, price, amountCollected, image, handleClick }) => {
 //   const remainingDays = daysLeft(deadline);
+  const keyword = name;
+  const gifUrl = useFetch({ keyword });
   
   return (
     <div className="sm:w-[288px] w-full rounded-[15px] bg-[#1c1c24] cursor-pointer" onClick={handleClick}>
-      <img src={image} alt="fund" className="w-full h-[158px] object-cover rounded-[15px]"/>
+      <img src={gifUrl} alt="fund" className="w-full h-[158px] object-cover rounded-[15px]"/>
 
       <div className="flex flex-col p-4">
         <div className="flex flex-row items-center mb-[18px]">

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
+import useFetch from "../hooks/gifGen";
 
 import { useStateContext } from '../context';
 import { CountBox, CustomButton, Loader } from '../components';
@@ -8,9 +9,9 @@ import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
 
 const ProductDetailsBuyers = () => {
-
     const { state } = useLocation();
-
+    const keyword = state.name;
+    const gifUrl = useFetch({ keyword });
     const navigate = useNavigate();
     const {buyProduct,  contract, address } = useStateContext();
   
@@ -45,7 +46,7 @@ const ProductDetailsBuyers = () => {
   
         <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
           <div className="flex-1 flex-col">
-            <img src="https://media.moddb.com/images/members/5/4550/4549205/duck.jpg" alt="product" className="w-full h-[410px] object-cover rounded-xl"/>
+            <img src={gifUrl} alt="product" className="w-full h-[410px] object-cover rounded-xl"/>
             <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
               <div className="absolute h-full bg-[#4acd8d]" 
               style={{ width: `${calculateBarPercentage(state.price, state.amt)}%`,
@@ -87,28 +88,15 @@ const ProductDetailsBuyers = () => {
                   <p className="font-epilogue font-normal text-[20px] text-[#808191] leading-[26px] text-justify">{state.description}</p>
                 </div>
             </div>
-  
-            <div>
-              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Buyers</h4>
-  
-                {/* <div className="mt-[20px] flex flex-col gap-4">
-                  {donators.length > 0 ? donators.map((item, index) => (
-                    <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
-                      <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
-                      <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
-                    </div>
-                  )) : (
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
-                  )}
-                </div> */}
-            </div>
+
             <div className="flex-1">
             <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Shop</h4>   
   
             <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
-              <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+            <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
                 Buy this product
               </p>
+            {state.amt != 0 && (
               <div className="mt-[30px]">
                 <input 
                   type="text"
@@ -130,7 +118,12 @@ const ProductDetailsBuyers = () => {
                   styles="w-full bg-[#8c6dfd]"
                   handleClick={handleDonate}
                 />
-              </div>
+              </div>             
+
+              )}
+              {state.amt === 0 && (
+                <h1 className="font-epilogue font-semibold text-[20px] leading-[22px] text-white">Products ran out</h1>
+              )}
             </div>
           </div> 
           </div>

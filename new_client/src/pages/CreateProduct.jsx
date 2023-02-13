@@ -22,23 +22,32 @@ const CreateProduct = () => {
     const handleSubmit = async (e) => {
         // never want to reload the page after form submission
         e.preventDefault();
-    
-        checkIfImage(form.image, async (exists) => {
-          if(exists) {
-            setIsLoading(true)
-            await createProduct(
-                {
-                ...form,
-                price: ethers.utils.parseUnits(form.price, "ether"),
-                // deposit: ethers.utils.parseUnits(form.deposit, "ether")
-            })
-            setIsLoading(false);
-            navigate('/');
-          } else {
-            alert('Provide valid image URL')
-            setForm({ ...form, image: '' });
-          }
+        setIsLoading(true)
+        await createProduct(
+            {
+            ...form,
+            price: ethers.utils.parseUnits(form.price, "ether"),
+            // deposit: ethers.utils.parseUnits(form.deposit, "ether")
         })
+        setIsLoading(false);
+        navigate('/');
+    
+        // checkIfImage(form.image, async (exists) => {
+        //   if(exists) {
+        //     setIsLoading(true)
+        //     await createProduct(
+        //         {
+        //         ...form,
+        //         price: ethers.utils.parseUnits(form.price, "ether"),
+        //         // deposit: ethers.utils.parseUnits(form.deposit, "ether")
+        //     })
+        //     setIsLoading(false);
+        //     navigate('/');
+        //   } else {
+        //     alert('Provide valid image URL')
+        //     setForm({ ...form, image: '' });
+        //   }
+        // })
       }
 
     const handleFormFieldChange = (fieldName, e) => {
@@ -96,13 +105,13 @@ const CreateProduct = () => {
                         value={form.price}
                         handleChange={(e) => handleFormFieldChange('deposit', e)}
                     />
-                <FormField 
+                {/* <FormField 
                 labelName="Campaign image *"
                 placeholder="Place image URL of your campaign"
                 inputType="url"
                 value={form.image}
                 handleChange={(e) => handleFormFieldChange('image', e)}
-                />
+                /> */}
                 <div className="flex justify-center items-center mt-[40px]">
                     <CustomButton 
                     btnType="submit"
