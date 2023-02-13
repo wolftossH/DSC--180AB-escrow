@@ -111,13 +111,13 @@ export const StateContextProvider = ({ children }) => {
   //   return data;
   // }
   // // Ongoing
-  // const stopProduct = async (product_id) => {
-  //   const data = await contract.call(
-  //     'stopProduct',
-  //     product_id,
-  //   );
-  //   return data;
-  // }
+  const stopProduct = async (product_id) => {
+    const data = await contract.call(
+      'stopProduct',
+      product_id,
+    );
+
+  }
 
   return (
     <StateContext.Provider
@@ -130,6 +130,7 @@ export const StateContextProvider = ({ children }) => {
         getUserProducts,
         buyProduct,
         observeBuyers,
+        stopProduct: stopProduct,
       }}
     >
       {children}

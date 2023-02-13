@@ -10,7 +10,7 @@ import { thirdweb } from '../assets';
 const ProductDetailsSellers = () => {
 
     const { state } = useLocation();
-    const {observeBuyers,  contract, address } = useStateContext();  
+    const {observeBuyers,  contract, address,connect, stopProduct } = useStateContext();  
     const [isLoading, setIsLoading] = useState(false);
     const [buyers, setBuyers] = useState([]);
 
@@ -28,6 +28,11 @@ const ProductDetailsSellers = () => {
         if(contract) fetchBuyers();
       }, [contract, address])
     
+      const handleStopProduct = async () => {
+        setIsLoading(true);
+        const data = await stopProduct(state.pId);
+        setIsLoading(false);
+      }
 
 
     return (
@@ -46,7 +51,7 @@ const ProductDetailsSellers = () => {
           </div>
   
           <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-          <CountBox title={`Price`} value={state.price} />
+          <CountBox title={`Price in ETH`} value={state.price} />
           <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
           <CountBox title={`Out of 5`} value={state.rating} />
 
@@ -92,7 +97,15 @@ const ProductDetailsSellers = () => {
                     <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
                   )}
                 </div> */}
-
+                    <button
+                type="button"
+                onClick={handleStopProduct}
+                className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
+                >
+                    <p className="text-white text-base font-semibold">
+                    Retreive Your Products
+                    </p>                
+                </button>
             </div>
             <div className="flex-1"> 
           </div> 

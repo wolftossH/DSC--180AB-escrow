@@ -63,15 +63,7 @@ const Welcome = () => {
                     Freedom to sell your items easily on Escryptow
                     </p>
                     {/* create button to put wallet in */}
-                    <button
-                type="button"
-                onClick={connectWallet}
-                className="flex flex-row justify-center items-center my-5 bg-[#2952e3] p-3 rounded-full cursor-pointer hover:bg-[#2546bd]"
-                >
-                    <p className="text-white text-base font-semibold">
-                    Connect your Crypto Wallet
-                    </p>                
-                </button>
+
                 {/* create list */}
                 <div className="grid sm:grid-cols-3 grid-cols-2 w-full mt-10 purple-glassmorp">
                     <div className={`rounded-tl-2xl ${companyCommonStyles}`}>
