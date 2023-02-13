@@ -39,7 +39,10 @@ export const StateContextProvider = ({ children }) => {
       name: product.name,
       description: product.description,
       price: ethers.utils.formatEther(product.price.toString()),
-      amount: product.amt.toNumber(),
+      amt: product.amt.toNumber(),
+      init_amt: product.init_amt.toNumber(),
+      cancelled: product.cancelled,
+      rating: product.rating.toNumber(),
       pId: i,
       // pic: form.image,
     }));
@@ -54,67 +57,67 @@ export const StateContextProvider = ({ children }) => {
   }
 
   // Ongoing
-  const buyProduct = async (product_id, delivery_address) => {
+  const buyProduct = async (product_id, delivery_address, deposit) => {
     const data = await contract.call(
       'buyProduct',
       product_id,
       delivery_address,
-      { value: ethers.utils.parseUnits(form.price.toString(), "wei")});
+      { value: ethers.utils.parseUnits(deposit.toString(), "wei")});
     return data;
   }
 
   // Ongoing
   const observeBuyers = async (product_id) => {
-    const data = await contract.call(
-      'observeBuyers',
-      product_id,
-      delivery_address,
-      { value: ethers.utils.parseUnits(form.price.toString(), "wei")});
-    return data;
+    const products = await contract.call('observeBuyers', product_id);
+
+    const parsedProducts = products.map((product, i) => ({
+      seller: product.buyer_ids,
+    }));
   }
 
-  // Ongoing
-  const approvePurchase = async (product_id) => {
-    const data = await contract.call(
-      'approvePurchase',
-      product_id,
-      buyer_id,
-    );
-    return data;
-  }
-  // Ongoing
-  const rejectPurchase = async (product_id) => {
-    const data = await contract.call(
-      'rejectPurchase',
-      product_id,
-      buyer_id,
-    );
-    return data;
-  }
-  // Ongoing
-  const approveReceipt = async (product_id) => {
-    const data = await contract.call(
-      'approveReceipt',
-      product_id,
-    );
-    return data;
-  }
-  // Ongoing
-  const cancelBuy = async (product_id) => {
-    const data = await contract.call(
-      'cancelBuy',
-      product_id,
-    );
-    return data;
-  }
-  // Ongoing
-  const stopProduct = async (product_id) => {
-    const data = await contract.call(
-      'stopProduct',
-      product_id,
-    );
-    return data;
-  }
+
+  // // Ongoing
+  // const approvePurchase = async (product_id) => {
+  //   const data = await contract.call(
+  //     'approvePurchase',
+  //     product_id,
+  //     buyer_id,
+  //   );
+  //   return data;
+  // }
+  // // Ongoing
+  // const rejectPurchase = async (product_id) => {
+  //   const data = await contract.call(
+  //     'rejectPurchase',
+  //     product_id,
+  //     buyer_id,
+  //   );
+  //   return data;
+  // }
+  // // Ongoing
+  // const approveReceipt = async (product_id) => {
+  //   const data = await contract.call(
+  //     'approveReceipt',
+  //     product_id,
+  //   );
+  //   return data;
+  // }
+  // // Ongoing
+  // const cancelBuy = async (product_id) => {
+  //   const data = await contract.call(
+  //     'cancelBuy',
+  //     product_id,
+  //   );
+  //   return data;
+  // }
+  // // Ongoing
+  // const stopProduct = async (product_id) => {
+  //   const data = await contract.call(
+  //     'stopProduct',
+  //     product_id,
+  //   );
+  //   return data;
+  // }
 
   
 
@@ -128,7 +131,7 @@ export const StateContextProvider = ({ children }) => {
         createProduct: publishProduct,
         getProducts,
         getUserProducts,
-        // buyProduct,
+        buyProduct,
       }}
     >
       {children}

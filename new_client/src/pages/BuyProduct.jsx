@@ -9,7 +9,7 @@ const BuyProduct = () => {
 
   const { address, contract, getProducts } = useStateContext();
 
-  const fetchCampaigns = async () => {
+  const fetchProducts = async () => {
     setIsLoading(true);
     const data = await getProducts();
     setCampaigns(data);
@@ -17,7 +17,7 @@ const BuyProduct = () => {
   }
 
   useEffect(() => {
-    if(contract) fetchCampaigns();
+    if(contract) fetchProducts();
   }, [address, contract]);
 
   return (
