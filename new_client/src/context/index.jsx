@@ -14,24 +14,10 @@ export const StateContextProvider = ({ children }) => {
     // const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
   
     const address = useAddress();
+    console.log(address)
     const connect = useMetamask();
 
-    // const publishProduct = async (form) => {
-    //     try {
-    //       const data = await createProduct([
-    //         address, // owner 
-    //         form.name, // title
-    //         form.description, // description
-    //         form.price,
-    //         form.amt,
-    //         form.deposit,
-    //       ])
-    
-    //       console.log("contract call success", data)
-    //     } catch (error) {
-    //       console.log("contract call failure", error)
-    //     }
-    //   }
+    /* Finished createProduct */
     const publishProduct = async (form) => {
       const data = await contract.call(
         'createProduct',
@@ -43,7 +29,9 @@ export const StateContextProvider = ({ children }) => {
         { value: ethers.utils.parseUnits(form.price.toString(), "wei")});  
       return data;
     }
-  const getProducts = async (form) => {
+
+    /* Finished getAllProducts */
+  const getProducts = async () => {
     const products = await contract.call('getAllProducts');
 
     const parsedProducts = products.map((product, i) => ({
@@ -58,18 +46,78 @@ export const StateContextProvider = ({ children }) => {
 
     return parsedProducts;
   }
-
-  const getUserProducts= async (form) => {
+  const getUserProducts= async (product) => {
     const allProducts = await getProducts();
-    console.log(address)
-    console.log('strange')
-
-
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
     console.log(filteredCampaigns)
-
     return filteredCampaigns;
   }
+
+  // Ongoing
+  const buyProduct = async (product_id, delivery_address) => {
+    const data = await contract.call(
+      'buyProduct',
+      product_id,
+      delivery_address,
+      { value: ethers.utils.parseUnits(form.price.toString(), "wei")});
+    return data;
+  }
+
+  // Ongoing
+  const observeBuyers = async (product_id) => {
+    const data = await contract.call(
+      'observeBuyers',
+      product_id,
+      delivery_address,
+      { value: ethers.utils.parseUnits(form.price.toString(), "wei")});
+    return data;
+  }
+
+  // Ongoing
+  const approvePurchase = async (product_id) => {
+    const data = await contract.call(
+      'approvePurchase',
+      product_id,
+      buyer_id,
+    );
+    return data;
+  }
+  // Ongoing
+  const rejectPurchase = async (product_id) => {
+    const data = await contract.call(
+      'rejectPurchase',
+      product_id,
+      buyer_id,
+    );
+    return data;
+  }
+  // Ongoing
+  const approveReceipt = async (product_id) => {
+    const data = await contract.call(
+      'approveReceipt',
+      product_id,
+    );
+    return data;
+  }
+  // Ongoing
+  const cancelBuy = async (product_id) => {
+    const data = await contract.call(
+      'cancelBuy',
+      product_id,
+    );
+    return data;
+  }
+  // Ongoing
+  const stopProduct = async (product_id) => {
+    const data = await contract.call(
+      'stopProduct',
+      product_id,
+    );
+    return data;
+  }
+
+  
+
 
   return (
     <StateContext.Provider
@@ -80,6 +128,7 @@ export const StateContextProvider = ({ children }) => {
         createProduct: publishProduct,
         getProducts,
         getUserProducts,
+        // buyProduct,
       }}
     >
       {children}
