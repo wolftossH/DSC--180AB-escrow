@@ -3,14 +3,21 @@ import { useNavigate } from 'react-router-dom';
 
 import FundCard from './FundCard';
 import { loader } from '../assets';
+import { useStateContext } from '../context';
+
 
 const DisplayCampaigns = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
+  const {address } = useStateContext();
+
 
   // code readability
   // go to product details
   const handleNavigate = (product) => {
-    navigate(`/product-details/${product.name}`, { state: product })
+    if(product.seller === address)
+      navigate(`/product-details-seller/${product.name}`, { state: product })
+    else
+      navigate(`/product-details/${product.name}`, { state: product })
   }
   
   return (
@@ -32,7 +39,7 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
         {!isLoading && products.length > 0 && products.map((product) => <FundCard 
           key={product.id}
           {...product}
-          handleClick={() => handleNavigate(product)}
+          handleClick={() =>  handleNavigate(product)}
         />)}
       </div>
     </div>

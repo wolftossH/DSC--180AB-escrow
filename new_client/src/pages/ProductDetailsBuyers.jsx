@@ -7,7 +7,7 @@ import { CountBox, CustomButton, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
 
-const ProductDetails = () => {
+const ProductDetailsBuyers = () => {
 
     const { state } = useLocation();
 
@@ -142,4 +142,4 @@ const ProductDetails = () => {
 
 }
 
-export default ProductDetails
+export default ProductDetailsBuyers

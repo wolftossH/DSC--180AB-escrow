@@ -15,7 +15,6 @@ const CreateProduct = () => {
       name: '',
       description: '',
       price: '', 
-      price: '',
       image: '',
       deposit: ''
     });

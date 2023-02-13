@@ -7,36 +7,27 @@ import { CountBox, CustomButton, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
 
-const ProductDetails = () => {
+const ProductDetailsSellers = () => {
 
     const { state } = useLocation();
-
-    const navigate = useNavigate();
-    const {buyProduct,  contract, address } = useStateContext();
-  
+    const {observeBuyers,  contract, address } = useStateContext();  
     const [isLoading, setIsLoading] = useState(false);
-    const [delivery_address, setDelivery_address] = useState('');
-    // const [donators, setDonators] = useState([]);
+    const [buyers, setBuyers] = useState([]);
 
-    const fetchDonators = async () => {
-        // const data = await getDonations(state.pId);
-    
-        // setDonators(data);
+    const fetchBuyers = async () => {
+      setIsLoading(true);
+      console.log(address);
+      console.log(state.seller)
+      // const data = await observeBuyers(state.pId);
+
+      // setBuyers(data);
+      setIsLoading(false);
       }
     
       useEffect(() => {
-        if(contract) fetchDonators();
+        if(contract) fetchBuyers();
       }, [contract, address])
     
-      const handleDonate = async () => {
-        setIsLoading(true);
-        await buyProduct(
-          state.pId,
-          delivery_address,
-          ethers.utils.parseUnits(parseFloat(state.price*2).toString(), "ether")
-        ); 
-        setIsLoading(false);
-      }
 
 
     return (
@@ -66,7 +57,7 @@ const ProductDetails = () => {
           <div className="flex-[2] flex flex-col gap-[40px]">
             <div>
               <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
-                Seller
+                Hello Seller
               </h4>
   
               <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
@@ -101,9 +92,9 @@ const ProductDetails = () => {
                     <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
                   )}
                 </div> */}
+
             </div>
-            <div className="flex-1">
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Shop</h4>   
+            <div className="flex-1"> 
           </div> 
           </div>
   
@@ -114,4 +105,4 @@ const ProductDetails = () => {
 
 }
 
-export default ProductDetails
+export default ProductDetailsSellers

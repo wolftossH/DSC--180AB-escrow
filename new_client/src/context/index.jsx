@@ -14,7 +14,6 @@ export const StateContextProvider = ({ children }) => {
     // const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
   
     const address = useAddress();
-    console.log(address)
     const connect = useMetamask();
 
     /* Finished createProduct */
@@ -52,7 +51,7 @@ export const StateContextProvider = ({ children }) => {
   const getUserProducts= async (product) => {
     const allProducts = await getProducts();
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
-    console.log(filteredCampaigns)
+    // console.log(filteredCampaigns)
     return filteredCampaigns;
   }
 
@@ -70,9 +69,10 @@ export const StateContextProvider = ({ children }) => {
   const observeBuyers = async (product_id) => {
     const products = await contract.call('observeBuyers', product_id);
 
-    const parsedProducts = products.map((product, i) => ({
+    const parsedBuyers = products.map((product, i) => ({
       seller: product.buyer_ids,
     }));
+    return parsedBuyers;
   }
 
 
@@ -119,9 +119,6 @@ export const StateContextProvider = ({ children }) => {
   //   return data;
   // }
 
-  
-
-
   return (
     <StateContext.Provider
       value={{
@@ -132,6 +129,7 @@ export const StateContextProvider = ({ children }) => {
         getProducts,
         getUserProducts,
         buyProduct,
+        observeBuyers,
       }}
     >
       {children}
