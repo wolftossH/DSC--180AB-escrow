@@ -8,6 +8,8 @@ const FundCard = ({ seller, name, description, price, amountCollected, image, ha
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
   const gifUrl = useFetch({ keyword });
+  const kw = 'Escrow'
+  const cryptoGif = useFetch({ keyword });
   
   return (
     <div className="sm:w-[288px] w-full rounded-[15px] bg-[#1c1c24] cursor-pointer" onClick={handleClick}>
@@ -33,7 +35,7 @@ const FundCard = ({ seller, name, description, price, amountCollected, image, ha
 
         <div className="flex items-center mt-[20px] gap-[12px]">
           <div className="w-[30px] h-[30px] rounded-full flex justify-center items-center bg-[#13131a]">
-            <img src={thirdweb} alt="user" className="w-1/2 h-1/2 object-contain"/>
+            <img src={cryptoGif} alt="user" className="w-1/2 h-1/2 object-contain"/>
           </div>
           <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">by <span className="text-[#b2b3bd]">{seller}</span></p>
         </div>

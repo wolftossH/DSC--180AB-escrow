@@ -6,7 +6,6 @@ import useFetch from "../hooks/gifGen";
 import { useStateContext } from '../context';
 import { CountBox, CustomButton, Loader } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
-import { thirdweb } from '../assets';
 
 const ProductDetailsBuyers = () => {
     const { state } = useLocation();
@@ -44,22 +43,21 @@ const ProductDetailsBuyers = () => {
         <div>
         {isLoading && <Loader />}
   
-        <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
+        <div className="w-full flex md:flex-row flex-col mt-5 gap-[15px]">
           <div className="flex-1 flex-col">
-            <img src={gifUrl} alt="product" className="w-full h-[410px] object-cover rounded-xl"/>
-            <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
+            <img src={gifUrl} alt="product" className="w-11/12 h-[500px] object-cover rounded-xl"/>
+            <div className="relative w-11/12  h-[5px] bg-[#3a3a43] mt-2">
               <div className="absolute h-full bg-[#4acd8d]" 
-              style={{ width: `${calculateBarPercentage(state.price, state.amt)}%`,
+              style={{ width: `${calculateBarPercentage(state.init_amt, state.amt)}%`,
                maxWidth: '100%'}}>
               </div>
             </div>
           </div>
   
-          <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-          <CountBox title={`Price`} value={state.price} />
-          <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
-          <CountBox title={`Out of 5`} value={state.rating} />
-
+          <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[20px]">
+            <CountBox title={`Price in ETH`} value={state.price} />
+            <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
+            <CountBox title={`Out of 5 Stars`} value={state.rating} />
           </div>
         </div>
   

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useLocation, useNavigate } from 'react-router-dom';
 import { ethers } from 'ethers';
+import useFetch from "../hooks/gifGen";
 
 import { useStateContext } from '../context';
 import { CountBox, CustomButton, Loader } from '../components';
@@ -10,6 +11,8 @@ import { thirdweb } from '../assets';
 const ProductDetailsSellers = () => {
 
     const { state } = useLocation();
+    const keyword = state.name;
+    const gifUrl = useFetch({ keyword });
     const {observeBuyers,  contract, address,connect, stopProduct } = useStateContext();  
     const [isLoading, setIsLoading] = useState(false);
     const [buyers, setBuyers] = useState([]);
@@ -39,22 +42,21 @@ const ProductDetailsSellers = () => {
         <div>
         {isLoading && <Loader />}
   
-        <div className="w-full flex md:flex-row flex-col mt-10 gap-[30px]">
+        <div className="w-full flex md:flex-row flex-col mt-5 gap-[15px]">
           <div className="flex-1 flex-col">
-            <img src="https://media.moddb.com/images/members/5/4550/4549205/duck.jpg" alt="product" className="w-full h-[410px] object-cover rounded-xl"/>
-            <div className="relative w-full h-[5px] bg-[#3a3a43] mt-2">
+            <img src={gifUrl} alt="product" className="w-11/12 h-[500px] object-cover rounded-xl"/>
+            <div className="relative w-11/12  h-[5px] bg-[#3a3a43] mt-2">
               <div className="absolute h-full bg-[#4acd8d]" 
-              style={{ width: `${calculateBarPercentage(state.price, state.amt)}%`,
+              style={{ width: `${calculateBarPercentage(state.init_amt, state.amt)}%`,
                maxWidth: '100%'}}>
               </div>
             </div>
           </div>
   
-          <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[30px]">
-          <CountBox title={`Price in ETH`} value={state.price} />
-          <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
-          <CountBox title={`Out of 5`} value={state.rating} />
-
+          <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[20px]">
+            <CountBox title={`Price in ETH`} value={state.price} />
+            <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
+            <CountBox title={`Out of 5 Stars`} value={state.rating} />
           </div>
         </div>
   
@@ -67,7 +69,7 @@ const ProductDetailsSellers = () => {
   
               <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
                 <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
-                  <img src="https://www.shutterstock.com/image-photo/seller-apron-market-260nw-720760306.jpg" alt="user" className="w-[60%] h-[60%] object-contain"/>
+                  <img src={gifUrl} alt="user" className="w-[60%] h-[60%] object-contain"/>
                 </div>
                 <div>
                   <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state.seller}</h4>
