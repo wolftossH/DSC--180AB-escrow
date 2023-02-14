@@ -54,7 +54,7 @@ const ProductDetailsBuyers = () => {
             </div>
           </div>
   
-          <div className="flex md:w-[150px] w-full flex-wrap justify-between gap-[20px]">
+          <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[20px]">
             <CountBox title={`Price in ETH`} value={state.price} />
             <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
             <CountBox title={`Out of 5 Stars`} value={state.rating} />
@@ -92,8 +92,8 @@ const ProductDetailsBuyers = () => {
   
             <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
             <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
-                Buy this product
-              </p>
+              Buy this product
+            </p>
             {state.amt != 0 && (
               <div className="mt-[30px]">
                 <input 

@@ -29,9 +29,8 @@ const Navbar = () => {
 
 return (
   
-    <nav className="w-full flex md:justify-center justify-between items-center p-4">
-      
-      <div className="mf:flex-[0.5] flex-initial justify-center items-center">
+    <nav className="w-full flex md:justify-center justify-between items-center p-5">      
+      <div className="mf:flex-[0.9] flex-initial justify-center items-center">
         <img src={logo} alt="logo" className="w-32 cursor-pointer" />
         <Link to="/" className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer"> 
           Escryptow
@@ -41,7 +40,7 @@ return (
         </p> */}
       </div>
       <ul className="text-white mf:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {["About", "Services", "Technologies"].map((item, index) => (
+        {["About"].map((item, index) => (
           <NavBarItem key={item + index} title={item} />
         ))}
         {/* <li className="text-[#221C20] font-bold bg-[#8deef0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#7ae3e6]">
@@ -50,7 +49,7 @@ return (
         <Link to="/profile"> 
           Profile
         </Link>
-        <div className="sm:flex hidden flex-row justify-end gap-4">
+        <div className="sm:flex hidden flex-row justify-end gap-5 pl-3">
           <CustomButton 
             btnType="button"
             title={address ? 'Connected' : 'Connect Metamask'}
@@ -58,12 +57,6 @@ return (
             handleClick={connect}
           />
         </div>
-        {/* <a
-        class="text-black flex items-center justify-center rounded-xl border-4 border-black bg-pink-100 px-3 py-2 font-bold shadow-[6px_6px_0_0_#000] transition hover:shadow-none focus:outline-none focus:ring active:bg-pink-50"
-        >
-          <button onClick={connect}>Connect Metamask</button>
-          <span aria-hidden="true" role="img" class="ml-1.5">🦊</span>
-        </a> */}
       </ul>
       <div className="flex relative">
         {!toggleMenu && (
@@ -78,7 +71,7 @@ return (
             flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white animate-slide-in"
           >
             <li className="text-xl w-full my-2"><AiOutlineClose onClick={() => setToggleMenu(false)} /></li>
-            {["About", "Services", "Technologies"].map(
+            {["About"].map(
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-3 text-lg" />,
             )}
           </ul>
