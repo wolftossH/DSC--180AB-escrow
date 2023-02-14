@@ -48,7 +48,6 @@ const Welcome = () => {
     }
     const showAddress = () => {
         console.log(address)
-        if(address) 
             return shortenAddress(address)
         return 'shortenAddress(address)'
     }
@@ -94,7 +93,7 @@ const Welcome = () => {
                     </div>
                     <div>
                     <p className="text-white font-light text-sm">
-                    {showAddress}
+                    {address && shortenAddress(address)}
                     </p>
                     <p className="text-white font-semibold text-lg mt-1">
                     Ethereum Wallet
