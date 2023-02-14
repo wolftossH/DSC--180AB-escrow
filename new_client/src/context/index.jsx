@@ -51,7 +51,7 @@ export const StateContextProvider = ({ children }) => {
   const getUserProducts= async (product) => {
     const allProducts = await getProducts();
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
-    // console.log(filteredCampaigns)
+    console.log(filteredCampaigns)
     return filteredCampaigns;
   }
 
@@ -118,6 +118,13 @@ export const StateContextProvider = ({ children }) => {
     );
 
   }
+  const addRating = async (form) => {
+    const data = await contract.call(
+      'addRating',
+      product_id,
+    );
+
+  }
 
   return (
     <StateContext.Provider
@@ -131,6 +138,7 @@ export const StateContextProvider = ({ children }) => {
         buyProduct,
         observeBuyers,
         stopProduct: stopProduct,
+        addRating: addRating,
       }}
     >
       {children}

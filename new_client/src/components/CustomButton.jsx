@@ -8,7 +8,7 @@ const CustomButton = ({ btnType, title, handleClick}) => {
       onClick={handleClick}
     >
       {title}
-      <span aria-hidden="true" role="img" class="ml-1.5">🦊</span>
+      <span aria-hidden="true" role="img" className="ml-1.5">🦊</span>
     </button>
   )
 }

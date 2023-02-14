@@ -10,7 +10,6 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
   const {address } = useStateContext();
 
-
   // code readability
   // go to product details
   const handleNavigate = (product) => {
@@ -37,7 +36,7 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
         )}
 
         {!isLoading && products.length > 0 && products.map((product) => <FundCard 
-          key={product.id}
+          key={product.pId}
           {...product}
           handleClick={() =>  handleNavigate(product)}
         />)}

@@ -66,8 +66,7 @@ const CreateProduct = () => {
                     labelName="Your Product *"
                     placeholder="John Doe"
                     inputType="text"
-                    value={form.name}
-            
+                    value={form.name}            
                     handleChange={(e) => handleFormFieldChange('name', e)}
                     />
                     <div className="flex flex-wrap gap-[40px]">
