@@ -30,8 +30,7 @@ const CreateProduct = () => {
             // deposit: ethers.utils.parseUnits(form.deposit, "ether")
         })
         setIsLoading(false);
-        navigate('/');
-    
+        navigate('/');    
         // checkIfImage(form.image, async (exists) => {
         //   if(exists) {
         //     setIsLoading(true)
@@ -64,7 +63,7 @@ const CreateProduct = () => {
                 <div className="flex flex-wrap gap-[40px]">
                     <FormField 
                     labelName="Your Product *"
-                    placeholder="John Doe"
+                    placeholder="Ferrari"
                     inputType="text"
                     value={form.name}            
                     handleChange={(e) => handleFormFieldChange('name', e)}
@@ -106,13 +105,6 @@ const CreateProduct = () => {
                         value={form.price}
                         handleChange={(e) => handleFormFieldChange('deposit', e)}
                     />
-                {/* <FormField 
-                labelName="Campaign image *"
-                placeholder="Place image URL of your campaign"
-                inputType="url"
-                value={form.image}
-                handleChange={(e) => handleFormFieldChange('image', e)}
-                /> */}
                 <div className="flex justify-center items-center mt-[40px]">
                     <CustomButton 
                     btnType="submit"
