@@ -1,6 +1,6 @@
 import React, { useContext, createContext } from 'react';
 
-import { useAddress, useContract, useMetamask, useContractWrite } from '@thirdweb-dev/react';
+import { useAddress, useContract, useMetamask, useContractWrite, useContractRead  } from '@thirdweb-dev/react';
 import { ethers } from 'ethers';
 import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
 
@@ -77,14 +77,14 @@ export const StateContextProvider = ({ children }) => {
 
 
   // // Ongoing
-  // const approvePurchase = async (product_id) => {
-  //   const data = await contract.call(
-  //     'approvePurchase',
-  //     product_id,
-  //     buyer_id,
-  //   );
-  //   return data;
-  // }
+  const approvePurchase = async (product_id) => {
+    const data = await contract.call(
+      'approvePurchase',
+      product_id,
+      buyer_id,
+    );
+    return data;
+  }
   // // Ongoing
   // const rejectPurchase = async (product_id) => {
   //   const data = await contract.call(
@@ -103,13 +103,13 @@ export const StateContextProvider = ({ children }) => {
   //   return data;
   // }
   // // Ongoing
-  // const cancelBuy = async (product_id) => {
-  //   const data = await contract.call(
-  //     'cancelBuy',
-  //     product_id,
-  //   );
-  //   return data;
-  // }
+  const cancelBuy = async (product_id) => {
+    const data = await contract.call(
+      'cancelBuy',
+      product_id,
+    );
+    return data;
+  }
   // // Ongoing
   const stopProduct = async (product_id) => {
     const data = await contract.call(

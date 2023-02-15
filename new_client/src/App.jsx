@@ -1,5 +1,5 @@
 import { Navbar,Navbar_new, Welcome, Footer, Services,  Loader } from "./components";
-import {CreateProduct,BuyProduct,TransactionsBuyers,TransactionsSellers, ProductDetailsBuyers,ProductDetailsSellers,Profile } from './pages';
+import {CreateProduct,BuyProduct,TransactionsBuyers,TransactionsSellers,Transactions, ProductDetailsBuyers,ProductDetailsSellers,Profile } from './pages';
 import {Route, Routes} from 'react-router-dom';
 
 import { useStateContext } from './context/index.jsx';
@@ -22,6 +22,8 @@ const App = () => {
         <Route path="/product-details-seller/:id" element={<ProductDetailsSellers />} />
         <Route path = "/transactions-buyers" element = {<TransactionsBuyers/>} />
         <Route path = "/transactions-sellers" element = {<TransactionsSellers/>} />
+        <Route path = "/transactions" element = {<Transactions/>} />
+
       </Routes>
       <div className="flex w-full justify-center items-center ">
         <Services />

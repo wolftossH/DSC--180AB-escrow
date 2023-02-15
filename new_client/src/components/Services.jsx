@@ -32,8 +32,7 @@ const Services = () => {
         
 
                 // https://wickedblocks.dev/groups/modal/#
-<div className="lg:p-16 sm:my-10 sm:align-middle sm:max-w-xl sm:w-full">
-
+    <div className="lg:p-16 sm:my-10 sm:align-middle sm:max-w-xl sm:w-full">
         <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex purple-glassmorphism">
             <div className="flex flex-row w-full">
                 <Link to="/createProduct" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
@@ -42,7 +41,7 @@ const Services = () => {
                 <Link to="/cart" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
                     Buy Products
                 </Link>
-                <Link to="/transactions-buyers" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"> 
+                <Link to="/transactions" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"> 
                     Track Transactions
                 </Link>
             </div>
