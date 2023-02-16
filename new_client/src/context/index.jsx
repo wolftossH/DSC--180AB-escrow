@@ -49,16 +49,36 @@ export const StateContextProvider = ({ children }) => {
       cancelled: product.cancelled,
       rating: product.rating.toNumber(),
       pId: i,
-      // pic: form.image,
     }));
-
     return parsedProducts;
   }
+
   const getUserProducts= async (product) => {
     const allProducts = await getProducts();
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
+    console.log(allProducts)
     console.log(filteredCampaigns)
     return filteredCampaigns;
+  }
+
+  const getUserTransactions = async (product, buyer_id) => {
+    const allProducts = await getProducts();
+    const parsedProducts = allProducts.map((product, i) => ({
+      seller: product.seller,
+      name: product.name,
+      description: product.description,
+      price: ethers.utils.formatEther(product.price.toString()),
+      amt: product.amt.toNumber(),
+      init_amt: product.init_amt.toNumber(),
+      cancelled: product.cancelled,
+      rating: product.rating.toNumber(),
+      pId: i,
+    }));
+    
+    // const status = await getStatus(, buyer_id)
+    // const filteredCampaigns = allProducts.filter((product) => product.seller === address);
+    // console.log(filteredCampaigns)
+    // return filteredCampaigns;
   }
 
 
@@ -74,7 +94,6 @@ export const StateContextProvider = ({ children }) => {
   // Ongoing
   const observeBuyers = async (product_id) => {
     const products = await contract.call('observeBuyers', product_id);
-
     const parsedBuyers = products.map((product, i) => ({
       seller: product.buyer_ids,
     }));
@@ -83,7 +102,7 @@ export const StateContextProvider = ({ children }) => {
 
 
   // // Ongoing
-  const approvePurchase = async (product_id) => {
+  const approvePurchase = async (product_id, buyer_id) => {
     const data = await contract.call(
       'approvePurchase',
       product_id,
@@ -92,7 +111,7 @@ export const StateContextProvider = ({ children }) => {
     return data;
   }
   // // Ongoing
-  const rejectPurchase = async (product_id) => {
+  const rejectPurchase = async (product_id, buyer_id) => {
     const data = await contract.call(
       'rejectPurchase',
       product_id,
@@ -116,7 +135,8 @@ export const StateContextProvider = ({ children }) => {
     );
     return data;
   }
-  // // Ongoing
+
+  // Finished with Retreive button
   const stopProduct = async (product_id) => {
     const data = await contract.call(
       'stopProduct',
@@ -124,12 +144,31 @@ export const StateContextProvider = ({ children }) => {
     );
 
   }
-  const addRating = async (form) => {
+    // Ongoing
+    const getDeliveryAddress = async (product_id, buyer_id) => {
+      const data = await contract.call(
+        'getDeliveryAddress',
+        product_id,
+        buyer_id,
+      );
+    }
+  // Ongoing
+  const getStatus = async (product_id, buyer_id) => {
+    const data = await contract.call(
+      'getStatus',
+      product_id,
+      buyer_id,
+    );
+  }
+  
+  // Ongoing
+  const addRating = async (product_id, rating, review) => {
     const data = await contract.call(
       'addRating',
       product_id,
+      rating,
+      review,
     );
-
   }
 
   return (
@@ -146,6 +185,7 @@ export const StateContextProvider = ({ children }) => {
         stopProduct: stopProduct,
         addRating: addRating,
         getProductsDeep,
+        getStatus,
       }}
     >
       {children}

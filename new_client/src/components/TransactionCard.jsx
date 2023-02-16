@@ -17,6 +17,8 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, im
   const cryptoGif = useFetch({ keyword });
 
   const { state } = useLocation();
+  const {address, getStatus } = useStateContext();
+
   
   const handleApprovePurchase = async () => {
     setIsLoading(true);

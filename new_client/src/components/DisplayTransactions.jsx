@@ -8,7 +8,8 @@ import { useStateContext } from '../context';
 
 const DisplayTransactions = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
-  const {address } = useStateContext();
+  const {address, getStatus } = useStateContext();
+  
 
   // code readability
   // go to product details
@@ -31,7 +32,7 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
 
         {!isLoading && products.length === 0 && (
           <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
-            You have not created any campigns yet
+            You have not order anything yet.
           </p>
         )}
 
