@@ -16,6 +16,12 @@ export const StateContextProvider = ({ children }) => {
     const address = useAddress();
     const connect = useMetamask();
 
+    // Get project deep
+    const getProductsDeep = async () => {
+      const { data, isLoading } = useContractRead(contract, "productsDeep")
+      console.log(data)
+    }
+
     /* Finished createProduct */
     const publishProduct = async (form) => {
       const data = await contract.call(
@@ -55,7 +61,7 @@ export const StateContextProvider = ({ children }) => {
     return filteredCampaigns;
   }
 
-  // Ongoing
+
   const buyProduct = async (product_id, delivery_address, deposit) => {
     const data = await contract.call(
       'buyProduct',
@@ -86,22 +92,22 @@ export const StateContextProvider = ({ children }) => {
     return data;
   }
   // // Ongoing
-  // const rejectPurchase = async (product_id) => {
-  //   const data = await contract.call(
-  //     'rejectPurchase',
-  //     product_id,
-  //     buyer_id,
-  //   );
-  //   return data;
-  // }
+  const rejectPurchase = async (product_id) => {
+    const data = await contract.call(
+      'rejectPurchase',
+      product_id,
+      buyer_id,
+    );
+    return data;
+  }
   // // Ongoing
-  // const approveReceipt = async (product_id) => {
-  //   const data = await contract.call(
-  //     'approveReceipt',
-  //     product_id,
-  //   );
-  //   return data;
-  // }
+  const approveReceipt = async (product_id) => {
+    const data = await contract.call(
+      'approveReceipt',
+      product_id,
+    );
+    return data;
+  }
   // // Ongoing
   const cancelBuy = async (product_id) => {
     const data = await contract.call(
@@ -139,6 +145,7 @@ export const StateContextProvider = ({ children }) => {
         observeBuyers,
         stopProduct: stopProduct,
         addRating: addRating,
+        getProductsDeep,
       }}
     >
       {children}
