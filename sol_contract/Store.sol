@@ -13,36 +13,26 @@ contract Store {
         uint price;
         uint value_escrow;
 
+        uint deposit_fund;
+        uint in_delivery;
+
         bool cancelled;
 
         address seller;
 
-        uint rating;
-    }
-
-    struct ProductDeep {
-
-        uint deposit_fund;
-
-        uint in_delivery;
-
-        address[] buyer_ids;
-
-        mapping (address => bool) buyer_start;
-        mapping (address => bool) buyer_confirmations;
-        mapping (address => bool) past_buyers;
-        mapping (address => bool) past_rejects;
-
-        uint tot_ratings;
+        uint total_ratings;
         string[] reviews;
-        mapping (string => uint) rating_review;
+        uint[] ratings;
     }
+
+    enum PurchaseState {Default, Started, Confirmed, Rejected, Finalized}
 
     uint public numProducts;
     Product[] public products;
-    mapping(uint => ProductDeep) public productsDeep;
-    mapping(uint => mapping(address => string)) internal buyers;
 
+    mapping(uint => address[]) internal buyers;
+    mapping(uint => mapping(address => string)) internal buyers_ads;
+    mapping(uint => mapping(address => PurchaseState)) internal buyerStatus;
 
     // Seller: Create a new product for sale
     function createProduct (
@@ -53,16 +43,13 @@ contract Store {
         uint amt
     ) public payable {
         // Ensure that the seller has enough balance to sell
-        require(address(msg.sender).balance > price, "Not enough balance to sell");
+        require(address(msg.sender).balance > price * 1 ether, "Not enough balance to sell");
         // Ensure that the value sent is equal to the price
-        require(msg.value == price, "Value must be equal to price");
+        require(msg.value == price * 1 ether, "Value must be equal to price");
         // Ensure that the price is bigger than 0
         require(price > 0, "Price must be bigger than 0");
         // Ensure that the amount is bigger than 0
         require(amt > 0, "Amount must be bigger than 0");
-
-        uint256 idx = numProducts;
-        numProducts++;
         
         // Create a new product
         Product memory newProduct;
@@ -70,19 +57,18 @@ contract Store {
         // Add information about the new product
         newProduct.name = name;
         newProduct.description = description;
-        newProduct.price = price;
-        newProduct.value_escrow = price * 2;   
+        newProduct.price = price * 1 ether;
+        newProduct.value_escrow = price * 2 ether;   
         newProduct.amt = amt;
         newProduct.init_amt = amt;
-        //newProduct.seller = address(msg.sender);
+        // newProduct.seller = address(msg.sender);
         newProduct.seller = _seller;
         newProduct.cancelled = false;
+        newProduct.deposit_fund = price * 1 ether;
+        newProduct.in_delivery = 0;
 
         products.push(newProduct);
-
-        ProductDeep storage newProductDeep = productsDeep[idx];
-        newProductDeep.deposit_fund = price;  
-        newProductDeep.in_delivery = 0;
+        numProducts++;
     }
 
     // Buyer: Buy a product
@@ -92,7 +78,6 @@ contract Store {
     ) public payable {
         // Select a product to buy
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
 
         // Ensure that the buyer has enough balance to buy the product
         require(address(msg.sender).balance > curProd.value_escrow, "Not enough balance to buy");
@@ -100,81 +85,65 @@ contract Store {
         require(msg.value == curProd.value_escrow, "Value must be equal to the value of the escrow");
         // Ensure that the product is still available
         require(curProd.amt > 0, "Product is out of stock");
-        // Ensure that the buyer has not already been rejected
-        require(!curProdDeep.past_rejects[msg.sender], "Buyer has already been rejected");
-        // Ensure that the buyer has not already bought the product
-        require(!curProdDeep.past_buyers[msg.sender], "Buyer has already bought the product");
-        // Ensure that the buyer has not already started the transaction
-        require(!curProdDeep.buyer_start[msg.sender], "Buyer can only buy one item of the product");
+        
+        // Ensure that the buyer has not already been a buyer of the product
+        require(buyerStatus[product_id][address(msg.sender)] == PurchaseState.Default);
 
         // Increase the deposit fund
-        curProdDeep.deposit_fund += msg.value;
+        curProd.deposit_fund += msg.value;
 
         // Set the buyer's start transaction to true
-        curProdDeep.buyer_start[address(msg.sender)] = true;    
-        // Set the buyer's confirmation to false
-        curProdDeep.buyer_confirmations[address(msg.sender)] = false;      
+        buyerStatus[product_id][address(msg.sender)] = PurchaseState.Started;
         
         // Decrease the amount of the product available
         curProd.amt --;
-        // Add the buyer's address to the buyer_ids array
-        curProdDeep.buyer_ids.push(address(msg.sender));
 
-        buyers[product_id][address(msg.sender)] = delivery_address;
+        // Add the buyer's address to the buyer_ids array
+        buyers[product_id].push(address(msg.sender));
+        buyers_ads[product_id][address(msg.sender)] = delivery_address;
 
     }
 
     // Seller: Approve purchase for the specified buyer
     function approvePurchase(
         uint product_id,
-        address payable buyer_id
+        address payable buyer
     ) public {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
 
         // Ensure that only the seller can approve the purchase
         require(curProd.seller == address(msg.sender), "Only the seller can approve the purchase.");
-        // Ensure that the buyer has not already been rejected or already purchased the product
-        require(!curProdDeep.past_rejects[buyer_id], "The buyer has already been rejected.");
-        require(!curProdDeep.past_buyers[buyer_id], "The buyer has already purchased the product.");
-        // Ensure that the buyer has already started the transaction
-        require(curProdDeep.buyer_start[buyer_id], "The buyer has not started the transaction");
-        // Ensure that the seller has not already approved Purchase
-        require(!curProdDeep.buyer_confirmations[buyer_id], "The buyer has already been approved");
-
-        // Increase the amount of products in delivery;
-        curProdDeep.in_delivery ++;
+        require(buyerStatus[product_id][buyer] == PurchaseState.Started);
         
-        // Approve the purchase by setting the buyer's confirmation status to true
-        curProdDeep.buyer_confirmations[buyer_id] = true;
+        // Increase the amount of products in delivery;
+        curProd.in_delivery ++;
+
+        buyerStatus[product_id][buyer] = PurchaseState.Confirmed;
     }
 
     // Seller: Reject a purchase from the specified buyer
     function rejectPurchase(
         uint product_id,
-        address payable buyer_id
+        address payable buyer
     ) public {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
 
         // Ensure that only the seller can reject the purchase
         require(curProd.seller == address(msg.sender), "Only the seller can reject the purchase.");
         // Ensure that the buyer has not already been rejected or already purchased the product
-        require(!curProdDeep.past_rejects[buyer_id], "The buyer has already been rejected.");
-        require(!curProdDeep.past_buyers[buyer_id], "The buyer has already purchased the product.");
+        require(buyerStatus[product_id][buyer]  == PurchaseState.Started);
 
         // Transfer the escrowed funds back to the buyer
-        payable(address(buyer_id)).transfer(curProd.value_escrow);
+        payable(address(buyer)).transfer(curProd.value_escrow);
         
         // Increment the number of avaiable products
         curProd.amt ++;
         // Decrement the deposit fund for the product
-        curProdDeep.deposit_fund -= curProd.value_escrow;
-        // Record the rejection for the buyer
-        curProdDeep.past_rejects[buyer_id] = true;
-        curProdDeep.buyer_confirmations[buyer_id] = true;
+        curProd.deposit_fund -= curProd.value_escrow;
+        
+        buyerStatus[product_id][buyer] = PurchaseState.Rejected; 
     }
 
     // Buyer: Approve receipt of the specified product
@@ -183,17 +152,9 @@ contract Store {
     ) public {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
 
         // Ensure that the buyer has already started the transaction
-        require(curProdDeep.buyer_start[msg.sender], "Buyer not identified for the product");
-        // Ensure that the buyer has confirmed the purchase with the seller
-        require(curProdDeep.buyer_confirmations[address(msg.sender)], "The seller has not confirmed the purchase.");
-        // Ensure that the buyer has not already purchased the product
-        require(!curProdDeep.past_buyers[address(msg.sender)], "The buyer has already purchased the product.");
-        // Ensure that the buyer has not been rejected
-        require(!curProdDeep.past_rejects[address(msg.sender)], "The buyer has already been rejected.");
-        
+        require(buyerStatus[product_id][address(msg.sender)] == PurchaseState.Confirmed);
         
         // Transfer the price of the product to the buyer
         payable(address(msg.sender)).transfer(curProd.price);
@@ -201,18 +162,17 @@ contract Store {
         payable(curProd.seller).transfer(curProd.price);
 
         // Reduce the deposit fund by the escrow value
-        curProdDeep.deposit_fund -= curProd.value_escrow;
+        curProd.deposit_fund -= curProd.value_escrow;
         
         // Decrease the amount of products in delivery;
-        curProdDeep.in_delivery --;
+        curProd.in_delivery --;
 
-        // Mark the buyer as having purchased the product
-        curProdDeep.past_buyers[address(msg.sender)] = true;
+        buyerStatus[product_id][address(msg.sender)] = PurchaseState.Finalized; 
 
         // If the amount of available products is 0, transfer the price to the seller
         if (curProd.amt == 0 && !curProd.cancelled) {
             payable(curProd.seller).transfer(curProd.price);
-            curProdDeep.deposit_fund -= curProd.price;
+            curProd.deposit_fund -= curProd.price;
             curProd.cancelled = true;
         }
     }
@@ -221,26 +181,19 @@ contract Store {
     function cancelBuy(
         uint product_id
     ) public {
+        require(buyerStatus[product_id][address(msg.sender)] == PurchaseState.Started);
+
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
-
-        // Ensure that the buyer has not already purchased the product and has not been rejected
-        require(!curProdDeep.past_buyers[address(msg.sender)], "The buyer has already purchased the product.");
-        require(!curProdDeep.past_rejects[address(msg.sender)], "The buyer has already been rejected.");
-        require(!curProdDeep.buyer_confirmations[address(msg.sender)], "The seller has already sent the product.");
-        // Ensure that the buyer has already started the transaction
-        require(curProdDeep.buyer_start[msg.sender], "Buyer not identified for the product");
 
         // Transfer the escrow value back to the buyer
         payable(address(msg.sender)).transfer(curProd.value_escrow);
 
         // Decrement the deposit fund by the escrow value
-        curProdDeep.deposit_fund -= curProd.value_escrow;
+        curProd.deposit_fund -= curProd.value_escrow;
 
-        // Mark the buyer as having rejected the product
-        curProdDeep.past_rejects[msg.sender] = true;
-        curProdDeep.buyer_confirmations[msg.sender] = true;
+        buyerStatus[product_id][address(msg.sender)]  = PurchaseState.Rejected; 
+
         curProd.amt ++;
     }
 
@@ -250,12 +203,11 @@ contract Store {
     ) public {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
 
         // Ensure that only the seller can delete the product
         require(curProd.seller == address(msg.sender), "Only the seller can stop selling the product.");
         // Ensure that no products are currently in delivery
-        require(curProdDeep.in_delivery == 0, "The seller can only stop selling the product when there are no products in delivery");
+        require(curProd.in_delivery == 0, "The seller can only stop selling the product when there are no products in delivery");
         // Ensure that the product is not already cancelled
         require(!curProd.cancelled, "The product is already cancelled");
         
@@ -264,21 +216,22 @@ contract Store {
         // Reset the product's amount
         curProd.amt = 0;
 
-        for (uint i = 0; i < curProdDeep.buyer_ids.length; i++) {
+        for (uint i = 0; i < buyers[product_id].length; i++) {
             // Check if the buyer's confirmation is true
-            if (!curProdDeep.buyer_confirmations[curProdDeep.buyer_ids[i]]) {
+            if (buyerStatus[product_id][buyers[product_id][i]] == PurchaseState.Confirmed ||
+                buyerStatus[product_id][buyers[product_id][i]] == PurchaseState.Started) {
                 // Transfer the buyer's escrow value back to them
-                payable(curProdDeep.buyer_ids[i]).transfer(curProd.value_escrow);
+                payable(buyers[product_id][i]).transfer(curProd.value_escrow);
                 // Decrement the deposit fund by the escrow value
-                curProdDeep.deposit_fund -= curProd.value_escrow;
+                curProd.deposit_fund -= curProd.value_escrow;
                 // Record the rejection of the buyer
-                curProdDeep.past_rejects[curProdDeep.buyer_ids[i]] = true;
+                buyerStatus[product_id][buyers[product_id][i]] = PurchaseState.Rejected; 
             }
         }
         // Transfer the sellers's escrow price back to them
         payable(curProd.seller).transfer(curProd.price);
         // Decrement the deposit fund by the product price
-        curProdDeep.deposit_fund -= curProd.price;
+        curProd.deposit_fund -= curProd.price;
     }
 
     // Seller: observe Buyers
@@ -287,13 +240,12 @@ contract Store {
     ) public view returns (address[] memory) {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
 
         // Ensure that the caller is the seller of the product
         require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
         
         // Return the list of buyers for the specified product
-        return curProdDeep.buyer_ids;
+        return buyers[product_id];
     }  
 
     function getDeliveryAddress(
@@ -307,7 +259,15 @@ contract Store {
         require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
         
         // Return the list of buyers for the specified product
-        return buyers[product_id][buyer];
+        return buyers_ads[product_id][buyer];
+    } 
+
+    function getStatus(
+        uint product_id,
+        address buyer
+    ) public view returns (PurchaseState) {
+        // Return the list of buyers for the specified product
+        return buyerStatus[product_id][buyer];
     }  
 
     function getAllProducts(
@@ -324,20 +284,17 @@ contract Store {
     ) public {
         // Retrieve the specified product from storage
         Product storage curProd = products[product_id];
-        ProductDeep storage curProdDeep = productsDeep[product_id];
         
         // Ensure that the message sender is not the seller of the product
         require(curProd.seller != address(msg.sender), "The seller cannot add a rating.");
         // Ensure that the message sender has confirmed the receipt for the product
-        require(curProdDeep.buyer_confirmations[address(msg.sender)], "You did not buy the product to review");
+        require(buyerStatus[product_id][address(msg.sender)] == PurchaseState.Finalized);
         // Ensure that the rating provided is between 0 and 5
         require(rating <= 5, "The rating should be between 0 and 5");
         
         // Add the review and rating to the product's storage
-        curProdDeep.tot_ratings ++;
-        curProdDeep.reviews.push(review);
-        curProdDeep.rating_review[review] = rating;
-        curProd.rating += ((curProd.rating*(curProdDeep.tot_ratings-1))+(rating))/curProdDeep.tot_ratings;    
+        curProd.total_ratings ++;
+        curProd.reviews.push(review);
+        curProd.ratings.push(rating);   
     }
-
 }
