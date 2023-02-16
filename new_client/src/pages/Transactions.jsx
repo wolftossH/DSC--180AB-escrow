@@ -8,8 +8,7 @@ const Transactions = () => {
   const [products, setProducts] = useState([]);
   
 
-  const { address, contract, getProducts } = useStateContext();
-  console.log(address)
+  const { address, contract, getProducts, getUserTransactions } = useStateContext();
 
   const fetchProducts = async () => {
     setIsLoading(true);

@@ -9,7 +9,8 @@ import { Outlet, Link } from "react-router-dom";
 
 
 
-const TransactionCard = ({ seller, name, description, price, amountCollected, image, handleClick }) => {
+const TransactionCard = ({ seller, name, description, price, amountCollected, handleClick, status }) => {
+  console.log(seller)
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
   const gifUrl = useFetch({ keyword });
@@ -18,6 +19,13 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, im
 
   const { state } = useLocation();
   const {address, getStatus } = useStateContext();
+
+  const getUserStatus = async () => {    
+    const status = await getStatus(state.pId, seller)
+    return status
+  }
+
+  console.log(getUserStatus)
 
   
   const handleApprovePurchase = async () => {
@@ -58,15 +66,18 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, im
       <div className="lg:p-1 sm:my-5 sm:align-middle sm:max-w-xl sm:w-full">
         <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex purple-glassmorphism">
           <div className="flex flex-row w-full">
-            <button
-            type="button"
-            onClick={handleApprovePurchase}
-            className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
-            >
-              <p className="text-white text-base font-semibold">
-                Approve BuyerPurchase
-              </p>                
-            </button>
+            {status===1 && (
+              <button
+              type="button"
+              onClick={handleApprovePurchase}
+              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              >
+                <p className="text-white text-base font-semibold">
+                  Approve Buyer Purchase
+                </p>                
+              </button>
+            )}
+
               <Link to="/cart" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
                 Reject Buyer
               </Link>

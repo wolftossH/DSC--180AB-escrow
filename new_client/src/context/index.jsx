@@ -9,19 +9,12 @@ const StateContext = createContext({});
 
 export const StateContextProvider = ({ children }) => {
     const { contract } = useContract(
-        '0x8777a29Dd7bc252d75497FF6bE478d694100F7e9'
+        '0xC2fC0e412464F3e15Cac0Cd82F7459b3cA89D144'
     );
     // const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
-  
     const address = useAddress();
+    
     const connect = useMetamask();
-
-    // Get project deep
-    const getProductsDeep = async () => {
-      const { data, isLoading } = useContractRead(contract, "productsDeep")
-      console.log(data)
-    }
-
     /* Finished createProduct */
     const publishProduct = async (form) => {
       const data = await contract.call(
@@ -38,7 +31,7 @@ export const StateContextProvider = ({ children }) => {
     /* Finished getAllProducts */
   const getProducts = async () => {
     const products = await contract.call('getAllProducts');
-
+    console.log(address)
     const parsedProducts = products.map((product, i) => ({
       seller: product.seller,
       name: product.name,
@@ -47,38 +40,42 @@ export const StateContextProvider = ({ children }) => {
       amt: product.amt.toNumber(),
       init_amt: product.init_amt.toNumber(),
       cancelled: product.cancelled,
-      rating: product.rating.toNumber(),
+      rating: product.rating,
       pId: i,
     }));
+    console.log(parsedProducts)
     return parsedProducts;
   }
 
   const getUserProducts= async (product) => {
     const allProducts = await getProducts();
+    console.log(address)
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
-    console.log(allProducts)
-    console.log(filteredCampaigns)
+    // console.log(allProducts)
+    // console.log(filteredCampaigns)
     return filteredCampaigns;
   }
 
-  const getUserTransactions = async (product, buyer_id) => {
+  const getUserTransactions = async (buyer_id) => {
     const allProducts = await getProducts();
-    const parsedProducts = allProducts.map((product, i) => ({
-      seller: product.seller,
-      name: product.name,
-      description: product.description,
-      price: ethers.utils.formatEther(product.price.toString()),
-      amt: product.amt.toNumber(),
-      init_amt: product.init_amt.toNumber(),
-      cancelled: product.cancelled,
-      rating: product.rating.toNumber(),
-      pId: i,
-    }));
-    
-    // const status = await getStatus(, buyer_id)
-    // const filteredCampaigns = allProducts.filter((product) => product.seller === address);
-    // console.log(filteredCampaigns)
-    // return filteredCampaigns;
+    const parsedProducts = await Promise.all(allProducts.map(async (product,i) => {
+      return {
+        seller: product.seller,
+        name: product.name,
+        description: product.description,
+        // price: ethers.utils.formatEther(product.price.toString()),
+        price:product.price,
+
+        amt: product.amt,
+        init_amt: product.init_amt,
+        cancelled: product.cancelled,
+        rating: product.rating,
+        pId: i,
+        status: await getStatus(i, buyer_id),
+      }
+  }));
+    const filteredCampaigns = allProducts.filter((product) => product.seller === address);
+    return filteredCampaigns;
   }
 
 
@@ -159,6 +156,7 @@ export const StateContextProvider = ({ children }) => {
       product_id,
       buyer_id,
     );
+    return data;
   }
   
   // Ongoing
@@ -180,12 +178,19 @@ export const StateContextProvider = ({ children }) => {
         createProduct: publishProduct,
         getProducts,
         getUserProducts,
+        getUserTransactions,
         buyProduct,
         observeBuyers,
         stopProduct: stopProduct,
-        addRating: addRating,
-        getProductsDeep,
+
+        approvePurchase,
+        rejectPurchase,
+        cancelBuy,
+        approveReceipt,
         getStatus,
+
+        getDeliveryAddress,
+        addRating: addRating,
       }}
     >
       {children}

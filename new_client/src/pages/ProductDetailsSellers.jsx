@@ -21,6 +21,7 @@ const ProductDetailsSellers = () => {
       setIsLoading(true);
       console.log(address);
       console.log(state.seller)
+      console.log(state.pId)
       // const data = await observeBuyers(state.pId);
 
       // setBuyers(data);

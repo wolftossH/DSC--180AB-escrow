@@ -9,7 +9,7 @@ import { useStateContext } from '../context';
 const DisplayTransactions = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
   const {address, getStatus } = useStateContext();
-  
+  console.log(products)  
 
   // code readability
   // go to product details
@@ -22,7 +22,7 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
   
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-[18px] text-white text-left">{title} ({products.length})</h1>
+      <h1 className="font-epilogue font-semibold text-[30px] text-white text-left">{title} ({products.length})</h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
         
@@ -31,8 +31,8 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
         )}
 
         {!isLoading && products.length === 0 && (
-          <p className="font-epilogue font-semibold text-[14px] leading-[30px] text-[#818183]">
-            You have not order anything yet.
+          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183]">
+            You have not ordered anything yet.
           </p>
         )}
 
