@@ -31,7 +31,6 @@ export const StateContextProvider = ({ children }) => {
     /* Finished getAllProducts */
   const getProducts = async () => {
     const products = await contract.call('getAllProducts');
-    console.log(address)
     const parsedProducts = products.map((product, i) => ({
       seller: product.seller,
       name: product.name,
@@ -43,13 +42,11 @@ export const StateContextProvider = ({ children }) => {
       rating: product.rating,
       pId: i,
     }));
-    console.log(parsedProducts)
     return parsedProducts;
   }
 
   const getUserProducts= async (product) => {
     const allProducts = await getProducts();
-    console.log(address)
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
     // console.log(allProducts)
     // console.log(filteredCampaigns)
@@ -63,9 +60,7 @@ export const StateContextProvider = ({ children }) => {
         seller: product.seller,
         name: product.name,
         description: product.description,
-        // price: ethers.utils.formatEther(product.price.toString()),
         price:product.price,
-
         amt: product.amt,
         init_amt: product.init_amt,
         cancelled: product.cancelled,
@@ -74,7 +69,7 @@ export const StateContextProvider = ({ children }) => {
         status: await getStatus(i, buyer_id),
       }
   }));
-    const filteredCampaigns = allProducts.filter((product) => product.seller === address);
+    const filteredCampaigns = parsedProducts.filter((product) => product.status > 0);
     return filteredCampaigns;
   }
 

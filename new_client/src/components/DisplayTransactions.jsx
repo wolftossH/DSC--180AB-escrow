@@ -8,8 +8,11 @@ import { useStateContext } from '../context';
 
 const DisplayTransactions = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
-  const {address, getStatus } = useStateContext();
-  console.log(products)  
+  const {address} = useStateContext();
+  const parsedProducts = products.filter((product) => product.status > 0); 
+
+  // console.log(parsedProducts)
+
 
   // code readability
   // go to product details
@@ -22,21 +25,26 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
   
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-[30px] text-white text-left">{title} ({products.length})</h1>
+      <h1 className="font-epilogue font-semibold text-[30px] text-white text-left">{title} ({parsedProducts.length})</h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
-        
+        {!address && (
+          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183]">
+            You are not logged in
+          </p>
+        )}
+
         {isLoading && (
           <img src={loader} alt="loader" className="w-[100px] h-[100px] object-contain" />
         )}
 
-        {!isLoading && products.length === 0 && (
+        {!isLoading && parsedProducts.length === 0 && (
           <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183]">
             You have not ordered anything yet.
           </p>
         )}
-
-        {!isLoading && products.length > 0 && products.map((product) => <TransactionCard 
+          
+        {address && !isLoading && parsedProducts.length > 0 && parsedProducts.map((product) => <TransactionCard 
           key={product.pId}
           {...product}
           handleClick={() =>  handleNavigate(product)}

@@ -9,8 +9,8 @@ import { Outlet, Link } from "react-router-dom";
 
 
 
-const TransactionCard = ({ seller, name, description, price, amountCollected, handleClick, status }) => {
-  console.log(seller)
+const TransactionCard = ({ seller, name, description, price, amountCollected, status }) => {
+
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
   const gifUrl = useFetch({ keyword });
@@ -25,17 +25,22 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, ha
     return status
   }
 
-  console.log(getUserStatus)
+  // console.log(getUserStatus)
 
-  
-  const handleApprovePurchase = async () => {
+  const handleCancelBuy = async () => {
     setIsLoading(true);
-    const data = await approvePurchase(state.pId);
+    const data = await cancelBuy(state.pId);
+    setIsLoading(false);
+  }
+
+  const handleApproveReceipt = async () => {
+    setIsLoading(true);
+    const data = await approveReceipt(state.pId);
     setIsLoading(false);
   }
 
   return (
-    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer" onClick={handleClick}>
+    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer">
       <img src={gifUrl} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"/>
       <div className="flex flex-col p-10">
         <div className="flex flex-row items-center mb-[18px]">
@@ -67,25 +72,63 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, ha
         <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex purple-glassmorphism">
           <div className="flex flex-row w-full">
             {status===1 && (
+              // <div
+              // className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              // >
+              //   <div>
+              //   <p className="text-white text-base font-semibold">
+              //     Waiting for Seller Decision
+              //   </p>
+              //   </div>
+              // </div>    
               <button
               type="button"
-              onClick={handleApprovePurchase}
+              onClick={handleCancelBuy} 
               className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
               >
                 <p className="text-white text-base font-semibold">
-                  Approve Buyer Purchase
+                  Reject Your Purchase
+                </p>                
+              </button>           
+            )}
+
+            {status===2 && (
+              <button
+              type="button"
+              onClick={handleApproveReceipt} 
+              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              >
+                <p className="text-white text-base font-semibold">
+                  Approve Your Receipt
                 </p>                
               </button>
             )}
 
+            {status===3 && (
+              <button
+              type="button"
+              onClick={handleApproveReceipt} 
+              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              >
+                <p className="text-white text-base font-semibold">
+                  You already cancelled to Buy or Seller did not want to sell
+                </p>                
+              </button>
+            )}
+
+            {status===4 && (
+              <button
+              type="button"
+              onClick={handleApproveReceipt} 
+              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              >
+                <p className="text-white text-base font-semibold">
+                  You already Bought this product
+                </p>                
+              </button>
+            )}
               <Link to="/cart" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
                 Reject Buyer
-              </Link>
-              <Link to="/transactions" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"> 
-                  Approve Receipt
-              </Link>
-              <Link to="/transactions" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"> 
-                Cancel Buy
               </Link>
           </div>
         </div>
