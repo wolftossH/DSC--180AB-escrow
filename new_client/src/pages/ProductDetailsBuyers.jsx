@@ -9,6 +9,7 @@ import { calculateBarPercentage, daysLeft } from '../utils';
 
 const ProductDetailsBuyers = () => {
   const { state } = useLocation();
+
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
   const navigate = useNavigate();
@@ -20,7 +21,6 @@ const ProductDetailsBuyers = () => {
     rate: '',
     review: '',
   });
-  console.log(state)
 
   const fetchDonators = async () => {
       // const data = await getDonations(state.pId);
@@ -102,7 +102,8 @@ const ProductDetailsBuyers = () => {
           <div className="flex-1">
           <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Shop</h4>   
 
-        <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+
+        {state.status == 0 && (<div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
             Buy this product
           </p>
@@ -134,9 +135,10 @@ const ProductDetailsBuyers = () => {
             {state.amt === 0 && (
               <h1 className="font-epilogue font-semibold text-[20px] leading-[22px] text-white">Products ran out</h1>
             )}
-        </div>
+        </div>)}
+        
+        {state.status === 4 && (
         <form onSubmit={handleRating} className="w-full mt-[65px] flex flex-col gap-[30px]">
-
         <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
             Rate this product
@@ -176,6 +178,8 @@ const ProductDetailsBuyers = () => {
             )}
         </div>
         </form>
+        )}
+
         </div> 
         </div>
       </div>

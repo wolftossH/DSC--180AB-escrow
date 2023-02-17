@@ -7,11 +7,11 @@ const BuyProduct = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [products, setProducts] = useState([]);
 
-  const { address, contract, getProducts } = useStateContext();
+  const { address, contract, getProducts,getModProducts } = useStateContext();
 
   const fetchProducts = async () => {
     setIsLoading(true);
-    const data = await getProducts();
+    const data = await getModProducts(address);
     setProducts(data);
     setIsLoading(false);
   }

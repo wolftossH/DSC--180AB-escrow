@@ -4,7 +4,7 @@ import { tagType, thirdweb } from '../assets';
 import useFetch from "../hooks/gifGen";
 // import { daysLeft } from '../utils';
 
-const FundCard = ({ seller, name, description, price, amountCollected, image, handleClick }) => {
+const FundCard = ({ seller, name, description, price, amountCollected, handleClick }) => {
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
   const gifUrl = useFetch({ keyword });

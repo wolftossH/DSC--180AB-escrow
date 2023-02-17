@@ -45,11 +45,29 @@ export const StateContextProvider = ({ children }) => {
     return parsedProducts;
   }
 
+  const getModProducts = async (buyer_id) => {
+    const products = await getProducts();
+    const parsedProducts = await Promise.all(products.map(async (product,i) => {
+      return {
+        seller: product.seller,
+        name: product.name,
+        description: product.description,
+        price: product.price,
+        amt: product.amt,
+        init_amt: product.init_amt,
+        cancelled: product.cancelled,
+        rating: product.rating,
+        pId: i,
+        status: await getStatus(i, buyer_id),
+      }
+  }));
+    return parsedProducts;
+  }
+
+
   const getUserProducts= async (product) => {
     const allProducts = await getProducts();
     const filteredCampaigns = allProducts.filter((product) => product.seller === address);
-    // console.log(allProducts)
-    // console.log(filteredCampaigns)
     return filteredCampaigns;
   }
 
@@ -172,6 +190,7 @@ export const StateContextProvider = ({ children }) => {
         connect,
         createProduct: publishProduct,
         getProducts,
+        getModProducts,
         getUserProducts,
         getUserTransactions,
         buyProduct,

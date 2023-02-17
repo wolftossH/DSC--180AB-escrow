@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 
 import { tagType, thirdweb } from '../assets';
 import useFetch from "../hooks/gifGen";
@@ -9,38 +9,40 @@ import { Outlet, Link } from "react-router-dom";
 
 
 
-const TransactionCard = ({ seller, name, description, price, amountCollected, status }) => {
+const TransactionCard = ({ seller, name, description, price, amountCollected, status, pId, handleClick }) => {
 
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
   const gifUrl = useFetch({ keyword });
   const kw = 'Escrow'
   const cryptoGif = useFetch({ keyword });
+  const [isLoading, setIsLoading] = useState(false);
+
 
   const { state } = useLocation();
-  const {address, getStatus } = useStateContext();
+  const {address, getStatus, cancelBuy, approveReceipt } = useStateContext();
 
   const getUserStatus = async () => {    
-    const status = await getStatus(state.pId, seller)
+    const status = await getStatus(pId, seller)
     return status
   }
 
   // console.log(getUserStatus)
 
   const handleCancelBuy = async () => {
-    setIsLoading(true);
-    const data = await cancelBuy(state.pId);
+    setIsLoading(true)
+    const data = await cancelBuy(pId);
     setIsLoading(false);
   }
 
   const handleApproveReceipt = async () => {
-    setIsLoading(true);
-    const data = await approveReceipt(state.pId);
+    setIsLoading(true)
+    const data = await approveReceipt(pId);
     setIsLoading(false);
   }
 
   return (
-    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer">
+    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer" onClick={handleClick}>
       <img src={gifUrl} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"/>
       <div className="flex flex-col p-10">
         <div className="flex flex-row items-center mb-[18px]">
@@ -67,7 +69,8 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
           <p className="flex-1 font-epilogue font-normal text-[12px] text-[#808191] truncate">by <span className="text-[#b2b3bd]">{seller}</span></p>
         </div>
       </div>
-      
+
+      {/* Need to redesign this       */}
       <div className="lg:p-1 sm:my-5 sm:align-middle sm:max-w-xl sm:w-full">
         <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex purple-glassmorphism">
           <div className="flex flex-row w-full">
@@ -105,27 +108,22 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
             )}
 
             {status===3 && (
-              <button
-              type="button"
-              onClick={handleApproveReceipt} 
+              <div
               className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
               >
                 <p className="text-white text-base font-semibold">
                   You already cancelled to Buy or Seller did not want to sell
                 </p>                
-              </button>
+              </div>
             )}
-
             {status===4 && (
-              <button
-              type="button"
-              onClick={handleApproveReceipt} 
+              <div
               className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
               >
                 <p className="text-white text-base font-semibold">
                   You already Bought this product
                 </p>                
-              </button>
+              </div>
             )}
               <Link to="/cart" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
                 Reject Buyer

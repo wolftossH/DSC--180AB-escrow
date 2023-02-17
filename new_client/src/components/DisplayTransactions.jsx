@@ -11,7 +11,7 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
   const {address} = useStateContext();
   const parsedProducts = products.filter((product) => product.status > 0); 
 
-  // console.log(parsedProducts)
+  console.log(parsedProducts)
 
 
   // code readability
