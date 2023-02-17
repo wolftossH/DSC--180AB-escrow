@@ -72,7 +72,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
 
       {/* Need to redesign this       */}
       <div className="lg:p-1 sm:my-5 sm:align-middle sm:max-w-xl sm:w-full">
-        <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex purple-glassmorphism">
+        <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex green-glassmorphism">
           <div className="flex flex-row w-full">
             {status===1 && (
               // <div

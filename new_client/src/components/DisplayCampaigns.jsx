@@ -24,6 +24,12 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
       <h1 className="font-epilogue font-semibold text-[25px] text-white text-left">{title} ({products.length})</h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
+
+      {!address && (
+          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183]">
+            You are not logged in
+          </p>
+        )}
         
         {isLoading && (
           <img src={loader} alt="loader" className="w-[100px] h-[100px] object-contain" />
@@ -35,7 +41,7 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
           </p>
         )}
 
-        {!isLoading && products.length > 0 && products.map((product) => <FundCard 
+        {address && !isLoading && products.length > 0 && products.map((product) => <FundCard 
           key={product.pId}
           {...product}
           handleClick={() =>  handleNavigate(product)}

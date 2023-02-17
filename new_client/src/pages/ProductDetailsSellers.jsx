@@ -10,33 +10,41 @@ import { thirdweb } from '../assets';
 
 const ProductDetailsSellers = () => {
 
-    const { state } = useLocation();
-    const keyword = state.name;
-    const gifUrl = useFetch({ keyword });
-    const {observeBuyers,  contract, address,connect, stopProduct } = useStateContext();  
-    const [isLoading, setIsLoading] = useState(false);
-    const [buyers, setBuyers] = useState([]);
+  const { state } = useLocation();
+  const keyword = state.name;
+  const gifUrl = useFetch({ keyword });
+  const {observeBuyers,  contract, address, stopProduct, rejectPurchase } = useStateContext();  
+  const [isLoading, setIsLoading] = useState(false);
+  const [buyers, setBuyers] = useState([]);
 
-    const fetchBuyers = async () => {
-      setIsLoading(true);
-      console.log(address);
-      console.log(state.seller)
-      console.log(state.pId)
-      // const data = await observeBuyers(state.pId);
+  const fetchBuyers = async () => {
+    setIsLoading(true);
+    console.log(address);
+    console.log(state.seller)
+    console.log(state.pId)
+    // const data = await observeBuyers(state.pId);
+    // setBuyers(data);
+    setIsLoading(false);
+    }
+  
+  useEffect(() => {
+    if(contract) fetchBuyers();
+  }, [contract, address])
 
-      // setBuyers(data);
-      setIsLoading(false);
-      }
-    
-      useEffect(() => {
-        if(contract) fetchBuyers();
-      }, [contract, address])
-    
-      const handleStopProduct = async () => {
-        setIsLoading(true);
-        const data = await stopProduct(state.pId);
-        setIsLoading(false);
-      }
+  const handleStopProduct = async () => {
+    setIsLoading(true);
+    const data = await stopProduct(state.pId);
+    setIsLoading(false);
+  }
+
+  const handleReject = async () => {
+    setIsLoading(true);
+    await rejectPurchase(
+      state.pId,
+      buyers,
+    ); 
+    setIsLoading(false);
+  }
 
 
     return (
@@ -88,8 +96,8 @@ const ProductDetailsSellers = () => {
             </div>
   
             <div>
-              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Buyers</h4>
-  
+              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Buyers</h4>
+              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Past Buyers</h4>
                 {/* <div className="mt-[20px] flex flex-col gap-4">
                   {donators.length > 0 ? donators.map((item, index) => (
                     <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
@@ -101,11 +109,40 @@ const ProductDetailsSellers = () => {
                   )}
                 </div> */}
             </div>
+            {state.amt != 0 && (
+              <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+              <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+                Suspicious Buyer
+              </p>
+              {state.amt != 0 && (
+                <div className="mt-[30px]">
+                  <input 
+                    type="text"
+                    placeholder="Buyer to reject"
+                    step="0.01"
+                    className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                    value={buyers}
+                    onChange={(e) => setBuyers(e.target.value)}
+                  />    
+                  <CustomButton 
+                    btnType="button"
+                    title="Reject Buyer"
+                    styles="w-full bg-[#8c6dfd]"
+                    handleClick={handleReject}
+                  />
+                </div>             
+    
+                )}
+                {state.amt === 0 && (
+                  <h1 className="font-epilogue font-semibold text-[20px] leading-[22px] text-white">Products ran out</h1>
+                )}
+            </div>
+            )}
             <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
             <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
               Product current state
             </p>
-            {state.amt != 0 && (
+            {state.amt != 0 && (              
                 <button
                 type="button"
                 onClick={handleStopProduct}
@@ -116,12 +153,12 @@ const ProductDetailsSellers = () => {
                 </p>                
                 </button>
               )}
-              {state.amt === 0 && (
-  
+
+            {state.amt === 0 && (  
               <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
               <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Product already sold out</h4>
               </div>
-              )}
+            )}
             </div>
             
             <div className="flex-1"> 

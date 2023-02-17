@@ -11,9 +11,6 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
   const {address} = useStateContext();
   const parsedProducts = products.filter((product) => product.status > 0); 
 
-  console.log(parsedProducts)
-
-
   // code readability
   // go to product details
   const handleNavigate = (product) => {

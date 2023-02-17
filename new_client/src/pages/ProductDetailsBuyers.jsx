@@ -31,7 +31,7 @@ const ProductDetailsBuyers = () => {
       if(contract) fetchDonators();
     }, [contract, address])
   
-    const handleDonate = async () => {
+    const handleBuy = async () => {
       setIsLoading(true);
       await buyProduct(
         state.pId,
@@ -103,7 +103,8 @@ const ProductDetailsBuyers = () => {
           <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Shop</h4>   
 
 
-        {state.status == 0 && (<div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+        {state.status == 0 && (
+        <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
             Buy this product
           </p>
@@ -127,7 +128,7 @@ const ProductDetailsBuyers = () => {
                 btnType="button"
                 title="Buy Product"
                 styles="w-full bg-[#8c6dfd]"
-                handleClick={handleDonate}
+                handleClick={handleBuy}
               />
             </div>             
 
