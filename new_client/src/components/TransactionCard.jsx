@@ -71,9 +71,10 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
       </div>
 
       {/* Need to redesign this       */}
-      <div className="lg:p-1 sm:my-5 sm:align-middle sm:max-w-xl sm:w-full">
-        <div className="justify-between w-full mx-auto mt-4 overflow-hidden rounded-lg wt-10 sm:flex green-glassmorphism">
-          <div className="flex flex-row w-full">
+      <div className="lg:p-5 lg:align-middle sm:my-2 sm:align-middle sm:max-w-xl sm:w-full">
+        {/*   */}
+        <div className="justify-between rounded-3xl w-10/12 mx-auto mt-auto overflow-hidden wt-10 sm:flex bg-white">
+          {/* <div className="flex flex-row w-full "> */}
             {status===1 && (
               // <div
               // className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
@@ -87,11 +88,11 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
               <button
               type="button"
               onClick={handleCancelBuy} 
-              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
-                <p className="text-white text-base font-semibold">
+                {/* <p className="text-black text-base font-semibold"> */}
                   Reject Your Purchase
-                </p>                
+                {/* </p>                 */}
               </button>           
             )}
 
@@ -99,36 +100,33 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
               <button
               type="button"
               onClick={handleApproveReceipt} 
-              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
-                <p className="text-white text-base font-semibold">
+                {/* <p className="text-black text-base font-semibold"> */}
                   Approve Your Receipt
-                </p>                
+                {/* </p>                 */}
               </button>
             )}
 
             {status===3 && (
               <div
-              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
-                <p className="text-white text-base font-semibold">
-                  You already cancelled to Buy or Seller did not want to sell
-                </p>                
+                {/* <p className="text-black text-base font-semibold"> */}
+                  You already cancelled to buy or Seller did not want to sell
+                {/* </p>                 */}
               </div>
             )}
             {status===4 && (
               <div
-              className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
+              className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
-                <p className="text-white text-base font-semibold">
-                  You already Bought this product
-                </p>                
+                {/* <p className="text-black text-base font-bold hover:text-white"> */}
+                  Already bought this product
+                {/* </p>                 */}
               </div>
             )}
-              <Link to="/cart" className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm">
-                Reject Buyer
-              </Link>
-          </div>
+          {/* </div> */}
         </div>
       </div> 
       
