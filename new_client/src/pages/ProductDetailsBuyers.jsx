@@ -22,13 +22,13 @@ const ProductDetailsBuyers = () => {
     review: '',
   });
 
-  const fetchDonators = async () => {
+  const fetchBuyers = async () => {
       // const data = await getDonations(state.pId);
   
       // setDonators(data);
     }    
     useEffect(() => {
-      if(contract) fetchDonators();
+      if(contract) fetchBuyers();
     }, [contract, address])
   
     const handleBuy = async () => {
@@ -50,6 +50,9 @@ const ProductDetailsBuyers = () => {
       setIsLoading(false);
     }
 
+    const handleFormFieldChange = (fieldName, e) => {
+      setForm({ ...form, [fieldName]: e.target.value })
+  }
 
   return (
       <div>
@@ -69,7 +72,7 @@ const ProductDetailsBuyers = () => {
         <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[20px]">
           <CountBox title={`Price in ETH`} value={state.price} />
           <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
-          <CountBox title={`Out of 5 Stars`} value={state.rating} />
+          <CountBox title={`Out of 5 Stars`} value={state.avg_rating} />
         </div>
       </div>
 
@@ -150,15 +153,15 @@ const ProductDetailsBuyers = () => {
                       labelName="Rating *"
                       placeholder="out of 5"
                       inputType="number"
-                      value={form.amt}
-                      handleChange={(e) => handleFormFieldChange('amt', e)}
+                      value={form.rate}
+                      handleChange={(e) => handleFormFieldChange('rate', e)}
                   />
                   <FormField 
                   labelName="Review *"
                   placeholder="Product Review "
                   isTextArea
                   value={form.review}
-                  handleChange={(e) => handleFormFieldChange('description', e)}
+                  handleChange={(e) => handleFormFieldChange('review', e)}
                   />
               <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
@@ -180,8 +183,14 @@ const ProductDetailsBuyers = () => {
         </div>
         </form>
         )}
+        
 
         </div> 
+          <h1 className="font-epilogue font-semibold text-[20px] text-white uppercase">Reviews</h1>
+          <div  className="w-2/12">
+            {address && !isLoading && state.ratings.map((x) => x
+          )}
+          </div>
         </div>
       </div>
     </div>        

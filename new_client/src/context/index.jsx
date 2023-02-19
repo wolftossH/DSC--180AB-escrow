@@ -39,8 +39,21 @@ export const StateContextProvider = ({ children }) => {
       amt: product.amt.toNumber(),
       init_amt: product.init_amt.toNumber(),
       cancelled: product.cancelled,
-      rating: product.rating,
+      rating: product.total_ratings.toNumber(),
       pId: i,
+      reviews: product.reviews,
+      ratings: product.ratings.map(x => x.toNumber()),
+
+      avg_rating: (
+        [product.ratings.map(x => x.toNumber()).reduce((partialSum, a) => partialSum + a, 0)
+          /product.total_ratings.toNumber()].map(x => {
+          if (isNaN(x))
+            return undefined
+          else
+            return x
+        }
+      )[0]
+      )
     }));
     return parsedProducts;
   }
@@ -85,6 +98,9 @@ export const StateContextProvider = ({ children }) => {
         rating: product.rating,
         pId: i,
         status: await getStatus(i, buyer_id),
+        reviews: product.reviews,
+        ratings: product.ratings,
+        avg_rating: product.avg_rating,
       }
   }));
     const filteredCampaigns = parsedProducts.filter((product) => product.status > 0);
