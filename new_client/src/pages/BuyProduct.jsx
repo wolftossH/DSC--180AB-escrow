@@ -11,9 +11,13 @@ const BuyProduct = () => {
 
   const fetchProducts = async () => {
     setIsLoading(true);
-    const data = await getModProducts(address);
-    setProducts(data);
-    setIsLoading(false);
+
+    if(address) {
+      const data = await getModProducts(address);
+      setProducts(data);
+      setIsLoading(false);
+    }
+
   }
 
   useEffect(() => {

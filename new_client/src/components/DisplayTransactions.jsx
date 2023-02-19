@@ -9,6 +9,7 @@ import { useStateContext } from '../context';
 const DisplayTransactions = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
   const {address} = useStateContext();
+
   const parsedProducts = products.filter((product) => product.status > 0); 
 
   // code readability

@@ -14,7 +14,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
   const gifUrl = useFetch({ keyword });
-  const kw = 'Escrow'
+  // const kw = 'Escrow'
   const cryptoGif = useFetch({ keyword });
   const [isLoading, setIsLoading] = useState(false);
 
@@ -22,12 +22,10 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
   const { state } = useLocation();
   const {address, getStatus, cancelBuy, approveReceipt } = useStateContext();
 
-  const getUserStatus = async () => {    
-    const status = await getStatus(pId, seller)
-    return status
-  }
-
-  // console.log(getUserStatus)
+  // const getUserStatus = async () => {    
+  //   const status = await getStatus(pId, seller)
+  //   return status
+  // }
 
   const handleCancelBuy = async () => {
     setIsLoading(true)
