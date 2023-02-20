@@ -25,7 +25,7 @@ contract Store {
         uint[] ratings;
     }
 
-    enum PurchaseState {Default, Started, Confirmed, Rejected, Finalized}
+    enum PurchaseState {Default, Started, Confirmed, Rejected, Cancelled, Finalized, Reviewed}
 
     uint public numProducts;
     Product[] public products;
@@ -43,9 +43,9 @@ contract Store {
         uint amt
     ) public payable {
         // Ensure that the seller has enough balance to sell
-        require(address(msg.sender).balance > price * 1 ether, "Not enough balance to sell");
+        require(address(msg.sender).balance > price, "Not enough balance to sell");
         // Ensure that the value sent is equal to the price
-        require(msg.value == price * 1 ether, "Value must be equal to price");
+        require(msg.value == price, "Value must be equal to price");
         // Ensure that the price is bigger than 0
         require(price > 0, "Price must be bigger than 0");
         // Ensure that the amount is bigger than 0
@@ -57,14 +57,14 @@ contract Store {
         // Add information about the new product
         newProduct.name = name;
         newProduct.description = description;
-        newProduct.price = price * 1 ether;
-        newProduct.value_escrow = price * 2 ether;   
+        newProduct.price = price;
+        newProduct.value_escrow = price * 2;   
         newProduct.amt = amt;
         newProduct.init_amt = amt;
         // newProduct.seller = address(msg.sender);
         newProduct.seller = _seller;
         newProduct.cancelled = false;
-        newProduct.deposit_fund = price * 1 ether;
+        newProduct.deposit_fund = price;
         newProduct.in_delivery = 0;
 
         products.push(newProduct);
@@ -192,7 +192,7 @@ contract Store {
         // Decrement the deposit fund by the escrow value
         curProd.deposit_fund -= curProd.value_escrow;
 
-        buyerStatus[product_id][address(msg.sender)]  = PurchaseState.Rejected; 
+        buyerStatus[product_id][address(msg.sender)] = PurchaseState.Cancelled; 
 
         curProd.amt ++;
     }
@@ -238,12 +238,6 @@ contract Store {
     function observeBuyers(
         uint product_id
     ) public view returns (address[] memory) {
-        // Retrieve the specified product from storage
-        Product storage curProd = products[product_id];
-
-        // Ensure that the caller is the seller of the product
-        require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
-        
         // Return the list of buyers for the specified product
         return buyers[product_id];
     }  
@@ -252,13 +246,6 @@ contract Store {
         uint product_id,
         address buyer
     ) public view returns (string memory) {
-        // Retrieve the specified product from storage
-        Product storage curProd = products[product_id];
-
-        // Ensure that the caller is the seller of the product
-        require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
-        
-        // Return the list of buyers for the specified product
         return buyers_ads[product_id][buyer];
     } 
 
@@ -295,6 +282,8 @@ contract Store {
         // Add the review and rating to the product's storage
         curProd.total_ratings ++;
         curProd.reviews.push(review);
-        curProd.ratings.push(rating);   
+        curProd.ratings.push(rating);
+
+        buyerStatus[product_id][address(msg.sender)] = PurchaseState.Reviewed;
     }
 }
