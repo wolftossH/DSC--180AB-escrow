@@ -25,7 +25,7 @@ contract Store {
         uint[] ratings;
     }
 
-    enum PurchaseState {Default, Started, Confirmed, Rejected, Finalized}
+    enum PurchaseState {Default, Started, Confirmed, Rejected, Cancelled, Finalized, Reviewed}
 
     uint public numProducts;
     Product[] public products;
@@ -192,7 +192,7 @@ contract Store {
         // Decrement the deposit fund by the escrow value
         curProd.deposit_fund -= curProd.value_escrow;
 
-        buyerStatus[product_id][address(msg.sender)]  = PurchaseState.Rejected; 
+        buyerStatus[product_id][address(msg.sender)] = PurchaseState.Cancelled; 
 
         curProd.amt ++;
     }
@@ -238,12 +238,6 @@ contract Store {
     function observeBuyers(
         uint product_id
     ) public view returns (address[] memory) {
-        // Retrieve the specified product from storage
-        Product storage curProd = products[product_id];
-
-        // Ensure that the caller is the seller of the product
-        require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
-        
         // Return the list of buyers for the specified product
         return buyers[product_id];
     }  
@@ -252,13 +246,6 @@ contract Store {
         uint product_id,
         address buyer
     ) public view returns (string memory) {
-        // Retrieve the specified product from storage
-        Product storage curProd = products[product_id];
-
-        // Ensure that the caller is the seller of the product
-        require(curProd.seller == address(msg.sender), "The caller must be the seller of the product.");
-        
-        // Return the list of buyers for the specified product
         return buyers_ads[product_id][buyer];
     } 
 
@@ -295,6 +282,8 @@ contract Store {
         // Add the review and rating to the product's storage
         curProd.total_ratings ++;
         curProd.reviews.push(review);
-        curProd.ratings.push(rating);   
+        curProd.ratings.push(rating);
+
+        buyerStatus[product_id][address(msg.sender)] = PurchaseState.Reviewed;
     }
 }

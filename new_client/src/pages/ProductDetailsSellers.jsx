@@ -11,22 +11,37 @@ import { thirdweb } from '../assets';
 const ProductDetailsSellers = () => {
 
   const { state } = useLocation();
+  console.log(state)
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
-  const {observeBuyers,  contract, address, stopProduct, rejectPurchase } = useStateContext();  
+  const {observeBuyers,  contract, address, stopProduct, approvePurchase, rejectPurchase, getDeliveryAddress} = useStateContext();  
   const [isLoading, setIsLoading] = useState(false);
+  const [reject_buyer, setRejectBuyer] = useState([]);
+  const [confirm_buyer, setConfirmBuyer] = useState([]);
   const [buyers, setBuyers] = useState([]);
 
+
+  const Default = 0
+  const Started = 1
+  const Confirmed = 2
+  const Rejected = 3
+  const Cancelled = 4
+  const Finalized = 5
+  const Reviewed = 6
+
   const fetchBuyers = async () => {
-    setIsLoading(true);
-    console.log(address);
-    console.log(state.seller)
-    console.log(state.pId)
-    // const data = await observeBuyers(state.pId);
-    // setBuyers(data);
-    setIsLoading(false);
+    const buyer_address = await observeBuyers(state.pId);
+    const delivery_addresses = await getDeliveryAddress(state.pId, buyer_address[0]);
+    const data = await Promise.all(buyer_address.map(async (key,index) => {
+        return {
+          buyer_address: key,
+          delivery_address: await  getDeliveryAddress(state.pId, key), 
+        }
+    }));
+    setBuyers(data);
     }
   
+
   useEffect(() => {
     if(contract) fetchBuyers();
   }, [contract, address])
@@ -41,7 +56,16 @@ const ProductDetailsSellers = () => {
     setIsLoading(true);
     await rejectPurchase(
       state.pId,
-      buyers,
+      reject_buyer,
+    ); 
+    setIsLoading(false);
+  }
+
+  const handleConfirm = async () => {
+    setIsLoading(true);
+    await approvePurchase(
+      state.pId,
+      confirm_buyer,
     ); 
     setIsLoading(false);
   }
@@ -97,20 +121,35 @@ const ProductDetailsSellers = () => {
   
             <div>
               <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Buyers</h4>
-              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Past Buyers</h4>
-                {/* <div className="mt-[20px] flex flex-col gap-4">
-                  {donators.length > 0 ? donators.map((item, index) => (
-                    <div key={`${item.donator}-${index}`} className="flex justify-between items-center gap-4">
-                      <p className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">{index + 1}. {item.donator}</p>
-                      <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+              <div>
+                {/* {address && !isLoading && state.ratings.length > 0 && state.ratings.map((x) => <FundCard 
+                key={x}
+                {...product}
+                />)} */}
+              </div>
+              <div className="mt-[20px] flex flex-col gap-4">
+                {buyers.length > 0 ? buyers.map((item, index) => (
+                  <div key={`${item}-${index}`} className="flex justify-between items-center gap-4">
+                    <div className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
+                      {index + 1}. {item.buyer_address}
+                      <div>
+                        Address: {item.delivery_address}
+                      </div> 
                     </div>
-                  )) : (
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No donators yet. Be the first one!</p>
-                  )}
-                </div> */}
+
+                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+                  </div>
+                )) : (
+                  <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No buyers yet.</p>
+                )}
+              </div>
+              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Past Buyers</h4>
+              
             </div>
+
+            <div className="flex flex-row w-full">
             {state.amt != 0 && (
-              <div className="mt-[10px] flex flex-col p-5 bg-[#1c1c24] rounded-[10px] ">
+              <div className="mt-[10px] w-1/2 flex flex-col p-5 bg-[#1c1c24] rounded-[10px] ">
               <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
                 Suspicious Buyer
               </p>
@@ -121,8 +160,8 @@ const ProductDetailsSellers = () => {
                     placeholder="Buyer to reject"
                     step="0.01"
                     className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
-                    value={buyers}
-                    onChange={(e) => setBuyers(e.target.value)}
+                    value={reject_buyer}
+                    onChange={(e) => setRejectBuyer(e.target.value)}
                   />    
                   <CustomButton 
                     btnType="button"
@@ -138,6 +177,38 @@ const ProductDetailsSellers = () => {
                 )}
             </div>
             )}
+
+{state.amt != 0 && (
+              <div className="mt-[10px] w-1/2 flex flex-col p-5 bg-[#1c1c24] rounded-[10px] ">
+              <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+                Good Buyers
+              </p>
+              {/* {state.amt != 0 && ( */}
+                <div className="mt-[30px]">
+                  <input 
+                    type="text"
+                    placeholder="Buyer to confirm"
+                    step="0.01"
+                    className="w-full py-[10px] sm:px-[20px] px-[15px] outline-none border-[1px] border-[#3a3a43] bg-transparent font-epilogue text-white text-[18px] leading-[30px] placeholder:text-[#4b5264] rounded-[10px]"
+                    value={confirm_buyer}
+                    onChange={(e) => setConfirmBuyer(e.target.value)}
+                  />    
+                  <CustomButton 
+                    btnType="button"
+                    title="Confirm Buyer"
+                    styles="w-full bg-[#8c6dfd]"
+                    handleClick={handleConfirm}
+                  />
+                </div>             
+    
+                {/* )} */}
+                {state.amt === 0 && (
+                  <h1 className="font-epilogue font-semibold text-[20px] leading-[22px] text-white">Products ran out</h1>
+                )}
+            </div>
+            )}
+            </div>
+
             <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[20px] w-full align-middle">
             <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
               Product current state

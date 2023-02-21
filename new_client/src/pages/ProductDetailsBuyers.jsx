@@ -8,12 +8,20 @@ import { CountBox, CustomButton, Loader, FormField } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 
 const ProductDetailsBuyers = () => {
+  const Default = 0
+  const Started = 1
+  const Confirmed = 2
+  const Rejected = 3
+  const Cancelled = 4
+  const Finalized = 5
+  const Reviewed = 6
+
   const { state } = useLocation();
 
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
   const navigate = useNavigate();
-  const {buyProduct,  contract, address } = useStateContext();
+  const {buyProduct,  contract, address, addRating} = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [delivery_address, setDelivery_address] = useState('');
@@ -21,6 +29,8 @@ const ProductDetailsBuyers = () => {
     rate: '',
     review: '',
   });
+
+  
 
   const fetchBuyers = async () => {
       // const data = await getDonations(state.pId);
@@ -39,13 +49,17 @@ const ProductDetailsBuyers = () => {
         ethers.utils.parseUnits(parseFloat(state.price*2).toString(), "ether")
       ); 
       setIsLoading(false);
+      navigate('/transactions');    
+
     }
 
     const handleRating = async (e) => {
       e.preventDefault();
       setIsLoading(true);
       await addRating(
-        {...form,}
+        state.pId,
+        Number(form.rate),
+        form.review,
       ); 
       setIsLoading(false);
     }
@@ -141,7 +155,7 @@ const ProductDetailsBuyers = () => {
             )}
         </div>)}
         
-        {state.status === 4 && (
+        {state.status === Finalized && (
         <form onSubmit={handleRating} className="w-full mt-[65px] flex flex-col gap-[30px]">
         <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
@@ -169,10 +183,9 @@ const ProductDetailsBuyers = () => {
               </div>
 
               <CustomButton 
-                btnType="button"
+                btnType="submit"
                 title="Rate it"
                 styles="w-full bg-[#8c6dfd]"
-
               />
             </div>             
 
@@ -184,12 +197,28 @@ const ProductDetailsBuyers = () => {
         </form>
         )}
         
+        {state.status === Reviewed && (
+        <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+        <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+          Rate this product
+        </p>
+          <div className="mt-[30px]">
+            <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
+              <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
+              <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">Thank you for rating us</p>
+            </div>
+          </div>
+      </div>
+        )}
 
+            
         </div> 
           <h1 className="font-epilogue font-semibold text-[20px] text-white uppercase">Reviews</h1>
           <div  className="w-2/12">
-            {address && !isLoading && state.ratings.map((x) => x
-          )}
+            {/* {address && !isLoading && (
+              state.ratings.map((x) => x)
+            )
+            } */}
           </div>
         </div>
       </div>

@@ -9,11 +9,12 @@ const StateContext = createContext({});
 
 export const StateContextProvider = ({ children }) => {
     const { contract } = useContract(
-        '0xC2fC0e412464F3e15Cac0Cd82F7459b3cA89D144'
+        '0x7a81D022CD5C8Fd3C818Cb3Ad09e2aD1bC4382Ac'
     );
+    // old contracts
+    // 0xC2fC0e412464F3e15Cac0Cd82F7459b3cA89D144
     // const { mutateAsync: createProduct } = useContractWrite(contract, 'createProduct');
-    const address = useAddress();
-    
+    const address = useAddress();    
     const connect = useMetamask();
     /* Finished createProduct */
     const publishProduct = async (form) => {
@@ -43,7 +44,6 @@ export const StateContextProvider = ({ children }) => {
       pId: i,
       reviews: product.reviews,
       ratings: product.ratings.map(x => x.toNumber()),
-
       avg_rating: (
         [product.ratings.map(x => x.toNumber()).reduce((partialSum, a) => partialSum + a, 0)
           /product.total_ratings.toNumber()].map(x => {
@@ -72,6 +72,7 @@ export const StateContextProvider = ({ children }) => {
         rating: product.rating,
         pId: i,
         status: await getStatus(i, buyer_id),
+        
       }
   }));
     return parsedProducts;
@@ -120,10 +121,8 @@ export const StateContextProvider = ({ children }) => {
   // Ongoing
   const observeBuyers = async (product_id) => {
     const products = await contract.call('observeBuyers', product_id);
-    const parsedBuyers = products.map((product, i) => ({
-      seller: product.buyer_ids,
-    }));
-    return parsedBuyers;
+
+    return products;
   }
 
 
@@ -177,6 +176,7 @@ export const StateContextProvider = ({ children }) => {
         product_id,
         buyer_id,
       );
+      return data
     }
   // Ongoing
   const getStatus = async (product_id, buyer_id) => {

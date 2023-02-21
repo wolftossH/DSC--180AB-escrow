@@ -22,6 +22,13 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
   const { state } = useLocation();
   const {address, getStatus, cancelBuy, approveReceipt } = useStateContext();
 
+  const Default = 0
+  const Started = 1
+  const Confirmed = 2
+  const Rejected = 3
+  const Cancelled = 4
+  const Finalized = 5
+  const Reviewed = 6
   // const getUserStatus = async () => {    
   //   const status = await getStatus(pId, seller)
   //   return status
@@ -73,7 +80,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
         {/*   */}
         <div className="justify-between rounded-3xl w-10/12 mx-auto mt-auto overflow-hidden wt-10 sm:flex bg-white">
           {/* <div className="flex flex-row w-full "> */}
-            {status===1 && (
+            {status===Started && (
               // <div
               // className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
               // >
@@ -94,7 +101,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
               </button>           
             )}
 
-            {status===2 && (
+            {status===Confirmed && (
               <button
               type="button"
               onClick={handleApproveReceipt} 
@@ -106,16 +113,26 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
               </button>
             )}
 
-            {status===3 && (
+            {status===Rejected && (
               <div
               className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
                 {/* <p className="text-black text-base font-semibold"> */}
-                  You already cancelled to buy or Seller did not want to sell
+                  You are Rejected
                 {/* </p>                 */}
               </div>
             )}
-            {status===4 && (
+
+            {status===Cancelled && (
+              <div
+              className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              >
+                {/* <p className="text-black text-base font-semibold"> */}
+                  Already Cancelled Your purchase
+                {/* </p>                 */}
+              </div>
+            )}
+            {status===Finalized && (
               <div
               className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >

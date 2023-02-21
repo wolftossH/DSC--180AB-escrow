@@ -69,20 +69,20 @@ const CreateProduct = () => {
                     handleChange={(e) => handleFormFieldChange('name', e)}
                     />
                     <div className="flex flex-wrap gap-[40px]">
-                    <FormField 
-                        labelName="Price *"
-                        placeholder="ETH 0.50"
-                        inputType="number"
-                        value={form.price}
-                        handleChange={(e) => handleFormFieldChange('price', e)}
-                    />
-                    <FormField 
-                        labelName="Amount *"
-                        placeholder="Amount"
-                        inputType="number"
-                        value={form.amt}
-                        handleChange={(e) => handleFormFieldChange('amt', e)}
-                    />
+                        <FormField 
+                            labelName="Price *"
+                            placeholder="ETH 0.50"
+                            inputType="number"
+                            value={form.price}
+                            handleChange={(e) => handleFormFieldChange('price', e)}
+                        />
+                        <FormField 
+                            labelName="Amount *"
+                            placeholder="Amount"
+                            inputType="number"
+                            value={form.amt}
+                            handleChange={(e) => handleFormFieldChange('amt', e)}
+                        />
                     </div>
                 </div>
                     <FormField 
