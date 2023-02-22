@@ -164,7 +164,7 @@ const ProductDetailsSellers = () => {
             </div>
 
             <div className="flex flex-row w-full">
-            {state.amt != 0 && (
+            {buyers.length != 0  && (
               <div className="mt-[10px] w-1/2 flex flex-col p-5 bg-[#1c1c24] rounded-[10px] ">
               <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
                 Suspicious Buyer
@@ -194,7 +194,7 @@ const ProductDetailsSellers = () => {
             </div>
             )}
 
-{state.amt != 0 && (
+{buyers.length != 0 && (
               <div className="mt-[10px] w-1/2 flex flex-col p-5 bg-[#1c1c24] rounded-[10px] ">
               <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
                 Good Buyers

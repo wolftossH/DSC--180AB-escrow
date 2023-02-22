@@ -19,7 +19,6 @@ const ProductDetailsBuyers = () => {
   const { state } = useLocation();
   console.log(state)
 
-
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
   const navigate = useNavigate();
@@ -34,6 +33,8 @@ const ProductDetailsBuyers = () => {
   });
 
   const [ratings, setRatings] = useState([]);
+  const [buyers, setBuyers] = useState([]);
+  const [pastBuyers, setPastBuyers] = useState([]);
 
   const review_ratings = state.reviews.map(function(e, i) {
     return [e, state.ratings[i],i];
@@ -46,12 +47,15 @@ const ProductDetailsBuyers = () => {
     // const buyer_address = await observeBuyers(state.pId);
     // const data = await Promise.all(buyer_address.map(async (key,index) => {
     //     return {
-    //       buyer_address: key, 
-    //       buyer_status: await getStatus(state.pId, key)          
+    //       buyer_address: key,
+    //       delivery_address: await  getDeliveryAddress(state.pId, key), 
+    //       buyer_status: await getStatus(state.pId, key)
     //     }
     // }));
-
-    // setRatings(past);
+    // const past = data.filter((buyer) => buyer.buyer_status > 1)
+    // const curr = data.filter((buyer) => buyer.buyer_status == 1)
+    // setBuyers(curr);
+    // setPastBuyers(past);
   }
     useEffect(() => {
       if(contract) fetchBuyers();
@@ -177,7 +181,7 @@ const ProductDetailsBuyers = () => {
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
             Rate this product
           </p>
-          {state.amt != 0 && (
+          {(
             <div className="mt-[30px]">
                   <FormField 
                       labelName="Rating *"
@@ -205,9 +209,6 @@ const ProductDetailsBuyers = () => {
               />
             </div>             
 
-            )}
-            {state.amt === 0 && (
-              <h1 className="font-epilogue font-semibold text-[20px] leading-[22px] text-white">Products ran out</h1>
             )}
         </div>
         </form>

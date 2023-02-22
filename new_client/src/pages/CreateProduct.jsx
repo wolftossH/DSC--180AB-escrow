@@ -14,8 +14,8 @@ const CreateProduct = () => {
     const [form, setForm] = useState({
       name: '',
       description: '',
-      price: '', 
-      image: '',
+      price: '',
+      amt: '', 
       deposit: ''
     });
 
@@ -52,19 +52,15 @@ const CreateProduct = () => {
     const handleFormFieldChange = (fieldName, e) => {
         setForm({ ...form, [fieldName]: e.target.value })
     }
-    const [formParams, updateFormParams] = useState({ name: '', description: '', reserve: '', time: ''});
 
     return (
-        <div className="flex flex-col place-items-center mt-10">
-            <form className="bg-[#11192e] shadow-md rounded-2xl px-10 pb-10 mb-4">
+        <div className="flex flex-col place-items-center mt-10">                
+            <form className="bg-[#11192e] shadow-md rounded-2xl px-10 pb-10 mb-4" onSubmit={handleSubmit}>
                 <div className="flex flex-col place-items-center mt-5 mb-5 ">
-                    {/* <div className="bg-[#3a3a43] shadow-md rounded-2xl px-10 pt-4 pb-4 mb-4"> */}
                     <p className="font-bold text-[28px] leading-[40px] text-white">
                         Sell a Product
                     </p>
-                    {/* </div> */}
                 </div>
-            {/* <h3 className="text-center font-bold text-[#fcfdff] mb-8">Upload your NFT to the marketplace</h3> */}
             <div className="mb-4">
                 <FormField 
                 labelName="Your Product *"
@@ -109,12 +105,6 @@ const CreateProduct = () => {
                     </h4>
                 </div>
             </div>
-            {/* <div className="flex justify-start items-center p-4 bg-[#e587ed] h-[100px] rounded-[20px]">
-                <img src={money} alt="money" className="w-[40px] h-[40px] object-contain"/>
-                <h4 className="font-epilogue font-bold text-[25px] text-white ml-[20px]">
-                    You have to deposit 1x the amount
-                </h4>
-            </div> */}
             <div className="mb-5 mt-5">
             <FormField 
             labelName="Deposit *"
@@ -125,11 +115,11 @@ const CreateProduct = () => {
             />
             </div>
 
-            <br></br>
+       
             <div className="flex justify-center items-center mt-[40px]">
             <CustomButton 
                 btnType="submit"
-                title="Submit new campaign"
+                title="Create a new product"
                 styles="bg-[#1dc071]"
                 />
             </div>
