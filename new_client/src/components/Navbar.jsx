@@ -32,7 +32,7 @@ return (
     <nav className="w-full flex md:justify-center justify-between items-center p-5">      
       <div className="mf:flex-[0.9] flex-initial justify-center items-center">
         <img src={logo} alt="logo" className="w-32 cursor-pointer" />
-        <Link to="/" className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer"> 
+        <Link to="/" className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient  text-white cursor-pointer"> 
           Escryptow
         </Link>
         {/* <p className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer">

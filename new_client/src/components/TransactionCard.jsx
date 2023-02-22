@@ -137,7 +137,17 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
               className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
                 {/* <p className="text-black text-base font-bold hover:text-white"> */}
-                  Already bought this product
+                  Like it! Please review.
+                {/* </p>                 */}
+              </div>
+            )}
+
+            {status===Reviewed && (
+              <div
+              className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              >
+                {/* <p className="text-black text-base font-bold hover:text-white"> */}
+                  Thanks for your Review
                 {/* </p>                 */}
               </div>
             )}
