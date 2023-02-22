@@ -17,6 +17,8 @@ const ProductDetailsBuyers = () => {
   const Reviewed = 6
 
   const { state } = useLocation();
+  console.log(state)
+
 
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });

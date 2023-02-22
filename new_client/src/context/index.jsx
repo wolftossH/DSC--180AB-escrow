@@ -65,14 +65,16 @@ export const StateContextProvider = ({ children }) => {
         seller: product.seller,
         name: product.name,
         description: product.description,
-        price: product.price,
+        price:product.price,
         amt: product.amt,
         init_amt: product.init_amt,
         cancelled: product.cancelled,
         rating: product.rating,
         pId: i,
         status: await getStatus(i, buyer_id),
-        
+        reviews: product.reviews,
+        ratings: product.ratings,
+        avg_rating: product.avg_rating,        
       }
   }));
     return parsedProducts;

@@ -89,7 +89,7 @@ const ProductDetailsSellers = () => {
           <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[70px]">
             <CountBox title={`Price in ETH`} value={state.price} />
             <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
-            <CountBox title={`Out of 5 Stars`} value={state.rating} />
+            <CountBox title={`Out of 5 Stars`} value={state.avg_rating} />
           </div>
         </div>
   

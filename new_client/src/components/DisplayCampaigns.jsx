@@ -1,7 +1,7 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 
-import FundCard from './FundCard';
+import ProductCard from './ProductCard';
 import { loader } from '../assets';
 import { useStateContext } from '../context';
 
@@ -41,7 +41,7 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
           </p>
         )}
 
-        {address && !isLoading && products.length > 0 && products.map((product) => <FundCard 
+        {address && !isLoading && products.length > 0 && products.map((product) => <ProductCard 
           key={product.pId}
           {...product}
           handleClick={() =>  handleNavigate(product)}

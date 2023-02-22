@@ -96,7 +96,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
               className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
                 {/* <p className="text-black text-base font-semibold"> */}
-                  Reject Your Purchase
+                  Refuse to Purchase
                 {/* </p>                 */}
               </button>           
             )}
