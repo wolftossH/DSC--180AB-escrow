@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import useFetch from "../hooks/gifGen";
 
 import { useStateContext } from '../context';
-import { CountBox, CustomButton, Loader, FormField } from '../components';
+import { CountBox, CustomButton, Loader, FormField, ReviewCard } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 
 const ProductDetailsBuyers = () => {
@@ -23,7 +23,8 @@ const ProductDetailsBuyers = () => {
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
   const navigate = useNavigate();
-  const {buyProduct,  contract, address, addRating} = useStateContext();
+  const {buyProduct,  contract, address,
+    addRating, observeBuyers, getStatus} = useStateContext();
 
   const [isLoading, setIsLoading] = useState(false);
   const [delivery_address, setDelivery_address] = useState('');
@@ -32,13 +33,26 @@ const ProductDetailsBuyers = () => {
     review: '',
   });
 
+  const [ratings, setRatings] = useState([]);
+
+  const review_ratings = state.reviews.map(function(e, i) {
+    return [e, state.ratings[i],i];
+  });
+  console.log(review_ratings)
+
   
 
   const fetchBuyers = async () => {
-      // const data = await getDonations(state.pId);
-  
-      // setDonators(data);
-    }    
+    // const buyer_address = await observeBuyers(state.pId);
+    // const data = await Promise.all(buyer_address.map(async (key,index) => {
+    //     return {
+    //       buyer_address: key, 
+    //       buyer_status: await getStatus(state.pId, key)          
+    //     }
+    // }));
+
+    // setRatings(past);
+  }
     useEffect(() => {
       if(contract) fetchBuyers();
     }, [contract, address])
@@ -217,10 +231,11 @@ const ProductDetailsBuyers = () => {
         </div> 
           <h1 className="font-epilogue font-semibold text-[20px] text-white uppercase">Reviews</h1>
           <div  className="w-2/12">
-            {/* {address && !isLoading && (
-              state.ratings.map((x) => x)
-            )
-            } */}
+          {review_ratings.length > 0 && review_ratings.map((review, i) => <ReviewCard 
+          key={i}
+          {...review}
+          handleClick={() =>  handleNavigate(product)}
+        />)}
           </div>
         </div>
       </div>

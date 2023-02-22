@@ -31,7 +31,6 @@ const ProductDetailsSellers = () => {
 
   const fetchBuyers = async () => {
     const buyer_address = await observeBuyers(state.pId);
-    const delivery_addresses = await getDeliveryAddress(state.pId, buyer_address[0]);
     const data = await Promise.all(buyer_address.map(async (key,index) => {
         return {
           buyer_address: key,

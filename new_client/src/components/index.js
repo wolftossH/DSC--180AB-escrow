@@ -12,6 +12,8 @@ export { default as DisplayTransactions } from './DisplayTransactions';
 // export { default as ShowBuyers } from './ShowBuyers';
 
 export { default as ProductCard } from './ProductCard';
+export { default as ReviewCard } from './ReviewCard';
+
 export { default as TransactionCard } from './TransactionCard';
 
 export { default as CountBox } from './CountBox';
