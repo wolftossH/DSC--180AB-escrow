@@ -14,12 +14,12 @@ const ProductDetailsSellers = () => {
   console.log(state)
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
-  const {observeBuyers,  contract, address, stopProduct, approvePurchase, rejectPurchase, getDeliveryAddress} = useStateContext();  
+  const {observeBuyers,  contract, address, stopProduct, approvePurchase, rejectPurchase, getDeliveryAddress, getStatus} = useStateContext();  
   const [isLoading, setIsLoading] = useState(false);
   const [reject_buyer, setRejectBuyer] = useState([]);
   const [confirm_buyer, setConfirmBuyer] = useState([]);
   const [buyers, setBuyers] = useState([]);
-
+  const [pastBuyers, setPastBuyers] = useState([]);
 
   const Default = 0
   const Started = 1
@@ -36,11 +36,15 @@ const ProductDetailsSellers = () => {
         return {
           buyer_address: key,
           delivery_address: await  getDeliveryAddress(state.pId, key), 
+          buyer_status: await getStatus(state.pId, key)
         }
     }));
-    setBuyers(data);
-    }
-  
+    const past = data.filter((buyer) => buyer.buyer_status > 1)
+    const curr = data.filter((buyer) => buyer.buyer_status == 1)
+    setBuyers(curr);
+    setPastBuyers(past);
+  }
+
 
   useEffect(() => {
     if(contract) fetchBuyers();
@@ -120,7 +124,7 @@ const ProductDetailsSellers = () => {
             </div>
   
             <div>
-              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Buyers</h4>
+              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Waiting Buyers</h4>
               <div>
                 {/* {address && !isLoading && state.ratings.length > 0 && state.ratings.map((x) => <FundCard 
                 key={x}
@@ -144,7 +148,20 @@ const ProductDetailsSellers = () => {
                 )}
               </div>
               <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Past Buyers</h4>
-              
+              {pastBuyers.length > 0 ? pastBuyers.map((item, index) => (
+                  <div key={`${item}-${index}`} className="flex justify-between items-center gap-4">
+                    <div className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
+                      {index + 1}. {item.buyer_address}
+                      <div>
+                        Address: {item.delivery_address}
+                      </div> 
+                    </div>
+
+                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+                  </div>
+                )) : (
+                  <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No buyers yet.</p>
+                )}
             </div>
 
             <div className="flex flex-row w-full">
