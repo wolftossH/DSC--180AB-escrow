@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { DisplayCampaigns } from '../components';
+import { DisplayProducts } from '../components';
 import { useStateContext } from '../context/index.jsx'
 
 const BuyProduct = () => {
@@ -25,7 +25,7 @@ const BuyProduct = () => {
   }, [address, contract]);
 
   return (
-    <DisplayCampaigns 
+    <DisplayProducts 
       title="All Products"
       isLoading={isLoading}
       products={products}

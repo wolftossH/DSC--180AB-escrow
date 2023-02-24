@@ -6,7 +6,7 @@ import { loader } from '../assets';
 import { useStateContext } from '../context';
 
 
-const DisplayCampaigns = ({ title, isLoading, products }) => {
+const DisplayProducts = ({ title, isLoading, products }) => {
   const navigate = useNavigate();
   const {address } = useStateContext();
 
@@ -51,4 +51,4 @@ const DisplayCampaigns = ({ title, isLoading, products }) => {
   )
 }
 
-export default DisplayCampaigns
+export default DisplayProducts

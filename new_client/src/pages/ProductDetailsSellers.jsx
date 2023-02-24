@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import useFetch from "../hooks/gifGen";
 
 import { useStateContext } from '../context';
-import { CountBox, CustomButton, Loader } from '../components';
+import { CountBox, CustomButton, Loader, ReviewCard } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 import { thirdweb } from '../assets';
 
@@ -44,6 +44,9 @@ const ProductDetailsSellers = () => {
     setPastBuyers(past);
   }
 
+  const review_ratings = state.reviews.map(function(e, i) {
+    return [e, state.ratings[i],i];
+  });
 
   useEffect(() => {
     if(contract) fetchBuyers();
@@ -92,7 +95,7 @@ const ProductDetailsSellers = () => {
           <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[70px]">
             <CountBox title={`Price in ETH`} value={state.price} />
             <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
-            <CountBox title={`Out of 5 Stars`} value={state.avg_rating} />
+            <CountBox title={`Out of 5 Stars`} value={state.avg_rating.toFixed(2)} />
           </div>
         </div>
   
@@ -224,6 +227,14 @@ const ProductDetailsSellers = () => {
             </div>
             )}
             </div>
+            <h1 className="font-epilogue font-semibold text-[30px] text-white uppercase">Reviews</h1>
+          <div  className="w-full flex flex-wrap mt-[20px] gap-[26px]">
+            {review_ratings.length > 0 && review_ratings.map((review, i) => <ReviewCard 
+            key={i}
+            {...review}
+            handleClick={() =>  handleNavigate(product)}
+          />)}
+          </div>
 
             <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[20px] w-full align-middle">
             <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">

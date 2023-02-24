@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 
-import { DisplayCampaigns } from '../components';
+import { DisplayProducts } from '../components';
 import { useStateContext } from '../context'
 
 const Profile = () => {
@@ -21,8 +21,8 @@ const Profile = () => {
   }, [address, contract]);
 
   return (
-    <DisplayCampaigns 
-      title="All Campaigns"
+    <DisplayProducts 
+      title="Your Products"
       isLoading={isLoading}
       products={products}
     />

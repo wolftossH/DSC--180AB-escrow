@@ -7,7 +7,7 @@ export { default as Footer } from "./Footer";
 export { default as Services } from "./Services";
 export { default as CustomButton } from './CustomButton';
 export { default as FormField } from './FormField';
-export { default as DisplayCampaigns } from './DisplayCampaigns';
+export { default as DisplayProducts } from './DisplayProducts';
 export { default as DisplayTransactions } from './DisplayTransactions';
 // export { default as ShowBuyers } from './ShowBuyers';
 

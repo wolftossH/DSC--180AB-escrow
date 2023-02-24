@@ -110,66 +110,110 @@ export const StateContextProvider = ({ children }) => {
     return filteredCampaigns;
   }
 
-
+  const { mutateAsync: buyP } = useContractWrite(contract, "buyProduct")
   const buyProduct = async (product_id, delivery_address, deposit) => {
-    const data = await contract.call(
-      'buyProduct',
-      product_id,
-      delivery_address,
-      { value: ethers.utils.parseUnits(deposit.toString(), "wei")});
-    return data;
+    try {
+      const data = await buyP([ product_id, delivery_address,
+        { value: ethers.utils.parseUnits(deposit.toString(), "wei")} ]);
+      return data
+    } catch (err) {
+    }
+    // const data = await contract.call(
+    //   'buyProduct',
+    //   product_id,
+    //   delivery_address,
+    //   { value: ethers.utils.parseUnits(deposit.toString(), "wei")});
+    // return data;
   }
 
   // Ongoing
   const observeBuyers = async (product_id) => {
     const products = await contract.call('observeBuyers', product_id);
-
     return products;
   }
 
 
   // // Ongoing
+  const { mutateAsync: approveP} = useContractWrite(contract, "approvePurchase")
   const approvePurchase = async (product_id, buyer_id) => {
-    const data = await contract.call(
-      'approvePurchase',
-      product_id,
-      buyer_id,
-    );
-    return data;
+    try {
+      const data = await approveP([ product_id, buyer_id ]);
+      return data
+    } catch (err) {
+
+    }
+    // const data = await contract.call(
+    //   'approvePurchase',
+    //   product_id,
+    //   buyer_id,
+    // );
+    // return data;
   }
   // // Ongoing
+  const { mutateAsync: rejectP } = useContractWrite(contract, "rejectPurchase")
   const rejectPurchase = async (product_id, buyer_id) => {
-    const data = await contract.call(
-      'rejectPurchase',
-      product_id,
-      buyer_id,
-    );
-    return data;
+      try {
+        const data = await rejectP([ product_id, buyer_id ]);
+        return data;      
+      } 
+      catch (err) {
+        // console.error("contract call failure", err);
+      }
+    // const data = await contract.call(
+    //   'rejectPurchase',
+    //   product_id,
+    //   buyer_id,
+    // );
+    // return data;
   }
+
   // // Ongoing
+  const { mutateAsync: confirmReceipt } = useContractWrite(contract, "approveReceipt")
   const approveReceipt = async (product_id) => {
-    const data = await contract.call(
-      'approveReceipt',
-      product_id,
-    );
-    return data;
+    try {
+      const data = await confirmReceipt([ product_id ]);
+      return data;      
+    } 
+    catch (err) {
+
+    }
+    // const data = await contract.call(
+    //   'approveReceipt',
+    //   product_id,
+    // );
+    // console.log(data)
+    // return data;
   }
+
   // // Ongoing
+  const { mutateAsync: cancelB } = useContractWrite(contract, "cancelBuy")
   const cancelBuy = async (product_id) => {
-    const data = await contract.call(
-      'cancelBuy',
-      product_id,
-    );
-    return data;
+    try {
+      const data = await cancelB([ product_id ]);
+      return data;      
+    } 
+    catch (err) {
+
+    }
+    // const data = await contract.call(
+    //   'cancelBuy',
+    //   product_id,
+    // );
+    // return data;
   }
 
   // Finished with Retreive button
+  const { mutateAsync: stopP } = useContractWrite(contract, "stopProduct")
   const stopProduct = async (product_id) => {
-    const data = await contract.call(
-      'stopProduct',
-      product_id,
-    );
-
+    try {
+      const data = await stopP([ product_id ]);
+      return data
+    } catch (err) {
+    }
+    // const data = await contract.call(
+    //   'stopProduct',
+    //   product_id,
+    // );
   }
     // Ongoing
     const getDeliveryAddress = async (product_id, buyer_id) => {
@@ -191,13 +235,18 @@ export const StateContextProvider = ({ children }) => {
   }
   
   // Ongoing
+  const { mutateAsync: addR } = useContractWrite(contract, "addRating")
   const addRating = async (product_id, rating, review) => {
-    const data = await contract.call(
-      'addRating',
-      product_id,
-      rating,
-      review,
-    );
+    try {
+      const data = await addR([ product_id, rating, review ]);
+    } catch (err) {
+    }
+    // const data = await contract.call(
+    //   'addRating',
+    //   product_id,
+    //   rating,
+    //   review,
+    // );
   }
 
   return (

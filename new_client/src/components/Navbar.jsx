@@ -40,12 +40,15 @@ return (
         </p> */}
       </div>
       <ul className="text-white mf:flex hidden list-none flex-row justify-between items-center flex-initial">
-        {["About"].map((item, index) => (
+        {/* {["About"].map((item, index) => (
           <NavBarItem key={item + index} title={item} />
-        ))}
+        ))} */}
         {/* <li className="text-[#221C20] font-bold bg-[#8deef0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#7ae3e6]">
           Connect
         </li> */}
+        <Link to="/"  className="mr-5"> 
+          About
+        </Link>
         <Link to="/profile"> 
           Profile
         </Link>
@@ -71,9 +74,15 @@ return (
             flex flex-col justify-start items-end rounded-md blue-glassmorphism text-white animate-slide-in"
           >
             <li className="text-xl w-full my-2"><AiOutlineClose onClick={() => setToggleMenu(false)} /></li>
-            {["About"].map(
+            {/* {["About"].map(
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-3 text-lg" />,
-            )}
+            )} */}
+            <Link to="/"  className="mr-5 my-2 text-lg"> 
+              About
+            </Link>
+            <Link to="/profile" className="mr-5 text-lg"> 
+              Profile
+            </Link>
           </ul>
         )}
       </div>

@@ -17,7 +17,6 @@ const ProductDetailsBuyers = () => {
   const Reviewed = 6
 
   const { state } = useLocation();
-  console.log(state)
 
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
@@ -39,9 +38,7 @@ const ProductDetailsBuyers = () => {
   const review_ratings = state.reviews.map(function(e, i) {
     return [e, state.ratings[i],i];
   });
-  console.log(review_ratings)
-
-  
+ 
 
   const fetchBuyers = async () => {
     // const buyer_address = await observeBuyers(state.pId);
@@ -106,7 +103,7 @@ const ProductDetailsBuyers = () => {
         <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[20px]">
           <CountBox title={`Price in ETH`} value={state.price} />
           <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
-          <CountBox title={`Out of 5 Stars`} value={state.avg_rating} />
+          <CountBox title={`Out of 5 Stars`} value={state.avg_rating.toFixed(2)} />
         </div>
       </div>
 
@@ -139,7 +136,7 @@ const ProductDetailsBuyers = () => {
           <div className="flex-1">
           <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Shop</h4>   
 
-
+          
         {state.status == 0 && (
         <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
@@ -190,7 +187,7 @@ const ProductDetailsBuyers = () => {
                       value={form.rate}
                       handleChange={(e) => handleFormFieldChange('rate', e)}
                   />
-                  <FormField 
+                  <FormFizeld 
                   labelName="Review *"
                   placeholder="Product Review "
                   isTextArea
@@ -230,13 +227,13 @@ const ProductDetailsBuyers = () => {
 
             
         </div> 
-          <h1 className="font-epilogue font-semibold text-[20px] text-white uppercase">Reviews</h1>
-          <div  className="w-2/12">
-          {review_ratings.length > 0 && review_ratings.map((review, i) => <ReviewCard 
-          key={i}
-          {...review}
-          handleClick={() =>  handleNavigate(product)}
-        />)}
+          <h1 className="font-epilogue font-semibold text-[30px] text-white uppercase">Reviews</h1>
+          <div  className="w-full flex flex-wrap mt-[20px] gap-[26px]">
+            {review_ratings.length > 0 && review_ratings.map((review, i) => <ReviewCard 
+            key={i}
+            {...review}
+            handleClick={() =>  handleNavigate(product)}
+          />)}
           </div>
         </div>
       </div>

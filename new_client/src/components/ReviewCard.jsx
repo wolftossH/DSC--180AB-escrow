@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { tagType, thirdweb } from '../assets';
+import { star, tagType, thirdweb } from '../assets';
 import useFetch from "../hooks/gifGen";
 
 const ReviewCard = (reviews) => {
@@ -15,16 +15,17 @@ const ReviewCard = (reviews) => {
 
   
   return (
-    <div className="sm:w-[288px] w-full rounded-[15px] bg-[#1c1c24] cursor-pointer">
-      <div className="flex flex-col p-4">
-        <div className="flex flex-row items-center mb-[18px]">
-          <img src={tagType} alt="tag" className="w-[17px] h-[17px] object-contain"/>
-          <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#808191]">{rating}</p>
+    <div className="sm:w-[300px] h-fit w-full rounded-3xl bg-white mb-5 ml-5">
+      <div className="flex flex-col p-5">
+        <div className="flex flex-row items-center mb-[20px]">
+          
+          <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[30px] text-[#808191] mr-5">{rating}</p>
+          <img src={star} alt="tag" className="w-[35px] h-[30px] object-contain"/>
         </div>
 
         <div className="block">
-          <h3 className="font-epilogue font-semibold text-[16px] text-white text-left leading-[26px] truncate">{name}</h3>
-          <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[18px] truncate">{review}</p>
+          {/* <h3 className="font-epilogue font-semibold text-[16px] text-white text-left leading-[26px] truncate">{name}</h3> */}
+          <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[18px]">{review}</p>
         </div>
 
         {/* <div className="flex justify-between flex-wrap mt-[15px] gap-2">

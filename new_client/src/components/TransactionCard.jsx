@@ -6,6 +6,7 @@ import { useStateContext } from '../context';
 import { useLocation, useNavigate } from 'react-router-dom';
 
 import { Outlet, Link } from "react-router-dom";
+import { Loader } from '../components';
 
 
 
@@ -20,6 +21,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
 
 
   const { state } = useLocation();
+  const navigate = useNavigate();
   const {address, getStatus, cancelBuy, approveReceipt } = useStateContext();
 
   const Default = 0
@@ -38,18 +40,28 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
     setIsLoading(true)
     const data = await cancelBuy(pId);
     setIsLoading(false);
+    navigate(`/transactions`)
   }
 
   const handleApproveReceipt = async () => {
     setIsLoading(true)
     const data = await approveReceipt(pId);
+    
     setIsLoading(false);
+    navigate(`/transactions`)
   }
 
+  // const handleNavigate = (product) => {
+  //   if(product.seller === address)
+  //     navigate(`/product-details-seller/${product.name}`, { state: product })
+  //   else
+  //     navigate(`/product-details/${product.name}`, { state: product })
+  // }
+
   return (
-    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer" onClick={handleClick}>
-      <img src={gifUrl} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"/>
-      <div className="flex flex-col p-10">
+    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer">
+      <img src={gifUrl} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"  onClick={handleClick}/>
+      <div className="flex flex-col p-10"  onClick={handleClick}>
         <div className="flex flex-row items-center mb-[18px]">
           <img src={tagType} alt="tag" className="w-[17px] h-[17px] object-contain"/>
           <p className="ml-[12px] mt-[2px] font-epilogue font-medium text-[12px] text-[#808191]">Escrow</p>
@@ -80,6 +92,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
         {/*   */}
         <div className="justify-between rounded-3xl w-10/12 mx-auto mt-auto overflow-hidden wt-10 sm:flex bg-white">
           {/* <div className="flex flex-row w-full "> */}
+          {isLoading && <Loader />}
             {status===Started && (
               // <div
               // className="flex items-center justify-center px-4 py-4 text-base font-normal text-white border border-transparent lg:w-1/3 hover:bg-gray-800 sm:text-sm"
@@ -135,9 +148,10 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
             {status===Finalized && (
               <div
               className="flex items-center justify-center px-4 py-4 text-base font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              onClick={handleClick}
               >
                 {/* <p className="text-black text-base font-bold hover:text-white"> */}
-                  Like it! Please review.
+                  Like it! Please review
                 {/* </p>                 */}
               </div>
             )}
