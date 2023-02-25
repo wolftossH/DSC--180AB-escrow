@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-import { tagType, thirdweb } from '../assets';
+import { tagType } from '../assets';
 import useFetch from "../hooks/gifGen";
 import { useStateContext } from '../context';
 import { useLocation, useNavigate } from 'react-router-dom';

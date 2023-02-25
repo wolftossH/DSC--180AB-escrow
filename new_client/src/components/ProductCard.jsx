@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { tagType, thirdweb } from '../assets';
+import { tagType } from '../assets';
 import useFetch from "../hooks/gifGen";
 // import { daysLeft } from '../utils';
 

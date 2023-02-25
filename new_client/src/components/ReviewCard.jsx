@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { star, tagType, thirdweb } from '../assets';
+import { star } from '../assets';
 import useFetch from "../hooks/gifGen";
 
 const ReviewCard = (reviews) => {

@@ -3,7 +3,7 @@ import { HiMenuAlt4 } from "react-icons/hi";
 import { AiOutlineClose } from "react-icons/ai";
 import { ConnectWallet } from "@thirdweb-dev/react";
 import { useMetamask, useAddress } from "@thirdweb-dev/react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { useStateContext } from '../context';
 
 import { CustomButton } from './';
@@ -11,7 +11,7 @@ import { CustomButton } from './';
 
 
 
-import logo from "../../images/logo.png";
+import logo from "../../images/main_logo.png";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
@@ -24,17 +24,21 @@ const Navbar = () => {
     // const address = useAddress();
     // const connect = useMetamask();
     const { connect, address,getProducts } = useStateContext();
+    const navigate = useNavigate();
 
+    const handleClick = async () => {
+      navigate(`/`)
+    }
 
 
 return (
   
     <nav className="w-full flex md:justify-center justify-between items-center p-5">      
       <div className="mf:flex-[0.9] flex-initial justify-center items-center">
-        <img src={logo} alt="logo" className="w-32 cursor-pointer" />
-        <Link to="/" className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient  text-white cursor-pointer"> 
+        <img src={logo} alt="logo" className="w-56 cursor-pointer" onClick={handleClick}  />
+        {/* <Link to="/" className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient  text-white cursor-pointer"> 
           Escryptow
-        </Link>
+        </Link> */}
         {/* <p className="font-['futura'] font-semibold text-2xl sm:text-5xl text-gradient text-white cursor-pointer">
           Escryptow
         </p> */}

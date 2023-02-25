@@ -6,7 +6,7 @@ import useFetch from "../hooks/gifGen";
 import { useStateContext } from '../context';
 import { CountBox, CustomButton, Loader, ReviewCard } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
-import { thirdweb } from '../assets';
+// import { thirdweb } from '../assets';
 
 const ProductDetailsSellers = () => {
 
