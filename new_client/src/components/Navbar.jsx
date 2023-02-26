@@ -11,7 +11,7 @@ import { CustomButton } from './';
 
 
 
-import logo from "../../images/main_logo.png";
+import logo from "../../images/main_logo_2.png";
 
 const NavBarItem = ({ title, classprops }) => (
   <li className={`mx-4 cursor-pointer ${classprops}`}>{title}</li>
