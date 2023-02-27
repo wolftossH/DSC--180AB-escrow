@@ -89,8 +89,8 @@ const ProductDetailsBuyers = () => {
       <div>
       {isLoading && <Loader />}
 
-      <div className="w-full flex md:flex-row flex-col mt-5 gap-[15px]">
-        <div className="flex-1 flex-col">
+      <div className="flex md:flex-row flex-col mt-5 ml-10 gap-[15px]">
+        <div className="flex-auto flex-col">
           <img src={gifUrl} alt="product" className="w-11/12 h-[500px] object-cover rounded-xl"/>
           <div className="relative w-11/12  h-[5px] bg-[#3a3a43] mt-2">
             <div className="absolute h-full bg-[#4acd8d]" 
@@ -100,41 +100,42 @@ const ProductDetailsBuyers = () => {
           </div>
         </div>
 
-        <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[20px]">
+        <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[35px]">
           <CountBox title={`Price in ETH`} value={state.price} />
           <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
           <CountBox title={`Out of 5 Stars`} value={state.avg_rating?.toFixed(2)} />
         </div>
       </div>
 
-      <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
-        <div className="flex-[2] flex flex-col gap-[40px]">
+      {/* <div className="mt-[60px] flex lg:flex-row flex-col gap-5"> */}
+      <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
+        <div className="flex flex-col gap-[40px]">
           <div>
-            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
+            <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
               Seller
-            </h4>
+            </h3>
 
-            <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
-              <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
-                <img src="https://www.shutterstock.com/image-photo/seller-apron-market-260nw-720760306.jpg" alt="user" className="w-[60%] h-[60%] object-contain"/>
+            <div className="mt-5 flex items-center gap-[14px]">
+              <div className="w-[80px] h-[80px] flex items-center justify-center rounded-full shadow-2xl">
+                <img src={gifUrl} alt="user" className="w-[60%] h-[60%] object-contain"/>
               </div>
               <div>
-                <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state.seller}</h4>
-                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p>
+                <h4 className="font-epilogue font-semibold text-[16px] text-white break-all">{state.seller}</h4>
+                {/* <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p> */}
               </div>
             </div>
           </div>
 
           <div>
-            <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">Description</h4>
+            <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
 
               <div className="mt-[20px]">
-                <p className="font-epilogue font-normal text-[20px] text-[#808191] leading-[26px] text-justify">{state.description}</p>
+                <p className="font-epilogue font-bold text-[20px] text-black leading-[26px] text-justify">{state.description}</p>
               </div>
           </div>
 
           <div className="flex-1">
-          <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Shop</h4>   
+          <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">Shop</h4>   
 
           
         {state.status == 0 && (
@@ -153,17 +154,20 @@ const ProductDetailsBuyers = () => {
                 onChange={(e) => setDelivery_address(e.target.value)}
               />
 
-              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
+              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px] items-center">
                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
                 <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">You will have to deposit twice the price</p>
               </div>
 
+              <div className="">
               <CustomButton 
                 btnType="button"
                 title="Buy Product"
                 styles="w-full bg-[#8c6dfd]"
                 handleClick={handleBuy}
               />
+              </div>
+
             </div>             
 
             )}
