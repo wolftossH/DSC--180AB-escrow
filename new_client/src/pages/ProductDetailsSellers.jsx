@@ -81,7 +81,7 @@ const ProductDetailsSellers = () => {
         <div>
         {isLoading && <Loader />}
   
-        <div className="w-full flex md:flex-row flex-col mt-5 gap-[15px]">
+        <div className="flex ml-20 mt-20">
           <div className="flex-1 flex-col">
             <img src={gifUrl} alt="product" className="w-11/12 h-[500px] object-cover rounded-xl"/>
             <div className="relative w-11/12  h-[5px] bg-[#3a3a43] mt-2">
@@ -92,18 +92,18 @@ const ProductDetailsSellers = () => {
             </div>
           </div>
   
-          <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[70px]">
+          <div className="flex md:w-[300px] w-full flex-wrap justify-between gap-[20px]">
             <CountBox title={`Price in ETH`} value={state.price} />
             <CountBox title={`Initial amount of ${state.init_amt}`} value={state.amt} />
             <CountBox title={`Out of 5 Stars`} value={state.avg_rating?.toFixed(2)} />
           </div>
         </div>
   
-        <div className="mt-[60px] flex lg:flex-row flex-col gap-5">
-          <div className="flex-[2] flex flex-col gap-[40px]">
+        <div className="flex ml-20 mt-20">
+          <div className="text-xl ml-20 space-y-20 text-white shadow-2xl rounded-lg p-20">
             <div>
-              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">
-                Hello Seller
+              <h4 className="font-epilogue font-sem ibold text-[25px] text-white uppercase">
+                Seller:
               </h4>
   
               <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
