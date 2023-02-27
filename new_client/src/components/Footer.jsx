@@ -19,6 +19,8 @@ const Footer = () => {
             <FooterLink href="#">Antoni Liria-Sala</FooterLink>
             <FooterLink href="#">William Li</FooterLink>
             <FooterLink href="#">Guangyu Yang</FooterLink>
+            <FooterLink href="#">Kim Nguyen</FooterLink>
+
           </Column>
           <Column>
             <Heading>Services</Heading>
