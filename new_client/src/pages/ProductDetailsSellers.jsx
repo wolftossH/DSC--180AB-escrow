@@ -102,7 +102,7 @@ const ProductDetailsSellers = () => {
         <div className="flex ml-20 mt-20">
           <div className="text-xl ml-20 space-y-20 text-white shadow-2xl rounded-lg p-20">
             <div>
-              <h4 className="font-epilogue font-sem ibold text-[25px] text-white uppercase">
+              <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">
                 Seller:
               </h4>
   
