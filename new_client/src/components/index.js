@@ -3,7 +3,6 @@ export { default as Navbar } from "./Navbar";
 export { default as Navbar_new } from "./Navbar_new";
 
 export { default as Welcome } from "./Welcome";
-export { default as Footer } from "./Footer";
 export { default as Services } from "./Services";
 export { default as CustomButton } from './CustomButton';
 export { default as FormField } from './FormField';
@@ -17,5 +16,7 @@ export { default as ReviewCard } from './ReviewCard';
 export { default as TransactionCard } from './TransactionCard';
 
 export { default as CountBox } from './CountBox';
+
+export { default as Footer } from "./Footer";
 
 
