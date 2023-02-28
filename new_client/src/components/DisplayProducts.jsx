@@ -21,12 +21,14 @@ const DisplayProducts = ({ title, isLoading, products }) => {
   
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-[25px] text-white text-left">{title} ({products.length})</h1>
+      <h1 className="font-epilogue font-semibold text-[30px] text-white text-center">
+        {title} ({products.length})
+      </h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
 
       {!address && (
-          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183]">
+          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183] ml-5">
             You are not logged in
           </p>
         )}
@@ -35,8 +37,8 @@ const DisplayProducts = ({ title, isLoading, products }) => {
           <img src={loader} alt="loader" className="w-[100px] h-[100px] object-contain" />
         )}
 
-        {!isLoading && products.length === 0 && (
-          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183]">
+        {!isLoading && address && products.length === 0 && (
+          <p className="font-epilogue font-semibold text-[20px] leading-[30px] text-[#818183] ml-5">
             No products are available yet
           </p>
         )}

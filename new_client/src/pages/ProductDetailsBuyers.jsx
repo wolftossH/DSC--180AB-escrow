@@ -137,8 +137,46 @@ const ProductDetailsBuyers = () => {
           <div className="flex-1">
           <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">Shop</h4>   
 
+          {state.status===Rejected && (
+              <div
+              className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              >
+                {/* <p className="text-black text-base font-semibold"> */}
+                  You are Rejected
+                {/* </p>                 */}
+              </div>
+            )}
           
-        {state.status == 0 && (
+          {state.status===Cancelled && (
+              <div
+              className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              >
+                {/* <p className="text-black text-base font-semibold"> */}
+                Already Cancelled
+                {/* </p>                 */}
+              </div>
+            )}
+            {state.status===Confirmed && (
+              <div
+              className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              >
+                {/* <p className="text-black text-base font-semibold"> */}
+                  Waiting for your delivered product to confirm
+                {/* </p>                 */}
+              </div>
+            )}
+
+            {state.status===Started && (
+              <div
+              className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
+              >
+                {/* <p className="text-black text-base font-semibold"> */}
+                  Waiting for Seller
+                {/* </p>                 */}
+              </div>
+            )}
+
+        {state.status == Default && (
         <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
           <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
             Buy this product

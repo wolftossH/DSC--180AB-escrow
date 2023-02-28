@@ -23,7 +23,7 @@ const DisplayTransactions = ({ title, isLoading, products }) => {
   
   return (
     <div>
-      <h1 className="font-epilogue font-semibold text-[30px] text-white text-left">{title} ({parsedProducts.length})</h1>
+      <h1 className="font-epilogue font-semibold text-[30px] text-white ml-10">{title} ({parsedProducts.length})</h1>
 
       <div className="flex flex-wrap mt-[20px] gap-[26px]">
         {!address && (

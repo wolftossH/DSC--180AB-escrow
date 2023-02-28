@@ -59,7 +59,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
   // }
 
   return (
-    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer">
+    <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer ml-5">
       <img src={gifUrl} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"  onClick={handleClick}/>
       <div className="flex flex-col p-10"  onClick={handleClick}>
         <div className="flex flex-row items-center mb-[18px]">
