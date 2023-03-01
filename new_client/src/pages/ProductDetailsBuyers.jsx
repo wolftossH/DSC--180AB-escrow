@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import useFetch from "../hooks/gifGen";
 
 import { useStateContext } from '../context';
-import { CountBox, CustomButton, Loader, FormField, ReviewCard } from '../components';
+import { CountBox, CustomButton, Loader, FormField, ReviewCard, DescriptionCard } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 
 const ProductDetailsBuyers = () => {
@@ -17,6 +17,7 @@ const ProductDetailsBuyers = () => {
   const Reviewed = 6
 
   const { state } = useLocation();
+  console.log(state)
 
   const keyword = state.name;
   const gifUrl = useFetch({ keyword });
@@ -111,27 +112,35 @@ const ProductDetailsBuyers = () => {
       <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
         <div className="flex flex-col gap-[40px]">
           <div>
-            <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
+            {/* <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
               Seller
-            </h3>
+            </h3> */}
 
-            <div className="mt-5 flex items-center gap-[14px]">
+            {/* <div className="mt-5 flex items-center gap-[14px]">
               <div className="w-[80px] h-[80px] flex items-center justify-center rounded-full shadow-2xl">
                 <img src={gifUrl} alt="user" className="w-[60%] h-[60%] object-contain"/>
               </div>
               <div>
                 <h4 className="font-epilogue font-semibold text-[16px] text-white break-all">{state.seller}</h4>
-                {/* <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p> */}
+                <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p>
               </div>
-            </div>
+            </div> */}
+
+
           </div>
 
           <div>
-            <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
+            <DescriptionCard
+              title= {state.name}
+              seller={state.seller}
+              description={state.description}
+              gifUrl = {gifUrl}
+            />
+            {/* <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
 
               <div className="mt-[20px]">
                 <p className="font-epilogue font-bold text-[20px] text-black leading-[26px] text-justify">{state.description}</p>
-              </div>
+              </div> */}
           </div>
 
           <div className="flex-1">

@@ -5,7 +5,5 @@ export {default as Transactions} from './Transactions';
 export { default as Welcome } from "./Welcome";
 
 // export {default as TransactionsSellers} from './TransactionsSellers';
-// export { default as ProductDetails } from './ProductDetails';
 export { default as ProductDetailsBuyers } from './ProductDetailsBuyers';
 export { default as ProductDetailsSellers } from './ProductDetailsSellers';
-

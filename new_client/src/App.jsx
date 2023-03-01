@@ -1,5 +1,5 @@
-import { Navbar,Navbar_new, Welcome, Footer, Services,  Loader } from "./components";
-import {CreateProduct, BuyProduct, Transactions, ProductDetailsBuyers,ProductDetailsSellers,Profile } from './pages';
+import { Navbar,Navbar_new, Footer, Services,  Loader } from "./components";
+import {CreateProduct, BuyProduct, Transactions, ProductDetailsBuyers,ProductDetailsSellers,Profile, Welcome } from './pages';
 import {Route, Routes} from 'react-router-dom';
 
 import { useStateContext } from './context/index.jsx';
