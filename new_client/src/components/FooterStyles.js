@@ -13,13 +13,13 @@ export const Box = styled.div`
 `;
    
 export const Container = styled.div`
-    display: flex;
+    // display: flex;
     flex-direction: column;
-    justify-content: center;
+    justify-content: left;
     max-width: 1000px;
     margin: 0 auto;
     /* background: black */
-`
+`;
    
 export const Column = styled.div`
   display: flex;
@@ -47,7 +47,7 @@ export const FooterLink = styled.a`
   text-decoration: none;
    
   &:hover {
-      color: green;
+      color: #897a9b;
       transition: 200ms ease-in;
   }
 `;
