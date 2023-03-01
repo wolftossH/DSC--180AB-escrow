@@ -81,8 +81,9 @@ const ProductDetailsSellers = () => {
         <div>
         {isLoading && <Loader />}
   
-        <div className="flex ml-20 mt-20">
-          <div className="flex-1 flex-col">
+        {/* <div className="flex ml-20 mt-20"> */}
+        <div className="flex md:flex-row flex-col mt-5 ml-10 gap-[15px]">
+          <div className="flex-auto flex-col">
             <img src={gifUrl} alt="product" className="w-11/12 h-[500px] object-cover rounded-xl"/>
             <div className="relative w-11/12  h-[5px] bg-[#3a3a43] mt-2">
               <div className="absolute h-full bg-[#4acd8d]" 
@@ -99,60 +100,64 @@ const ProductDetailsSellers = () => {
           </div>
         </div>
   
-        <div className="flex ml-20 mt-20">
-          <div className="text-xl ml-20 space-y-20 text-white shadow-2xl rounded-lg p-20">
+        {/* <div className="flex ml-20 mt-20"> */}
+          <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
+        <div className="flex flex-col gap-[40px]">
+
+
+          {/* <div className="text-xl ml-20 space-y-20 text-white shadow-2xl rounded-lg p-20"> */}
             <div>
-              <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">
-                Seller:
-              </h4>
-  
-              <div className="mt-[20px] flex flex-row items-center flex-wrap gap-[14px]">
-                <div className="w-[52px] h-[52px] flex items-center justify-center rounded-full bg-[#2c2f32] cursor-pointer">
+              <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
+                Seller
+              </h3>
+
+              <div className="mt-5 flex items-center gap-[14px]">
+                <div className="w-[80px] h-[80px] flex items-center justify-center rounded-full shadow-2xl">
                   <img src={gifUrl} alt="user" className="w-[60%] h-[60%] object-contain"/>
                 </div>
                 <div>
-                  <h4 className="font-epilogue font-semibold text-[14px] text-white break-all">{state.seller}</h4>
-                  <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p>
+                  <h4 className="font-epilogue font-semibold text-[16px] text-white break-all">{state.seller}</h4>
+                  {/* <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p> */}
                 </div>
               </div>
             </div>
   
             <div>
-              <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">Description</h4>
-  
+              <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
+
                 <div className="mt-[20px]">
-                  <p className="font-epilogue font-normal text-[20px] text-[#808191] leading-[26px] text-justify">{state.description}</p>
+                  <p className="font-epilogue font-bold text-[20px] text-black leading-[26px] text-justify">{state.description}</p>
                 </div>
             </div>
   
             <div>
               <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Waiting Buyers</h4>
-              <div>
-                {/* {address && !isLoading && state.ratings.length > 0 && state.ratings.map((x) => <FundCard 
+              {/* <div>
+                {address && !isLoading && state.ratings.length > 0 && state.ratings.map((x) => <FundCard 
                 key={x}
                 {...product}
-                />)} */}
-              </div>
-              <div className="mt-[20px] flex flex-col gap-4">
+                />)}
+              </div> */}
+              <div className="mt-[15px] flex flex-col gap-4">
                 {buyers.length > 0 ? buyers.map((item, index) => (
                   <div key={`${item}-${index}`} className="flex justify-between items-center gap-4">
-                    <div className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
+                    <div className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] break-ll">
                       {index + 1}. {item.buyer_address}
                       <div>
                         Address: {item.delivery_address}
                       </div> 
                     </div>
 
-                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+                    {/* <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p> */}
                   </div>
                 )) : (
-                  <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No buyers yet.</p>
+                  <p className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] text-justify">No buyers yet.</p>
                 )}
               </div>
-              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Past Buyers</h4>
+              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase mt-10">Past Buyers</h4>
               {pastBuyers.length > 0 ? pastBuyers.map((item, index) => (
-                  <div key={`${item}-${index}`} className="flex justify-between items-center gap-4">
-                    <div className="font-epilogue font-normal text-[16px] text-[#b2b3bd] leading-[26px] break-ll">
+                  <div key={`${item}-${index}`} className="flex justify-between items-center gap-4 mt-[15px] ">
+                    <div className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] break-ll">
                       {index + 1}. {item.buyer_address}
                       <div>
                         Address: {item.delivery_address}
@@ -261,9 +266,7 @@ const ProductDetailsSellers = () => {
             
             <div className="flex-1"> 
           </div> 
-          </div>
-  
-          
+          </div>          
         </div>
       </div>        
     )
