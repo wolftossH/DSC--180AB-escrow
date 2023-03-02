@@ -4,7 +4,7 @@ import { ethers } from 'ethers';
 import useFetch from "../hooks/gifGen";
 
 import { useStateContext } from '../context';
-import { CountBox, CustomButton, Loader, ReviewCard } from '../components';
+import { CountBox, CustomButton, Loader, ReviewCard, DescriptionCard } from '../components';
 import { calculateBarPercentage, daysLeft } from '../utils';
 // import { thirdweb } from '../assets';
 
@@ -101,12 +101,12 @@ const ProductDetailsSellers = () => {
         </div>
   
         {/* <div className="flex ml-20 mt-20"> */}
-          <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
-        <div className="flex flex-col gap-[40px]">
+        <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
+          <div className="flex flex-col gap-[40px]">
 
 
           {/* <div className="text-xl ml-20 space-y-20 text-white shadow-2xl rounded-lg p-20"> */}
-            <div>
+            {/* <div>
               <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
                 Seller
               </h3>
@@ -117,7 +117,7 @@ const ProductDetailsSellers = () => {
                 </div>
                 <div>
                   <h4 className="font-epilogue font-semibold text-[16px] text-white break-all">{state.seller}</h4>
-                  {/* <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p> */}
+                  <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p>
                 </div>
               </div>
             </div>
@@ -128,8 +128,13 @@ const ProductDetailsSellers = () => {
                 <div className="mt-[20px]">
                   <p className="font-epilogue font-bold text-[20px] text-black leading-[26px] text-justify">{state.description}</p>
                 </div>
-            </div>
-  
+            </div> */}
+              <DescriptionCard
+              title= {state.name}
+              seller={state.seller}
+              description={state.description}
+              gifUrl = {gifUrl}
+            />
             <div>
               <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Waiting Buyers</h4>
               {/* <div>

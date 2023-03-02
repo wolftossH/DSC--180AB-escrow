@@ -111,7 +111,6 @@ const ProductDetailsBuyers = () => {
       {/* <div className="mt-[60px] flex lg:flex-row flex-col gap-5"> */}
       <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
         <div className="flex flex-col gap-[40px]">
-          <div>
             {/* <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
               Seller
             </h3> */}
@@ -125,9 +124,6 @@ const ProductDetailsBuyers = () => {
                 <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p>
               </div>
             </div> */}
-
-
-          </div>
 
           <div>
             <DescriptionCard
