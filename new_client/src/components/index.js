@@ -15,11 +15,10 @@ export { default as ProductCard } from './ProductCard';
 export { default as ReviewCard } from './ReviewCard';
 export { default as TransactionCard } from './TransactionCard';
 export { default as DescriptionCard } from './DescriptionCard';
-
+export { default as BuyerCard } from './BuyerCard';
 
 
 export { default as CountBox } from './CountBox';
-
 export { default as Footer } from "./Footer";
 
 

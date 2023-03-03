@@ -103,24 +103,80 @@ const ProductDetailsSellers = () => {
         {/* <div className="flex ml-20 mt-20"> */}
         <div className="w-11/12 mt-[60px] ml-10 shadow-2xl rounded-lg p-10">
           <div className="flex flex-col gap-[40px]">
+
+
+          {/* <div className="text-xl ml-20 space-y-20 text-white shadow-2xl rounded-lg p-20"> */}
+            {/* <div>
+              <h3 className="font-epilogue font-semibold text-[20px] text-white uppercase">
+                Seller
+              </h3>
+
+              <div className="mt-5 flex items-center gap-[14px]">
+                <div className="w-[80px] h-[80px] flex items-center justify-center rounded-full shadow-2xl">
+                  <img src={gifUrl} alt="user" className="w-[60%] h-[60%] object-contain"/>
+                </div>
+                <div>
+                  <h4 className="font-epilogue font-semibold text-[16px] text-white break-all">{state.seller}</h4>
+                  <p className="mt-[4px] font-epilogue font-normal text-[12px] text-[#808191]"> Products</p>
+                </div>
+              </div>
+            </div>
+  
+            <div>
+              <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
+
+                <div className="mt-[20px]">
+                  <p className="font-epilogue font-bold text-[20px] text-black leading-[26px] text-justify">{state.description}</p>
+                </div>
+            </div> */}
               <DescriptionCard
               title= {state.name}
               seller={state.seller}
               description={state.description}
               gifUrl = {gifUrl}
-              />
+            />
             <div>
             <BuyerCard
               title= "CURRENT WAITING BUYERS"
               buyers={buyers}
             />
-            <div className="mt-5">
-
-            </div>
             <BuyerCard
               title= "PAST BUYERS"
               buyers={pastBuyers}
             />
+            <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase">Current Waiting Buyers</h4>
+
+              <div className="mt-[15px] flex flex-col gap-4">
+                {buyers.length > 0 ? buyers.map((item, index) => (
+                  <div key={`${item}-${index}`} className="flex justify-between items-center gap-4">
+                    <div className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] break-ll">
+                      {index + 1}. {item.buyer_address}
+                      <div>
+                        Address: {item.delivery_address}
+                      </div> 
+                    </div>
+
+                    {/* <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p> */}
+                  </div>
+                )) : (
+                  <p className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] text-justify">No buyers yet.</p>
+                )}
+              </div>
+              <h4 className="font-epilogue font-semibold text-[18px] text-white uppercase mt-10">Past Buyers</h4>
+              {pastBuyers.length > 0 ? pastBuyers.map((item, index) => (
+                  <div key={`${item}-${index}`} className="flex justify-between items-center gap-4 mt-[15px] ">
+                    <div className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] break-ll">
+                      {index + 1}. {item.buyer_address}
+                      <div>
+                        Address: {item.delivery_address}
+                      </div> 
+                    </div>
+
+                    <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] break-ll">{item.donation}</p>
+                  </div>
+                )) : (
+                  <p className="font-epilogue font-normal text-[16px] text-[#808191] leading-[26px] text-justify">No buyers yet.</p>
+                )}
             </div>
 
             <div className="flex flex-row w-full">
