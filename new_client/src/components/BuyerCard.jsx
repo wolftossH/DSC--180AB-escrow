@@ -21,7 +21,7 @@ console.log(buyers)
                 <li key={index} className="py-3 sm:py-4">
                     <div className="flex items-center space-x-4">
                         <div className="flex-shrink-0">
-                            <div className="w-8 h-8 rounded-full ">
+                            <div className="w-8 h-8 rounded-full dark:text-white">
                                 {index+1}
                             </div>
                         </div>

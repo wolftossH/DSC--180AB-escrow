@@ -53,11 +53,12 @@ return (
         <Link to="/"  className="mr-5"> 
           About
         </Link>
-        <Link to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  className="mr-5"> 
-          How to
-        </Link>
-        <Link to="/profile"> 
+
+        <Link to="/profile" className="mr-5"> 
           Profile
+        </Link>
+        <Link target="_blank" to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  > 
+          How to
         </Link>
         <div className="sm:flex hidden flex-row justify-end gap-5 pl-3">
           <CustomButton 
