@@ -53,6 +53,9 @@ return (
         <Link to="/"  className="mr-5"> 
           About
         </Link>
+        <Link to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  className="mr-5"> 
+          How to
+        </Link>
         <Link to="/profile"> 
           Profile
         </Link>
