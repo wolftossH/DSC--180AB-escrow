@@ -36,7 +36,7 @@ console.log(buyers)
                     </div>
                 </li>
                 )) : (
-                  <p className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] text-justify">No buyers yet.</p>
+                  <p className="font-epilogue font-normal text-[16px] text-black font-semibold leading-[26px] text-justify dark:text-white">No buyers yet.</p>
                 )}
         </ul>
    </div>
