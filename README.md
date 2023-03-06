@@ -43,10 +43,7 @@
     <br />
     <br />
     <a href="https://github.com/othneildrew/Best-README-Template">View Demo</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Report Bug</a>
-    ·
-    <a href="https://github.com/othneildrew/Best-README-Template/issues">Request Feature</a>
+
   </p>
 </div>
 
@@ -71,9 +68,7 @@
     </li>
     <li><a href="#usage">Usage</a></li>
     <li><a href="#roadmap">Roadmap</a></li>
-    <li><a href="#contributing">Contributing</a></li>
-    <li><a href="#license">License</a></li>
-    <li><a href="#contact">Contact</a></li>
+    <li><a href="#contributors-and-contact">Contributors and Contact</a></li>
     <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
@@ -111,10 +106,7 @@ This is an example of how you can use the website
 ### Prerequisites
 
 This is an example of how to list things you need to use the software and how to install them.
-* npm
-  ```sh
-  npm install npm@latest -g
-  ```
+
 
 <!-- USAGE EXAMPLES -->
 ## Usage
@@ -131,9 +123,9 @@ _For more examples, please refer to the [Documentation]()_
 ## Roadmap
 
 - [x] Design logo
-- [x] 
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
+- [x] Added ipfs
+
+
 
 
 See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
@@ -152,9 +144,7 @@ Distributed under the ....... License. See `LICENSE.md` for more information.
 
 
 <!-- CONTACT -->
-## Contributors & Contact
-
-
+## Contributors and Contact
 
 Huy Trinh - [![LinkedIn][linkedin-shield]][linkedin-url-huy]
 
@@ -176,11 +166,7 @@ Guangyu Yang - [![LinkedIn][linkedin-shield]][linkedin-url]
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
 * [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
 * [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
 * [Font Awesome](https://fontawesome.com)
 * [React Icons](https://react-icons.github.io/react-icons/search)
 
@@ -208,7 +194,7 @@ Use this space to list resources you find helpful and would like to give credit 
 [linkedin-url-william]: https://www.linkedin.com/feed/
 [linkedin-url-irvin]: https://www.linkedin.com/feed/
 
-[product-screenshot]: images/screenshot.png
+[product-screenshot]: images/website_main_pic.jpg
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
 [Next-url]: https://nextjs.org/
 [React.js]: https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB
