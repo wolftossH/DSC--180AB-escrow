@@ -17,10 +17,11 @@ const ProductDetailsBuyers = () => {
   const Reviewed = 6
 
   const { state } = useLocation();
-  console.log(state)
+  // console.log(state)
 
-  //const keyword = state.name;
-  //const gifUrl = useFetch({ keyword });
+  const keyword = state.name;
+  const gifUrl = useFetch({ keyword });
+  console.log(gifUrl)
   const img = state.img
   const navigate = useNavigate();
   const {buyProduct,  contract, address,
@@ -131,7 +132,7 @@ const ProductDetailsBuyers = () => {
               title= {state.name}
               seller={state.seller}
               description={state.description}
-              gifUrl = {img}
+              gifUrl = {gifUrl}
             />
             {/* <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
 

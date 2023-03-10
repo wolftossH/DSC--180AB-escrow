@@ -4,7 +4,10 @@ const APIKEY = import.meta.env.VITE_GIPHY_API;
 
 const useFetch = ({ keyword }) => {
   const [gifUrl, setGifUrl] = useState("");
-  
+  if (keyword.length>50) {
+    keyword = keyword.substring(0, 50);
+  }
+  console.log(keyword)
   const fetchGifs = async () => {
     try {
     //   const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${keyword.split(" ").join("")}&limit=1`);

@@ -10,7 +10,7 @@ import { Loader } from '../components';
 
 
 
-const TransactionCard = ({ seller, name, description, price, amountCollected, status, pId, handleClick }) => {
+const TransactionCard = ({ seller, name,img, description, price, amountCollected, status, pId, handleClick }) => {
 
 //   const remainingDays = daysLeft(deadline);
   const keyword = name;
@@ -60,7 +60,7 @@ const TransactionCard = ({ seller, name, description, price, amountCollected, st
 
   return (
     <div className="sm:w-[485px] w-full rounded-[20px] bg-[#1c1c24] cursor-pointer ml-5">
-      <img src={gifUrl} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"  onClick={handleClick}/>
+      <img src={img} alt="fund" className="w-full h-[250px] object-cover rounded-[15px]"  onClick={handleClick}/>
       <div className="flex flex-col p-10"  onClick={handleClick}>
         <div className="flex flex-row items-center mb-[18px]">
           <img src={tagType} alt="tag" className="w-[17px] h-[17px] object-contain"/>

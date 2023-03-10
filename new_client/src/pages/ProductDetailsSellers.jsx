@@ -11,9 +11,10 @@ import { calculateBarPercentage, daysLeft } from '../utils';
 const ProductDetailsSellers = () => {
 
   const { state } = useLocation();
-  console.log(state)
-  //const keyword = state.name;
-  //const gifUrl = useFetch({ keyword });
+  // console.log(state)
+  const keyword = state.name;
+  const gifUrl = useFetch({ keyword });
+
   const img = state.img;
   const {observeBuyers,  contract, address, stopProduct, approvePurchase, rejectPurchase, getDeliveryAddress, getStatus} = useStateContext();  
   const [isLoading, setIsLoading] = useState(false);
@@ -108,7 +109,7 @@ const ProductDetailsSellers = () => {
               title= {state.name}
               seller={state.seller}
               description={state.description}
-              gifUrl = {img}
+              gifUrl = {gifUrl}
               />
             <div>
             <BuyerCard
