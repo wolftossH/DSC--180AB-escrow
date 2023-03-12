@@ -1,5 +1,5 @@
 import { Navbar,Navbar_new, Footer, Services,  Loader } from "./components";
-import {CreateProduct, BuyProduct, Transactions, ProductDetailsBuyers,ProductDetailsSellers,Profile, Welcome } from './pages';
+import {CreateProduct, BuyProduct, Transactions, ProductDetailsBuyers,ProductDetailsSellers,Profile, Welcome, About } from './pages';
 import {Route, Routes} from 'react-router-dom';
 
 import { useStateContext } from './context/index.jsx';
@@ -14,6 +14,8 @@ const App = () => {
       {/* Design for users to click and redirect to those webpage */}
       <Routes>
         <Route path = "/" element = {<Welcome/>} />
+        <Route path = "/about" element = {<About/>} />
+
         <Route path = "/createProduct" element = {<CreateProduct/>} />        
 
         <Route path = "/cart" element = {<BuyProduct/>} />
