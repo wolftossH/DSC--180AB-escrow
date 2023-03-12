@@ -43,9 +43,7 @@ const About = () => {
     </div>
 
 
-
     <section
-      id="about"
       className="bg-[#f3f4fe] pt-20 pb-20 lg:pt-[120px] lg:pb-[120px]"
     >
       <div className="container">
@@ -64,12 +62,12 @@ const About = () => {
                     Introduction
                   </h2>
                   <p className="mb-9 text-base leading-relaxed text-body-color">
-                  {/* The online marketplace and escrow system. show great potential to be incorporated with and benefit tremendously from emerging blockchain technology. In this project, we aim to creates a decentralized, blockchain-based online marketplace. The goal of the website is to provides secure online transaction and comfortable online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy. To create the escrow system and user- interactive platform, we developed smart contract based on Solidity to accommodate user - user transactions and established front- end website on Pinata, an interplanetary file system based node service provider. Together, user can navigate the autonomous marketplace as they would on a conventional shopping site while using cryptocurrency for product exchange */}
+                  The online marketplace and escrow system. show great potential to be incorporated with and benefit tremendously from emerging blockchain technology. In this project, we aim to creates a decentralized, blockchain-based online marketplace. The goal of the website is to provides secure online transaction and comfortable online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy. To create the escrow system and user- interactive platform, we developed smart contract based on Solidity to accommodate user - user transactions and established front- end website on Pinata, an interplanetary file system based node service provider. Together, user can navigate the autonomous marketplace as they would on a conventional shopping site while using cryptocurrency for product exchange
                   </p>
                 </div>
                 <div className="text-center">
                   <div className="relative z-10 inline-block">
-                  The online marketplace and escrow system. show great potential to be incorporated with and benefit tremendously from emerging blockchain technology. In this project, we aim to creates a decentralized, blockchain-based online marketplace. The goal of the website is to provides secure online transaction and comfortable online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy. To create the escrow system and user- interactive platform, we developed smart contract based on Solidity to accommodate user - user transactions and established front- end website on Pinata, an interplanetary file system based node service provider. Together, user can navigate the autonomous marketplace as they would on a conventional shopping site while using cryptocurrency for product exchange
+                  {/* The online marketplace and escrow system. show great potential to be incorporated with and benefit tremendously from emerging blockchain technology. In this project, we aim to creates a decentralized, blockchain-based online marketplace. The goal of the website is to provides secure online transaction and comfortable online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy. To create the escrow system and user- interactive platform, we developed smart contract based on Solidity to accommodate user - user transactions and established front- end website on Pinata, an interplanetary file system based node service provider. Together, user can navigate the autonomous marketplace as they would on a conventional shopping site while using cryptocurrency for product exchange */}
                   </div>
                 </div>
               </div>
