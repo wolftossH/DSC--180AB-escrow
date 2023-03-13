@@ -1,6 +1,6 @@
 //require('dotenv').config();
-//const key = process.env.REACT_APP_PINATA_KEY;
-//const secret = process.env.REACT_APP_PINATA_SECRET;
+const key = process.env.PINATA_API_KEY;
+const secret = process.env.PINATA_SECRET_API_KEY;
 
 import axios from 'axios'
 import FormData from 'form-data';
@@ -11,14 +11,14 @@ export const uploadJSONToIPFS = async(JSONBody) => {
     return axios 
         .post(url, JSONBody, {
             headers: {
-                pinata_api_key: '6870c9a412ed8217083f',
-                pinata_secret_api_key: '6e16bce88375964585fd96744d59760eaf93efbd9fa422d2fe7af45ace188e8d',
+                pinata_api_key: PINATA_API_KEY,
+                pinata_secret_api_key: PINATA_SECRET_API_KEY,
             }
         })
         .then(function (response) {
            return {
                success: true,
-               pinataURL: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
+               pinataURL: "copper-electoral-bison-672.mypinata.cloud" + response.data.IpfsHash
            };
         })
         .catch(function (error) {
@@ -69,15 +69,15 @@ export const uploadFileToIPFS = async(file) => {
             maxBodyLength: 'Infinity',
             headers: {
                 'Content-Type': `multipart/form-data; boundary=${data._boundary}`,
-                pinata_api_key: '6870c9a412ed8217083f',
-                pinata_secret_api_key: '6e16bce88375964585fd96744d59760eaf93efbd9fa422d2fe7af45ace188e8d',
+                pinata_api_key: PINATA_API_KEY,
+                pinata_secret_api_key: PINATA_SECRET_API_KEY,
             }
         })
         .then(function (response) {
             console.log("image uploaded", response.data.IpfsHash)
             return {
                success: true,
-               pinataURL: "https://gateway.pinata.cloud/ipfs/" + response.data.IpfsHash
+               pinataURL: "copper-electoral-bison-672.mypinata.cloud" + response.data.IpfsHash
            };
         })
         .catch(function (error) {
