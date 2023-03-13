@@ -94,6 +94,7 @@
 [![Solidity][solidity]][solidity-url] \
 [![Vite][vite]][vite-url] \
 [![Tailwind][tailwind]][tailwind-url] \
+[![Hardhat][hardhat]][hardhat-url] \
 ![HTML][html] \
 ![CSS][css]
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
@@ -223,3 +224,6 @@ Use this space to list resources you find helpful and would like to give credit 
 
 [Node.js]: https://img.shields.io/badge/Node.js-339933?style=for-the-badge&logo=nodedotjs&logoColor=white
 [node-url]: https://nodejs.org/en/
+
+[hardhat]: https://hardhat.org/_next/static/media/hardhat-logo.5c5f687b.svg
+[hardhat-url]: https://hardhat.org/
