@@ -16,9 +16,9 @@ const Footer = () => {
           <Column>
             <Heading>Creators</Heading>
             <FooterLink target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/huy-trinh-9868ba194/">Huy Trinh</FooterLink>
-            <FooterLink href="#">Antoni Liria-Sala</FooterLink>
-            <FooterLink href="#">William Li</FooterLink>
-            <FooterLink href="#">Guangyu Yang</FooterLink>
+            <FooterLink target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/antoniliriasala/">Antoni Liria-Sala</FooterLink>
+            <FooterLink target="_blank" rel="noopener noreferrer" href="#">William Li</FooterLink>
+            <FooterLink target="_blank" rel="noopener noreferrer" href="https://www.linkedin.com/in/irvinyang/">Guangyu Yang</FooterLink>
           </Column>
           <Column>
             <Heading>Services</Heading>

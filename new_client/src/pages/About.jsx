@@ -29,14 +29,15 @@ const About = () => {
               className="mb-8 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug md:text-[45px] md:leading-snug"
             >
               Escryptow: Design and Implementation of an E-commerce Dapp              </h1>
-              <Link
+              <Link to="https://github.com/wolftossH/DSC--180AB-escrow/blob/main/report.pdf"
+              target="_blank"
                 className="mx-auto mb-20 max-w-[600px] text-base text-[#e4e4e4] sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed"
               >
                 Report
               </Link>
               <p className="mx-auto mb-20 max-w-[600px] text-base text-[#e4e4e4] sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed"
 >
-  
+
 </p>
               {/* <Link to="/about"  className="mr-5 my-2 text-lg"> 
           Report
@@ -79,7 +80,7 @@ const About = () => {
                 <div className="text-center">
                   <div className="relative z-10 inline-block mr-20">
                   <img
-                      src="../../images/dApps.png"
+                      src="../assets/dApps.png"
                       alt="image"
                       className="mx-auto lg:ml-auto"
                     />
