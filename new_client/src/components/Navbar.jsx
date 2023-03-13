@@ -53,11 +53,10 @@ return (
         <Link to="/about"  className="mr-5 my-2 text-lg"> 
           About
         </Link>
+
         <Link to="/"  className="mr-5 my-2 text-lg"> 
           Home
         </Link>
-
-
         <Link to="/profile" className="mr-5 my-2 text-lg"> 
           Profile
         </Link>
