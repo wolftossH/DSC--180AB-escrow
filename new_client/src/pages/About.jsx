@@ -3,6 +3,8 @@ import React, { useState, useEffect } from 'react'
 import { useStateContext } from '../context'
 import { Link, useNavigate } from "react-router-dom";
 
+
+import { dApps, flow, website } from '../assets';
 const About = () => {
 
   return (
@@ -80,7 +82,7 @@ const About = () => {
                 <div className="text-center">
                   <div className="relative z-10 inline-block mr-20">
                   <img
-                      src="../assets/dApps.png"
+                      src={dApps}
                       alt="image"
                       className="mx-auto lg:ml-auto"
                     />
@@ -106,7 +108,7 @@ const About = () => {
                 <div className="text-center">
                   <div className="relative z-10 inline-block mr-20">
                   <img
-                      src="../../images/flow.png"
+                      src={flow}
                       alt="image"
                       className="mx-auto lg:ml-auto"
                     />
@@ -164,7 +166,7 @@ const About = () => {
                 <div className="text-center">
                   <div className="relative z-10 inline-block mr-20">
                   <img
-                      src="../../images/website.png"
+                      src={website}
                       alt="image"
                       className="mx-auto lg:ml-auto"
                     />

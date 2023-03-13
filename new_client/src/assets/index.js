@@ -9,6 +9,11 @@ import menu from './menu.svg';
 import money from './money.svg';
 import loader from './loader.svg';
 
+import dApps from './dApps.png';
+import flow from './flow.png';
+import website from './website.png';
+
+
 export {
   tagType,
 
@@ -21,4 +26,7 @@ export {
   money,
   loader,
 
+  dApps,
+  flow,
+  website,
 };
