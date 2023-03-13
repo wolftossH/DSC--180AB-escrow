@@ -16,27 +16,24 @@ const About = () => {
 
    
     <div
-      id="home"
-      className="relative overflow-hidden bg-primary pt-[120px] md:pt-[130px] lg:pt-[160px]"
+      className="relative overflow-hidden pt-[120px] md:pt-[130px] lg:pt-[160px]"
     >
-      <div className="container">
-        <div className="-mx-4 flex flex-wrap items-center">
-          <div className="w-full px-4">
-            <div
-              className="hero-content wow fadeInUp mx-auto max-w-[780px] text-center"
-              data-wow-delay=".2s"
+        <div className="mx-4 flex flex-wrap items-center">
+        <div className="w-full px-4">
+          <div
+            className="hero-content wow fadeInUp mx-auto max-w-[780px] text-center"
+            data-wow-delay=".2s"
+          >
+            <h1
+              className="mb-8 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug md:text-[45px] md:leading-snug"
             >
-              <h1
-                className="mb-8 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug md:text-[45px] md:leading-snug"
-              >
-                Escryptow: Design and Implementation of an E-commerce Dapp              </h1>
-              <p
-                className="mx-auto mb-10 max-w-[600px] text-base text-[#e4e4e4] sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed"
-              >
-                Multidisciplinary Web Template Built with Your Favourite
-                Technology - HTML Bootstrap, Tailwind and React NextJS.
-              </p>
-            </div>
+              Escryptow: Design and Implementation of an E-commerce Dapp              </h1>
+            <p
+              className="mx-auto mb-10 max-w-[600px] text-base text-[#e4e4e4] sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed"
+            >
+              Multidisciplinary Web Template Built with Your Favourite
+              Technology - HTML Bootstrap, Tailwind and React NextJS.
+            </p>
           </div>
         </div>
       </div>
@@ -46,7 +43,7 @@ const About = () => {
     <section
       className="bg-[#f3f4fe] pt-20 pb-20 lg:pt-[120px] lg:pb-[120px]"
     >
-      <div className="container">
+      <div className="ml-20 mr-20 text-center">
         <div className="wow fadeInUp bg-white" data-wow-delay=".2s">
           <div className="-mx-4 flex flex-wrap">
             <div className="w-full px-4">
@@ -62,12 +59,23 @@ const About = () => {
                     Introduction
                   </h2>
                   <p className="mb-9 text-base leading-relaxed text-body-color">
-                  The online marketplace and escrow system. show great potential to be incorporated with and benefit tremendously from emerging blockchain technology. In this project, we aim to creates a decentralized, blockchain-based online marketplace. The goal of the website is to provides secure online transaction and comfortable online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy. To create the escrow system and user- interactive platform, we developed smart contract based on Solidity to accommodate user - user transactions and established front- end website on Pinata, an interplanetary file system based node service provider. Together, user can navigate the autonomous marketplace as they would on a conventional shopping site while using cryptocurrency for product exchange
+                  Conventional software and website services are facing challenges as
+                  Blockchain-based Applications (o.e. dApps) provide high data integrity,
+                  transparent workflow, and are essentially free from the control of single authority (e.g. IT corporations, service providers).
+                  The online marketplace and escrow system shows great potential  to be incorporated with emerging blockchain technology.
+                 We aim to  create a decentralized, blockchain-based online marketplace to provide secure online transactions and comfortable
+                  online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy.
                   </p>
+                  <p className="mb-9 text-base leading-relaxed text-body-color">
+                  We divided our task into two parallel portions, the front-end escrow client building, and the back-end smart contract development.To create the  escrow system and user-interactive platform, we developed a smart contract with  Solidity to accommodate transactions between multiple users, established a front-end client hosted on a website based on Pinata, and utilized the node-based interplanetary file system for data storage and sharing. Together, users can navigate the autonomous marketplace and shop as they would on a conventional shopping site with cryptocurrency, which should allow higher degrees of security and privacy and charge minimal service fees.                   </p>
                 </div>
                 <div className="text-center">
-                  <div className="relative z-10 inline-block">
-                  {/* The online marketplace and escrow system. show great potential to be incorporated with and benefit tremendously from emerging blockchain technology. In this project, we aim to creates a decentralized, blockchain-based online marketplace. The goal of the website is to provides secure online transaction and comfortable online shopping experiences for users while guaranteeing high degrees of user anonymity and autonomy. To create the escrow system and user- interactive platform, we developed smart contract based on Solidity to accommodate user - user transactions and established front- end website on Pinata, an interplanetary file system based node service provider. Together, user can navigate the autonomous marketplace as they would on a conventional shopping site while using cryptocurrency for product exchange */}
+                  <div className="relative z-10 inline-block mr-20">
+                  <img
+                      src="../../images/dApps.png"
+                      alt="image"
+                      class="mx-auto lg:ml-auto"
+                    />
                   </div>
                 </div>
               </div>
@@ -76,7 +84,7 @@ const About = () => {
         </div>
       </div>
     </section>
-{/* sdfsdf */}
+
 
         </div>
     )
