@@ -50,11 +50,15 @@ return (
         {/* <li className="text-[#221C20] font-bold bg-[#8deef0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#7ae3e6]">
           Connect
         </li> */}
-        <Link to="/"  className="mr-5"> 
+        <Link to="/about"  className="mr-5 my-2 text-lg"> 
           About
         </Link>
+        <Link to="/"  className="mr-5 my-2 text-lg"> 
+          Home
+        </Link>
 
-        <Link to="/profile" className="mr-5"> 
+
+        <Link to="/profile" className="mr-5 my-2 text-lg"> 
           Profile
         </Link>
         <Link target="_blank" to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  > 
@@ -86,6 +90,9 @@ return (
               (item, index) => <NavBarItem key={item + index} title={item} classprops="my-3 text-lg" />,
             )} */}
             <Link to="/"  className="mr-5 my-2 text-lg"> 
+              Home
+            </Link>
+            <Link to="/about"  className="mr-5 my-2 text-lg"> 
               About
             </Link>
             <Link to="/profile" className="mr-5 text-lg"> 
