@@ -236,7 +236,7 @@ const ProductDetailsBuyers = () => {
                       value={form.rate}
                       handleChange={(e) => handleFormFieldChange('rate', e)}
                   />
-                  <FormFizeld 
+                  <FormField 
                   labelName="Review *"
                   placeholder="Product Review "
                   isTextArea
