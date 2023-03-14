@@ -9,7 +9,7 @@ const ReviewCard = (reviews) => {
   const gifUrl = useFetch({ keyword });
   const kw = 'Escrow'
   const cryptoGif = useFetch({ keyword });
-  console.log(reviews)
+  // console.log(reviews)
   const review = reviews[0]
   const rating = reviews[1]
 
@@ -25,7 +25,7 @@ const ReviewCard = (reviews) => {
 
         <div className="block">
           {/* <h3 className="font-epilogue font-semibold text-[16px] text-white text-left leading-[26px] truncate">{name}</h3> */}
-          <p className="mt-[5px] font-epilogue font-normal text-[#808191] text-left leading-[18px]">{review}</p>
+          <p className="mt-[5px] font-epilogue text-[16px] font-normal text-[#808191] text-left leading-[18px] leading-relaxed">{review}</p>
         </div>
 
         {/* <div className="flex justify-between flex-wrap mt-[15px] gap-2">

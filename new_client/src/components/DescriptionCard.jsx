@@ -17,7 +17,7 @@ const DescriptionCard = ({seller, title,  description, gifUrl}) => {
 
   <div className="justify-between sm:flex">
     <div>
-      <h2 className="text-3xl font-bold text-slate-900">
+      <h2 className="text-2xl font-bold text-slate-900">
         {title}
       </h2>
       <p className="mt-1 text-xs font-medium text-slate-600">By {seller}</p>
@@ -34,7 +34,7 @@ const DescriptionCard = ({seller, title,  description, gifUrl}) => {
 
   <div className="mt-4 text-2xl">
     Description
-    <p className="text-sm text-slate-500 text-xl">
+    <p className="text-base text-slate-500">
       {description}
     </p>
   </div>

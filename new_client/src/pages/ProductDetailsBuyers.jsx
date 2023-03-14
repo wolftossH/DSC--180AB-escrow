@@ -100,8 +100,9 @@ const ProductDetailsBuyers = () => {
             style={{ width: `${calculateBarPercentage(state.init_amt, state.amt)}%`,
               maxWidth: '100%'}}>
             </div>
-          </div>
+          </div>          
         </div>
+        
 
         <div className="flex md:w-[250px] w-full flex-wrap justify-between gap-[35px]">
           <CountBox title={`Price in ETH`} value={state.price} />
@@ -127,24 +128,21 @@ const ProductDetailsBuyers = () => {
               </div>
             </div> */}
 
-          <div>
+<div className="flex flex-row w-full items-center">
+          
+          <div className='w-2/3 flex flex-col'>
             <DescriptionCard
               title= {state.name}
               seller={state.seller}
               description={state.description}
               gifUrl = {gifUrl}
             />
-            {/* <h4 className="font-epilogue font-semibold text-[30px] text-white uppercase">Description</h4>
-
-              <div className="mt-[20px]">
-                <p className="font-epilogue font-bold text-[20px] text-black leading-[26px] text-justify">{state.description}</p>
-              </div> */}
+              
           </div>
+          <div className="flex flex-col w-1/3">
+            {/* <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">Shop</h4>    */}
 
-          <div className="flex-1">
-          <h4 className="font-epilogue font-semibold text-[25px] text-white uppercase">Shop</h4>   
-
-          {state.status===Rejected && (
+            {state.status===Rejected && (
               <div
               className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
@@ -154,7 +152,7 @@ const ProductDetailsBuyers = () => {
               </div>
             )}
           
-          {state.status===Cancelled && (
+            {state.status===Cancelled && (
               <div
               className="flex items-center justify-center px-4 py-4 text-base text-center font-bold text-black border border-transparent lg:w-full hover:bg-gray-700 sm:text-sm hover:text-white"
               >
@@ -183,12 +181,12 @@ const ProductDetailsBuyers = () => {
               </div>
             )}
 
-        {state.status == Default && (
-        <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
-          <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
-            Buy this product
-          </p>
-          {state.amt != 0 && (
+            {state.status == Default && (
+            <div className=" flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+              <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+                Buy this product
+              </p>
+            {state.amt != 0 && (
             <div className="mt-[30px]">
               <input 
                 type="text"
@@ -199,16 +197,17 @@ const ProductDetailsBuyers = () => {
                 onChange={(e) => setDelivery_address(e.target.value)}
               />
 
-              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px] items-center">
+              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px] text-center">
                 <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
-                <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">You will have to deposit twice the price</p>
+                <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">You have to deposit x2 the price</p>
               </div>
 
-              <div className="">
+              <div className="flex justify-center">
+
               <CustomButton 
                 btnType="button"
                 title="Buy Product"
-                styles="w-full bg-[#8c6dfd]"
+                styles="w-full bg-[#8c6dfd] "
                 handleClick={handleBuy}
               />
               </div>
@@ -219,70 +218,73 @@ const ProductDetailsBuyers = () => {
             {state.amt === 0 && (
               <h1 className="font-epilogue font-semibold text-[20px] leading-[22px] text-white">Products ran out</h1>
             )}
-        </div>)}
+            </div>)}
         
-        {state.status === Finalized && (
-        <form onSubmit={handleRating} className="w-full mt-[65px] flex flex-col gap-[30px]">
-        <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
-          <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
-            Rate this product
-          </p>
-          {(
-            <div className="mt-[30px]">
-                  <FormField 
-                      labelName="Rating *"
-                      placeholder="out of 5"
-                      inputType="number"
-                      value={form.rate}
-                      handleChange={(e) => handleFormFieldChange('rate', e)}
+            {state.status === Finalized && (
+            <form onSubmit={handleRating} className="w-full mt-[65px] flex flex-col gap-[30px]">
+            <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+              <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+                Rate this product
+              </p>
+              {(
+                <div className="mt-[30px]">
+                      <FormField 
+                          labelName="Rating *"
+                          placeholder="out of 5"
+                          inputType="number"
+                          value={form.rate}
+                          handleChange={(e) => handleFormFieldChange('rate', e)}
+                      />
+                      <FormField 
+                      labelName="Review *"
+                      placeholder="Product Review "
+                      isTextArea
+                      value={form.review}
+                      handleChange={(e) => handleFormFieldChange('review', e)}
+                      />
+                  <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
+                    <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
+                    <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">Feedback is important to us</p>
+                  </div>
+                  <div className="flex justify-center">
+                  <CustomButton 
+                    btnType="submit"
+                    title="Rate it"
+                    styles="w-full bg-[#8c6dfd]"
                   />
-                  <FormField 
-                  labelName="Review *"
-                  placeholder="Product Review "
-                  isTextArea
-                  value={form.review}
-                  handleChange={(e) => handleFormFieldChange('review', e)}
-                  />
-              <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
-                <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
-                <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">Feedback is important to us</p>
-              </div>
+                  </div>
+                </div>             
 
-              <CustomButton 
-                btnType="submit"
-                title="Rate it"
-                styles="w-full bg-[#8c6dfd]"
-              />
-            </div>             
-
-            )}
-        </div>
-        </form>
-        )}
-        
-        {state.status === Reviewed && (
-        <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
-        <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
-          Rate this product
-        </p>
-          <div className="mt-[30px]">
-            <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
-              <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
-              <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">Thank you for rating us</p>
+                )}
             </div>
+            </form>
+            )}
+        
+            {state.status === Reviewed && (
+              <div className="mt-[20px] flex flex-col p-4 bg-[#1c1c24] rounded-[10px]">
+                <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
+                Rate this product
+                </p>
+                <div className="mt-[30px]">
+                  <div className="my-[20px] p-4 bg-[#13131a] rounded-[10px]">
+                    <h4 className="font-epilogue font-semibold text-[14px] leading-[22px] text-white">Enjoy what you love</h4>
+                    <p className="mt-[20px] font-epilogue font-normal leading-[22px] text-[#808191]">Thank you for rating us</p>
+                  </div>
+                </div>
+              </div>
+            )}            
           </div>
-      </div>
-        )}
+</div>
 
-            
-        </div> 
+
+ 
           <h1 className="font-epilogue font-semibold text-[30px] text-white uppercase">Reviews</h1>
           <div  className="w-full flex flex-wrap mt-[20px] gap-[26px]">
             {review_ratings.length > 0 && review_ratings.map((review, i) => <ReviewCard 
             key={i}
             {...review}
             handleClick={() =>  handleNavigate(product)}
-          />)}
+            />)}
           </div>
         </div>
       </div>
