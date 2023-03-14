@@ -127,7 +127,7 @@ const ProductDetailsSellers = () => {
 
             <div className="flex flex-row w-full content-center">
             {buyers.length != 0  && (
-              <div className="mt-[10px] w-1/3 flex-col self-center p-5 bg-[#1c1c24] rounded-[10px] justify-center	">
+              <div className="mt-[10px] w-1/2 flex-col self-center p-5 bg-[#1c1c24] rounded-[10px] justify-center	">
               <p className="font-epilogue fount-medium text-[20px] leading-[30px] text-center text-[#808191]">
                 Suspicious Buyer
               </p>
