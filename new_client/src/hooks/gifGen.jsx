@@ -7,7 +7,7 @@ const useFetch = ({ keyword }) => {
   if (keyword.length>50) {
     keyword = keyword.substring(0, 50);
   }
-  console.log(keyword)
+  //console.log(keyword)
   const fetchGifs = async () => {
     try {
     //   const response = await fetch(`https://api.giphy.com/v1/gifs/search?api_key=${APIKEY}&q=${keyword.split(" ").join("")}&limit=1`);
@@ -19,7 +19,7 @@ const useFetch = ({ keyword }) => {
     }
   };
 
-  console.log(gifUrl)
+  //console.log(gifUrl)
   useEffect(() => {
     if (keyword) fetchGifs();
   }, [keyword]);
