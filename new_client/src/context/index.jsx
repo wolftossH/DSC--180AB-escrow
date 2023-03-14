@@ -4,21 +4,34 @@ import { useAddress, useContract, useMetamask, useContractWrite, useContractRead
 import { ethers } from 'ethers';
 import Readt, {useState, useEffect} from 'react';
 import axios from 'axios';
+//import setGataway from '../pinata.js';
 import { EditionMetadataWithOwnerOutputSchema } from '@thirdweb-dev/sdk';
 
 // added {} in createContext to fix problem
 const StateContext = createContext({});
 
+const setGateway = (metaURL) => {
+  let out = metaURL.split('cloud')[1];
+  let first = out.slice(0,6);
+  if (first == '/ipfs/') {
+      out = out.slice(6)
+  }
+  else {
+    //console.log('the wrong shit: '+ out)
+  }
+  return "https://copper-electoral-bison-672.mypinata.cloud/ipfs/"+out
+}
+
 const getMeta = async (metaURL, item) => {
+  metaURL = setGateway(metaURL);
+  //console.log(metaURL)
   let meta = await axios.get(metaURL, {
     headers: {
       'Accept': 'text/plain'
     }
   });
   meta = meta.data;
-
   return meta[item]
-
 }
 
 export const StateContextProvider = ({ children }) => {
@@ -74,14 +87,15 @@ export const StateContextProvider = ({ children }) => {
       )[0]
       )
     }));
-    console.log('index image '+parsedProducts[1].img)
+    //console.log('index image '+parsedProducts[1].img)
     return parsedProducts
   }
 
   const getModProducts = async (buyer_id) => {
     const products = await getProducts();
     const parsedProducts = await Promise.all(products.map(async (product,i) => {
-      let meta = await axios.get(product.metaURL, {
+     //console.log('index metaURL: ' + product.metaURL);
+      let meta = await axios.get(setGateway(product.metaURL), {
         headers: {
           'Accept': 'text/plain'
         }
@@ -90,7 +104,7 @@ export const StateContextProvider = ({ children }) => {
       return {
         name: meta.name,
         description: meta.description,
-        img: meta.image,
+        img: setGateway(meta.image),
         seller: product.seller,
         metaURL: product.metaURL,
         price:product.price,
@@ -119,7 +133,7 @@ export const StateContextProvider = ({ children }) => {
   const getUserTransactions = async (buyer_id) => {
     const allProducts = await getProducts();
     const parsedProducts = await Promise.all(allProducts.map(async (product,i) => {
-      let meta = await axios.get(product.metaURL, {
+      let meta = await axios.get(setGateway(product.metaURL), {
         headers: {
           'Accept': 'text/plain'
         }
@@ -128,7 +142,7 @@ export const StateContextProvider = ({ children }) => {
       return {
         name: meta.name,
         description: meta.description,
-        img: meta.image,
+        img: setGateway(meta.image),
         seller: product.seller,
         metaURL: product.metaURL,
         product_id: product.product_id,
