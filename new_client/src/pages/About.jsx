@@ -31,7 +31,7 @@ const About = () => {
               className="mb-8 text-3xl font-bold leading-snug text-white sm:text-4xl sm:leading-snug md:text-[45px] md:leading-snug"
             >
               Escryptow: Design and Implementation of an E-commerce Dapp              </h1>
-              <Link to="https://github.com/wolftossH/DSC--180AB-escrow/blob/main/report.pdf"
+              <Link to="https://wolftossh.github.io/DSC--180AB-escrow-report/report.pdf"
               target="_blank"
                 className="mx-auto mb-20 max-w-[600px] text-base text-[#e4e4e4] sm:text-lg sm:leading-relaxed md:text-xl md:leading-relaxed"
               >
