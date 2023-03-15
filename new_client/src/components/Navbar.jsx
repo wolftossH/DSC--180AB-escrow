@@ -50,15 +50,18 @@ return (
         {/* <li className="text-[#221C20] font-bold bg-[#8deef0] py-2 px-7 mx-4 rounded-full cursor-pointer hover:bg-[#7ae3e6]">
           Connect
         </li> */}
-        <Link to="/about"  className="mr-5 my-2 text-lg"> 
+        <Link to="/about"  className="mr-5 my-2 text-xl"> 
           About
         </Link>
 
-        <Link to="/"  className="mr-5 my-2 text-lg"> 
+        <Link to="/"  className="mr-5 my-2 text-xl"> 
           Home
         </Link>
-        <Link to="/profile" className="mr-5 my-2 text-lg"> 
+        <Link to="/profile" className="mr-5 my-2 text-xl"> 
           Profile
+        </Link>
+        <Link target="_blank" className="mr-5 my-2" to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  > 
+          Demo
         </Link>
         <Link target="_blank" to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  > 
           How to
