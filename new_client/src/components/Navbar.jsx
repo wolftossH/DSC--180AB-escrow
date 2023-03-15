@@ -60,7 +60,7 @@ return (
         <Link to="/profile" className="mr-5 my-2 text-xl"> 
           Profile
         </Link>
-        <Link target="_blank" className="mr-5 my-2" to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  > 
+        <Link target="_blank" className="mr-5 my-2" to="https://youtu.be/hcucS1EMM7E"  > 
           Demo
         </Link>
         <Link target="_blank" to="https://www.coindesk.com/learn/how-to-set-up-a-metamask-wallet/"  > 
