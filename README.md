@@ -150,7 +150,7 @@ Distributed under the ....... License. See `LICENSE.md` for more information.
 
 Huy Trinh - [![LinkedIn][linkedin-shield]][linkedin-url-huy]
 
-Antoni Liria-Sala - [![LinkedIn][linkedin-shield]][linkedin-url]
+Antoni Liria-Sala - [![LinkedIn][linkedin-shield]][linkedin-url-antoni]
 
 William Li - [![LinkedIn][linkedin-shield]][linkedin-url] 
 
@@ -192,9 +192,9 @@ Use this space to list resources you find helpful and would like to give credit 
 
 [linkedin-url]: https://www.linkedin.com/feed/
 [linkedin-url-huy]: https://www.linkedin.com/in/huy-trinh-9868ba194
-[linkedin-url-antoni]: https://www.linkedin.com/feed/
-[linkedin-url-william]: https://www.linkedin.com/feed/
-[linkedin-url-irvin]: https://www.linkedin.com/feed/
+[linkedin-url-antoni]: https://www.linkedin.com/in/antoniliriasala/
+[linkedin-url-william]: https://www.linkedin.com/in/tianyangwillli/
+[linkedin-url-irvin]: https://www.linkedin.com/in/irvinyang/
 
 [product-screenshot]: images/website_main_pic.jpg
 [Next.js]: https://img.shields.io/badge/next.js-000000?style=for-the-badge&logo=nextdotjs&logoColor=white
