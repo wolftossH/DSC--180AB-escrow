@@ -152,9 +152,9 @@ Huy Trinh - [![LinkedIn][linkedin-shield]][linkedin-url-huy]
 
 Antoni Liria-Sala - [![LinkedIn][linkedin-shield]][linkedin-url-antoni]
 
-William Li - [![LinkedIn][linkedin-shield]][linkedin-url] 
+William Li - [![LinkedIn][linkedin-shield]][linkedin-url-william] 
 
-Guangyu Yang - [![LinkedIn][linkedin-shield]][linkedin-url] 
+Guangyu Yang - [![LinkedIn][linkedin-shield]][linkedin-url-irvin] 
 
 
 
