@@ -39,10 +39,11 @@
   <p align="center">
     An awesome README template to jumpstart your projects!
     <br />
-    <a href="https://github.com/othneildrew/Best-README-Template"><strong>Explore the docs »</strong></a>
     <br />
     <br />
     <a href="https://escryptow.net/">View Webiste</a>
+    <br />
+    <a href="https://www.youtube.com/watch?v=hcucS1EMM7E">View Demo</a>
 
   </p>
 </div>
